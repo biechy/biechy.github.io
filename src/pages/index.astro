@@ -48,14 +48,10 @@ const glyphs = ["γ", "λ", "ε"];
           I like research that goes <em>all the way</em>: from a theorem, to an experiment, to the people it ends up
           affecting.
         </p>
-        <p>
-          These days that means privacy in LLM agents, and figuring out what models really do when all we get to see
-          is their outputs. I want AI that makes people more capable and more free, and I think getting there takes
-          both solid maths and good tools for the people using it.
-        </p>
         <p class="creds">
-          PhD researcher at <a href="https://www.inria.fr/">Inria</a> ({site.team.name} team) · MARS V fellow ·
-          BlueDot Impact alumnus
+          PhD researcher at <a href="https://www.inria.fr/">Inria</a> in the{" "}
+          <a href="https://team.inria.fr/petscraft/">PETSCRAFT team</a>, fellow at{" "}
+          <a href="https://caish.org/mars">MARS V</a> and <a href="https://bluedot.org/">BlueDot Impact</a> alumnus.
         </p>
 
         <div class="hero-ctas">
@@ -616,10 +612,13 @@ const glyphs = ["γ", "λ", "ε"];
   }
 
   .creds {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
     color: var(--ink-2);
+  }
+
+  .creds a {
+    color: var(--ink);
+    font-weight: 500;
   }
 
   .focus {
