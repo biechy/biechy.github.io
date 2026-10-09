@@ -12,6 +12,7 @@ export const site = {
     now: "Open to PhD research internships & safety fellowships",
     later: "Full-time research roles from September 2027",
   },
+  cv: "/cv-lucas-biechy.pdf",
   email: "lucas.biechy@inria.fr",
   github: "https://github.com/biechy",
   linkedin: "https://linkedin.com/in/biechy",

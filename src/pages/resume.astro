@@ -20,6 +20,7 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
         Physics and mathematics first, then statistics, then the question that stuck: when can we trust large
         language models? Now an AI safety PhD at Inria, thesis expected September 2027.
       </p>
+      <a class="cv-btn" href={site.cv} download data-reveal style="--delay: .24s">Download the PDF version <span>↓</span></a>
     </div>
     <img class="head-memoji" src="/img/memojie/study.png" alt="" width="420" height="420" data-reveal />
   </header>
@@ -167,6 +168,27 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
     align-items: flex-end;
     justify-content: space-between;
     gap: 2rem;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    padding: 0.8rem 1.3rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.3s var(--ease);
+  }
+
+  .cv-btn:hover {
+    background: var(--accent);
+    color: var(--accent-ink);
+    transform: translateY(-2px);
   }
 
   .head-memoji {
