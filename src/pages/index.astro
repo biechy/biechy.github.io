@@ -435,14 +435,12 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     .hero-inner {
       grid-template-columns: 1fr;
       grid-template-areas:
-        "badge"
         "kicker"
         "title"
         "intro";
     }
     .badge {
-      width: 8.5rem;
-      margin-bottom: 1.5rem;
+      display: none;
     }
     .hero-kicker {
       align-items: flex-start;
