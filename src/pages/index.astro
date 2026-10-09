@@ -13,7 +13,6 @@ const papers = sortPapers(await getCollection("publications"));
 const { notes } = await getKnowledge();
 const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
-const j4u = papers.find((p) => p.data.short === "J4U");
 const ringText = "privacy · evals · uncertainty · AI safety · ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
 ---
@@ -151,6 +150,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <ul class="mini-list">
           <li><span><strong>Mentored 2 research interns</strong> · one now co-author on PrivacySkills</span></li>
           <li><span><strong>TA in probability &amp; statistics</strong> · ENSTA Paris</span></li>
+          <li><span><strong>Organised the team research seminar</strong> · PETSCRAFT</span></li>
         </ul>
       </div>
 
@@ -159,9 +159,9 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <p class="kicker">Talks &amp; outreach</p>
         <h3>On stage, for experts and for everyone</h3>
         <ul class="mini-list talk-list">
-          <li><span><em class="tag">Technical</em><strong><a href={j4u?.data.link ?? "/publications"}>Jailbreaks for Uncertainty (J4U)</a></strong> · AI &amp; cybersecurity programme</span><time>2026</time></li>
+          <li><span><em class="tag">Technical</em><strong><a href="https://youtu.be/ZhORtZ00Ur0?t=2760">AI &amp; Cybersecurity</a></strong></span><time>2026</time></li>
           <li><span><em class="tag">General public</em><strong>Sovereignty &amp; entrepreneurship</strong></span><time>2026</time></li>
-          <li><span><em class="tag">Outreach</em><strong>Inria science outreach team</strong> · médiation scientifique</span><time>2024–25</time></li>
+          <li><span><em class="tag">Outreach</em><strong>Inria science outreach team</strong></span><time>2024–25</time></li>
         </ul>
       </div>
 
