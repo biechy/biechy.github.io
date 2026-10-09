@@ -2,20 +2,23 @@ import type { CollectionEntry } from "astro:content";
 
 /** The research agenda, shown on the home page. Each paper points to one theme. */
 export const themes = {
+  privacy: {
+    label: "Privacy in LLM agents",
+    focus: true,
+    question: "What do agents do with our personal data?",
+    blurb: "Where agents go looking for information, what they do with it, and which kind of privacy guidance actually changes that. Most of my upcoming work is here.",
+  },
   uncertainty: {
     label: "Black-box uncertainty",
+    focus: false,
     question: "How sure is the model, really?",
     blurb: "Getting calibrated uncertainty out of reasoning models when you have no access to logits, only to what they answer.",
   },
-  auditing: {
-    label: "Auditing from behaviour",
+  evals: {
+    label: "Behavioural evaluations",
+    focus: false,
     question: "What can behaviour alone tell us?",
-    blurb: "A biased agent or a biased user can look perfectly normal from the outside. I work out when watching is not enough, and which probes or interventions give them away.",
-  },
-  privacy: {
-    label: "Privacy in agents",
-    question: "What do agents do with our personal data?",
-    blurb: "Measuring where agents get their information from, and which kind of privacy guidance actually changes it.",
+    blurb: "A biased agent or a biased user can look perfectly normal from the outside. I work out when watching isn't enough, and which tests give them away.",
   },
 } as const;
 

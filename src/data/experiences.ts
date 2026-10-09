@@ -11,7 +11,7 @@ export const experiences: Experience[] = [
     date: { start: "2024", end: null },
     location: "Palaiseau, France",
     description:
-      "Auditing LLMs and agents from the outside: calibrated uncertainty for black-box reasoning models (via jailbreaks), detecting biased self-grading agents and biased users from behaviour, and measuring how agents handle personal data. Four first-author papers, three under review (ICLR 2027, AISTATS 2027).",
+      "Privacy in LLM agents and evaluation of what models really do: calibrated uncertainty for black-box reasoning models (via jailbreaks), detecting biased self-grading agents and biased users from behaviour, and measuring how agents handle personal data. Four first-author papers, three under review (ICLR 2027, AISTATS 2027).",
     tags: ["LLMs", "Oversight", "Uncertainty", "Agents", "Privacy"],
   },
   {

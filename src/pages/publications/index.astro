@@ -13,13 +13,13 @@ const firstAuthor = papers.filter((p) => p.data.authors[0] === site.name).length
 const glyphs = ["γ", "λ", "ε", "π", "β", "α", "θ"];
 ---
 
-<Base title="Research" description="Papers by Lucas Biéchy on AI safety: black-box uncertainty, behavioural audits of agents and privacy.">
+<Base title="Research" description="Papers by Lucas Biéchy on AI safety: privacy in LLM agents, black-box uncertainty and behavioural evaluations.">
   <header class="wrap page-head">
     <p class="kicker" data-reveal>Research · {papers.length} papers · {firstAuthor} first-author</p>
     <h1 class="page-title" data-reveal style="--delay: .08s">Papers &amp; <em>preprints</em></h1>
     <p class="lede" data-reveal style="--delay: .16s">
-      Most of these papers ask the same question: what can we learn about an LLM or an agent when all we see is
-      what it does? <a href={site.scholar}>Google Scholar ↗</a>{" "}
+      Privacy in LLM agents, uncertainty of reasoning models, and what we can learn about a model or a user from
+      their behaviour alone. <a href={site.scholar}>Google Scholar ↗</a>{" "}
       <a class="rss" href="/publications/rss.xml"><Icon name="rss" size={14} /> RSS</a>
     </p>
   </header>

@@ -15,8 +15,9 @@ import { getKnowledge } from "../lib/knowledge";
 const papers = sortPapers(await getCollection("publications"));
 const featured = papers.filter((p) => p.data.featured);
 const { notes } = await getKnowledge();
-const ringText = "oversight · black-box audits · uncertainty · privacy · ";
-const tones: Record<Theme, string> = { uncertainty: "var(--cobalt)", auditing: "var(--accent)", privacy: "var(--lime)" };
+const ringText = "privacy · evals · uncertainty · AI safety · ";
+const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
+const marsPaper = papers.find((p) => p.data.status === "workshop");
 const glyphs = ["γ", "λ", "ε"];
 ---
 
@@ -26,10 +27,6 @@ const glyphs = ["γ", "λ", "ε"];
     <div class="blob blob-b" aria-hidden="true"></div>
 
     <div class="wrap hero-inner">
-      <p class="kicker hero-kicker" data-reveal>
-        <span class="dot"></span> {site.role} · {site.affiliation}
-      </p>
-
       <h1 class="hero-title">
         <span class="line" data-reveal style="--delay: .05s">Lucas</span>
         <span class="line indent" data-reveal style="--delay: .15s"><em>Biéchy</em><span class="sparkle">✺</span></span>
@@ -47,25 +44,23 @@ const glyphs = ["γ", "λ", "ε"];
 
       <div class="hero-intro" data-reveal style="--delay: .35s">
         <p class="statement">
-          I build ways to audit LLMs and agents <em>from the outside</em>, when all you can see is what they do.
+          I like research that goes <em>all the way</em>: from a theorem, to an experiment, to the people it ends up
+          affecting.
         </p>
         <p>
-          PhD researcher at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay ({site.team.name} team), working on black-box uncertainty, behavioural audits of agents and privacy.
-          Three first-author papers under review at ICLR and AISTATS 2027.
+          These days that means privacy in LLM agents, and figuring out what models really do when all we get to see
+          is their outputs. I want AI that makes people more capable and more free, and I think getting there takes
+          both solid maths and good tools for the people using it.
         </p>
-
-        <div class="availability">
-          <span class="dot"></span>
-          <p>
-            <strong>{site.availability.now}</strong>
-            <span>{site.availability.later}</span>
-          </p>
-        </div>
+        <p class="creds">
+          PhD researcher at <a href="https://www.inria.fr/">Inria</a> ({site.team.name} team) · MARS V fellow ·
+          BlueDot Impact alumnus
+        </p>
 
         <div class="hero-ctas">
           <a class="btn btn-primary" href="/publications">Read my research <Icon name="arrow" size={16} /></a>
           <a class="btn" href={`mailto:${site.email}`}><Icon name="mail" size={16} /> Email me</a>
-          <a class="btn btn-ghost" href={site.cv} download>Download CV (PDF)</a>
+          <a class="btn btn-ghost" href={site.cv} target="_blank" rel="noopener">View my CV</a>
         </div>
       </div>
     </div>
@@ -73,10 +68,33 @@ const glyphs = ["γ", "λ", "ε"];
 
   <Marquee items={site.topics} />
 
+  <section class="wrap papers-section">
+    <div class="section-head split" data-reveal>
+      <div>
+        <p class="kicker">01 · Selected work</p>
+        <h2 class="section-title">Recent <em>work</em></h2>
+      </div>
+      <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
+    </div>
+    {marsPaper && (
+      <a class="mars" href={marsPaper.data.link ?? "/publications"} data-reveal>
+        <div class="mars-big">
+          <span class="kicker">During MARS V</span>
+          <strong>A few <em>weeks</em></strong>
+        </div>
+        <p>
+          From a first idea to a paper accepted at the {marsPaper.data.venue.replace(" 2026", "")}, during my MARS V
+          fellowship with the Cambridge AI Safety Hub: <span class="mars-title">{marsPaper.data.title}</span>
+        </p>
+      </a>
+    )}
+    {featured.map((paper, i) => <Paper paper={paper} glyph={glyphs[i % glyphs.length]} />)}
+  </section>
+
   <section class="wrap agenda-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">01 · Research agenda</p>
-      <h2 class="section-title">Looking at models <em>from the outside</em></h2>
+      <p class="kicker">02 · What I work on</p>
+      <h2 class="section-title">Three <em>threads</em></h2>
     </div>
 
     <div class="agenda">
@@ -84,7 +102,7 @@ const glyphs = ["γ", "λ", "ε"];
         const related = papers.filter((p) => p.data.theme === key);
         return (
           <article class="theme" style={`--tone: ${tones[key]}; --delay: ${i * 0.08}s`} data-reveal>
-            <p class="kicker">0{i + 1} · {themes[key].label}</p>
+            <p class="kicker">{themes[key].label}{themes[key].focus && <span class="focus">Main focus</span>}</p>
             <h3>{themes[key].question}</h3>
             <p class="theme-blurb">{themes[key].blurb}</p>
             {related.length > 0 && (
@@ -101,17 +119,6 @@ const glyphs = ["γ", "λ", "ε"];
         );
       })}
     </div>
-  </section>
-
-  <section class="wrap papers-section">
-    <div class="section-head split" data-reveal>
-      <div>
-        <p class="kicker">02 · Selected papers</p>
-        <h2 class="section-title">Recent <em>work</em></h2>
-      </div>
-      <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
-    </div>
-    {featured.map((paper, i) => <Paper paper={paper} glyph={glyphs[i % glyphs.length]} />)}
   </section>
 
   <section class="wrap bento-section">
@@ -591,7 +598,7 @@ const glyphs = ["γ", "λ", "ε"];
     }
   }
 
-  /* ---- research statement & availability */
+  /* ---- research statement */
 
   .statement {
     font-family: var(--font-display);
@@ -601,41 +608,87 @@ const glyphs = ["γ", "λ", "ε"];
     font-variation-settings: "SOFT" 100, "WONK" 1;
   }
 
+  .creds {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-2);
+  }
+
+  .focus {
+    margin-left: 0.5rem;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .mars {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(1.25rem, 4vw, 3rem);
+    margin-bottom: 1.5rem;
+    padding: clamp(1.25rem, 3.5vw, 2.25rem);
+    border-radius: var(--radius);
+    background: var(--lime);
+    color: #17140f;
+    text-decoration: none;
+    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  }
+
+  .mars:hover {
+    color: #17140f;
+    transform: translateY(-4px) rotate(-0.4deg);
+    box-shadow: var(--shadow);
+  }
+
+  .mars-big {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .mars-big .kicker {
+    color: rgb(23 20 15 / 0.7);
+  }
+
+  .mars-big strong {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .mars-big em {
+    font-style: italic;
+  }
+
+  .mars p {
+    margin: 0;
+    max-width: 36rem;
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+  }
+
+  .mars-title {
+    display: block;
+    margin-top: 0.4rem;
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .mars {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .statement em {
     font-style: italic;
     color: var(--accent);
-  }
-
-  .availability {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-    padding: 0.9rem 1.1rem;
-    border: 1px solid color-mix(in srgb, #22c55e 40%, var(--line));
-    border-radius: 1rem;
-    background: color-mix(in srgb, #22c55e 8%, var(--card));
-  }
-
-  .availability .dot {
-    flex: none;
-    margin-top: 0.45rem;
-  }
-
-  .availability p {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.45;
-  }
-
-  .availability strong {
-    font-weight: 600;
-  }
-
-  .availability span {
-    color: var(--ink-2);
   }
 
   .btn-ghost {
