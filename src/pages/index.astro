@@ -29,7 +29,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
       </h1>
 
       <div class="badge" data-reveal style="--delay: .3s">
-        <span class="badge-glow" aria-hidden="true"></span>
         <img src="/img/memojie/hey.png" alt="Lucas' memoji waving hello" width="420" height="420" />
       </div>
 
@@ -378,18 +377,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .badge:hover img {
     transform: rotate(-10deg) scale(1.08);
   }
-
-  .badge-glow {
-    position: absolute;
-    inset: -35%;
-    z-index: -1;
-    border-radius: 50%;
-    background: radial-gradient(circle, var(--lime), transparent 62%);
-    filter: blur(28px);
-    opacity: 0.85;
-    animation: drift 14s ease-in-out infinite alternate;
-  }
-
 
   .hero-intro {
     grid-area: intro;
