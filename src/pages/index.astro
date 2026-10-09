@@ -18,6 +18,7 @@ const { notes } = await getKnowledge();
 const ringText = "privacy · evals · uncertainty · AI safety · ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
 const marsPaper = papers.find((p) => p.data.status === "workshop");
+const aistatsPaper = papers.find((p) => p.data.venue.startsWith("AISTATS"));
 const glyphs = ["γ", "λ", "ε"];
 ---
 
@@ -77,16 +78,22 @@ const glyphs = ["γ", "λ", "ε"];
       <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
     </div>
     {marsPaper && (
-      <a class="mars" href={marsPaper.data.link ?? "/publications"} data-reveal>
+      <div class="mars" data-reveal>
         <div class="mars-big">
-          <span class="kicker">During MARS V</span>
-          <strong>A few <em>weeks</em></strong>
+          <span class="kicker">MARS V · summer 2026</span>
+          <strong>7 <em>weeks</em></strong>
         </div>
-        <p>
-          From a first idea to a paper accepted at the {marsPaper.data.venue.replace(" 2026", "")}, during my MARS V
-          fellowship with the Cambridge AI Safety Hub: <span class="mars-title">{marsPaper.data.title}</span>
-        </p>
-      </a>
+        <div class="mars-text">
+          <p>
+            From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS. Five weeks
+            later, a full follow-up paper went to AISTATS 2027.
+          </p>
+          <ul>
+            <li><a href={marsPaper.data.link ?? "/publications"}>{marsPaper.data.title}</a> <span>NeurIPS workshop · accepted</span></li>
+            {aistatsPaper && <li><a href={aistatsPaper.data.link ?? "/publications"}>{aistatsPaper.data.title}</a> <span>AISTATS 2027 · submitted</span></li>}
+          </ul>
+        </div>
+      </div>
     )}
     {featured.map((paper, i) => <Paper paper={paper} glyph={glyphs[i % glyphs.length]} />)}
   </section>
@@ -637,11 +644,6 @@ const glyphs = ["γ", "λ", "ε"];
     transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
   }
 
-  .mars:hover {
-    color: #17140f;
-    transform: translateY(-4px) rotate(-0.4deg);
-    box-shadow: var(--shadow);
-  }
 
   .mars-big {
     display: flex;
@@ -669,15 +671,39 @@ const glyphs = ["γ", "λ", "ε"];
 
   .mars p {
     margin: 0;
-    max-width: 36rem;
+    max-width: 38rem;
     font-size: clamp(1rem, 1.6vw, 1.15rem);
   }
 
-  .mars-title {
-    display: block;
-    margin-top: 0.4rem;
+  .mars ul {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+  }
+
+  .mars li {
+    padding-block: 0.45rem;
+    border-top: 1px solid rgb(23 20 15 / 0.15);
+  }
+
+  .mars li a {
     font-family: var(--font-display);
     font-style: italic;
+    text-decoration-color: rgb(23 20 15 / 0.35);
+  }
+
+  .mars li a:hover {
+    color: #17140f;
+    text-decoration-color: currentColor;
+  }
+
+  .mars li span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgb(23 20 15 / 0.65);
   }
 
   @media (max-width: 640px) {
