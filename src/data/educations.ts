@@ -17,10 +17,10 @@ export const educations: Education[] = [
       start: "2024",
       end: "2027",
     },
-    location: "Paris, France",
+    location: "Palaiseau, France",
     description:
-      "Advisors: Nicolas Anciaux, Cédric Eichler, Adrien Boiret",
-    tags: ["LLMs", "NLP", "Privacy", "Red Teaming"],
+      "Advisors: Nicolas Anciaux, Cédric Eichler, Adrien Boiret. Thesis expected September 2027.",
+    tags: ["AI Safety", "LLMs", "Privacy"],
     honors: "none",
   },
   {
@@ -46,13 +46,13 @@ export const educations: Education[] = [
     },
     location: "Orsay, France",
     description:
-      "Joint program with CentraleSupélec and École Polytechnique.",
+      "Joint program with CentraleSupélec and École Polytechnique. GPA 4.00/4.00.",
     tags: ["Machine Learning", "Statistics", "Optimization", "Probability"],
     honors: "High Honors",
   },
   {
     degree: {
-      title: "BSc Double Major in Mathematics and Physics Minor in Engineering",
+      title: "Double BSc in Mathematics and Physics",
       link: "https://www.universite-paris-saclay.fr/formation/licence-double-diplome/mathematiques-physique-et-sciences-pour-lingenieur",
     },
     school: [
@@ -66,10 +66,10 @@ export const educations: Education[] = [
       start: "2019",
       end: "2022",
     },
-    location: "Orsay, France",
+    location: "Gif-sur-Yvette, France",
     description:
-      "Physics track joint with École Normale Supérieure Paris-Saclay.",
-    tags: ["Mathematics", "Theorical Physics", "Engineering"],
+      "Physics track joint with École Normale Supérieure Paris-Saclay. Mathematics GPA 4.00/4.00.",
+    tags: ["Mathematics", "Theoretical Physics"],
     honors: "Honors",
   },
 ];

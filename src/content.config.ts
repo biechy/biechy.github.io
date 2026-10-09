@@ -13,16 +13,24 @@ const knowledge = defineCollection({
   }),
 });
 
+// One file per paper. The Markdown body (the abstract) is optional:
+// papers without one get no dedicated page and link straight to `link`.
 const publications = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: "./publications" }),
   schema: z.object({
     title: z.string(),
+    /** Optional nickname shown as a badge, e.g. "J4U". */
+    short: z.string().optional(),
+    /** Only the year is displayed; the full date orders papers within a year. */
     date: z.coerce.date(),
+    authors: z.array(z.string()),
     venue: z.string(),
+    status: z.enum(["published", "under-review", "workshop", "preprint"]),
     link: z.url().optional(),
-    authors: z.array(z.string()).optional(),
-    tags: z.array(z.string()).default([]),
-    summary: z.string(),
+    code: z.url().optional(),
+    theme: z.enum(["calibration", "alignment", "privacy", "other"]),
+    featured: z.boolean().default(false),
+    tldr: z.string(),
   }),
 });
 

@@ -4,17 +4,20 @@ import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import Marquee from "../components/Marquee.astro";
 import NewsTimeline from "../components/NewsTimeline.astro";
+import Paper from "../components/Paper.astro";
 import { site } from "../data/site";
 import { news } from "../data/news";
-import { experiences } from "../data/experiences";
 import { projects } from "../data/projects";
+import { safetyPrograms } from "../data/community";
+import { sortPapers, themes, type Theme } from "../data/research";
 import { getKnowledge } from "../lib/knowledge";
 
-const publications = (await getCollection("publications")).sort((a, b) => +b.data.date - +a.data.date);
-const latestPub = publications[0];
-const current = experiences[0];
+const papers = sortPapers(await getCollection("publications"));
+const featured = papers.filter((p) => p.data.featured);
 const { notes } = await getKnowledge();
-const ringText = "privacy · language models · red teaming · statistics · ";
+const ringText = "trust · calibration · human–AI alignment · privacy · ";
+const tones: Record<Theme, string> = { calibration: "var(--cobalt)", alignment: "var(--accent)", privacy: "var(--lime)" };
+const glyphs = ["γ", "λ", "ε"];
 ---
 
 <Base>
@@ -43,19 +46,27 @@ const ringText = "privacy · language models · red teaming · statistics · ";
       </div>
 
       <div class="hero-intro" data-reveal style="--delay: .35s">
-        <p>
-          I'm a PhD student at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay, supervised by{" "}
-          <a href="https://pages.saclay.inria.fr/nicolas.anciaux/">Nicolas Anciaux</a> in the{" "}
-          <a href={site.team.link}>{site.team.name}</a> team. I study what language models can{" "}
-          <span class="serif-italic">infer</span> about people, and how to measure and prevent it.
+        <p class="statement">
+          {site.statement} — what they say about the world, about <em>themselves</em>, and what they infer about{" "}
+          <em>us</em>.
         </p>
         <p>
-          On the side, I build <a href="/projects">software &amp; MLOps projects</a> and keep a public{" "}
-          <a href="/knowledge">mental palace</a> of notes on machine learning, finance and maths.
+          PhD researcher at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay ({site.team.name} team), working on calibration and honesty of reasoning models, human–AI alignment and privacy of LLM agents.
+          Two first-author papers under review at ICLR 2027.
         </p>
+
+        <div class="availability">
+          <span class="dot"></span>
+          <p>
+            <strong>{site.availability.now}</strong>
+            <span>{site.availability.later}</span>
+          </p>
+        </div>
+
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="/resume">See my resume <Icon name="arrow" size={16} /></a>
-          <a class="btn" href={`mailto:${site.email}`}><Icon name="mail" size={16} /> Get in touch</a>
+          <a class="btn btn-primary" href="/publications">Read my research <Icon name="arrow" size={16} /></a>
+          <a class="btn" href={`mailto:${site.email}`}><Icon name="mail" size={16} /> Email me</a>
+          <a class="btn btn-ghost" href="/resume">Resume</a>
         </div>
       </div>
     </div>
@@ -63,30 +74,74 @@ const ringText = "privacy · language models · red teaming · statistics · ";
 
   <Marquee items={site.topics} />
 
+  <section class="wrap agenda-section">
+    <div class="section-head" data-reveal>
+      <p class="kicker">01 — Research agenda</p>
+      <h2 class="section-title">Three ways to ask <em>“can we trust it?”</em></h2>
+    </div>
+
+    <div class="agenda">
+      {(Object.keys(themes) as Theme[]).map((key, i) => {
+        const related = papers.filter((p) => p.data.theme === key);
+        return (
+          <article class="theme" style={`--tone: ${tones[key]}; --delay: ${i * 0.08}s`} data-reveal>
+            <p class="kicker">0{i + 1} · {themes[key].label}</p>
+            <h3>{themes[key].question}</h3>
+            <p class="theme-blurb">{themes[key].blurb}</p>
+            {related.length > 0 && (
+              <ul>
+                {related.map((p) => (
+                  <li>
+                    <a href={p.data.link ?? "/publications"}>{p.data.short ?? p.data.title.split(":")[0]}</a>
+                    <span>{p.data.venue}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="wrap papers-section">
+    <div class="section-head split" data-reveal>
+      <div>
+        <p class="kicker">02 — Selected papers</p>
+        <h2 class="section-title">Recent <em>work</em></h2>
+      </div>
+      <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
+    </div>
+    {featured.map((paper, i) => <Paper paper={paper} glyph={glyphs[i % glyphs.length]} />)}
+  </section>
+
   <section class="wrap bento-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">01 — Right now</p>
-      <h2 class="section-title">What I'm <em>up to</em></h2>
+      <p class="kicker">03 — Beyond papers</p>
+      <h2 class="section-title">In the <em>community</em></h2>
     </div>
 
     <div class="bento">
       <a class="tile tile-now" href="/resume" data-reveal>
-        <p class="kicker">Currently</p>
-        <h3>{current.title}</h3>
-        <p class="muted">{current.company.name}</p>
-        <p>{current.description}</p>
-        <ul class="chips">{current.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+        <p class="kicker">AI safety ecosystem</p>
+        <h3>Trained and connected in the safety community</h3>
+        <ul class="community">
+          {safetyPrograms.map((p) => (
+            <li><strong>{p.name}</strong> · {p.org} <span>{p.year}</span></li>
+          ))}
+          <li><strong>Visiting</strong> · Trajan House, Oxford <span>2026</span></li>
+          <li><strong>BiAlign workshop</strong> · NeurIPS <span>2026</span></li>
+          <li><strong>MLSS</strong> · Columbia University <span>2026</span></li>
+        </ul>
         <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
       </a>
 
-      {latestPub && (
-        <a class="tile tile-pub" href={`/publications/${latestPub.id}`} data-reveal style="--delay: .08s">
-          <span class="glyph" aria-hidden="true">γ</span>
-          <p class="kicker">Latest paper · {latestPub.data.date.getFullYear()}</p>
-          <h3>{latestPub.data.title}</h3>
-          <p class="muted">{latestPub.data.venue}</p>
-        </a>
-      )}
+      <a class="tile tile-pub" href="/resume" data-reveal style="--delay: .08s">
+        <span class="glyph" aria-hidden="true">∂</span>
+        <p class="kicker">Building</p>
+        <h3>Doctoral entrepreneurship programme</h3>
+        <p class="muted">Talks on AI &amp; cybersecurity and on sovereignty &amp; entrepreneurship (2026).</p>
+      </a>
 
       <a class="tile tile-knowledge" href="/knowledge" data-reveal style="--delay: .12s">
         <p class="kicker">Mental palace</p>
@@ -106,10 +161,10 @@ const ringText = "privacy · language models · red teaming · statistics · ";
 
   <section class="wrap news-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">02 — Logbook</p>
+      <p class="kicker">04 — Logbook</p>
       <h2 class="section-title">Latest <em>news</em></h2>
     </div>
-    <NewsTimeline items={news} initial={7} />
+    <NewsTimeline items={news} initial={6} />
   </section>
 </Base>
 
@@ -534,6 +589,164 @@ const ringText = "privacy · language models · red teaming · statistics · ";
     }
     .tile-now .tile-memoji {
       width: 8.5rem;
+    }
+  }
+
+  /* ---- research statement & availability */
+
+  .statement {
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 2.6vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+
+  .statement em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .availability {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid color-mix(in srgb, #22c55e 40%, var(--line));
+    border-radius: 1rem;
+    background: color-mix(in srgb, #22c55e 8%, var(--card));
+  }
+
+  .availability .dot {
+    flex: none;
+    margin-top: 0.45rem;
+  }
+
+  .availability p {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .availability strong {
+    font-weight: 600;
+  }
+
+  .availability span {
+    color: var(--ink-2);
+  }
+
+  .btn-ghost {
+    border-color: transparent;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--ink);
+  }
+
+  /* ---- research agenda */
+
+  .agenda-section,
+  .papers-section {
+    padding-top: clamp(4rem, 10vw, 8rem);
+  }
+
+  .agenda {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .theme {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border-radius: var(--radius);
+    border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
+    background: color-mix(in srgb, var(--tone) 12%, var(--card));
+    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  }
+
+  .theme:hover {
+    transform: translateY(-4px) rotate(-0.4deg);
+    box-shadow: var(--shadow);
+  }
+
+  .theme .kicker {
+    margin: 0;
+  }
+
+  .theme h3 {
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    font-style: italic;
+    letter-spacing: -0.03em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 72;
+  }
+
+  .theme-blurb {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+  }
+
+  .theme ul {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 0.75rem 0 0;
+    border-top: 1px dashed var(--line);
+  }
+
+  .theme li {
+    display: flex;
+    flex-direction: column;
+    padding-block: 0.3rem;
+  }
+
+  .theme li a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .theme li span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-3);
+  }
+
+  .split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .community {
+    list-style: none;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    font-size: 0.92rem;
+  }
+
+  .community li {
+    padding-block: 0.3rem;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .community span {
+    margin-left: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 900px) {
+    .agenda {
+      grid-template-columns: 1fr;
     }
   }
 </style>

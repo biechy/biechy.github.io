@@ -5,8 +5,10 @@ import { experiences } from "../data/experiences";
 import { educations } from "../data/educations";
 import { formatRange } from "../lib/dates";
 import { site } from "../data/site";
+import { grants, safetyPrograms, service, skills } from "../data/community";
 
 const darkLogo = (logo: string) => logo.replace(/\.(\w+)$/, "-dark.$1");
+const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
 ---
 
 <Base title="Resume" description="Experience and education of Lucas Biéchy, PhD researcher in AI at Inria.">
@@ -15,8 +17,8 @@ const darkLogo = (logo: string) => logo.replace(/\.(\w+)$/, "-dark.$1");
       <p class="kicker" data-reveal>Curriculum vitæ</p>
       <h1 class="page-title" data-reveal style="--delay: .08s">The <em>path</em> so far</h1>
       <p class="lede" data-reveal style="--delay: .16s">
-        From theoretical physics to statistics, then to the privacy of language models — with a detour through
-        satellites and Taiwanese traffic.
+        Physics and mathematics first, then statistics, then the question that stuck: when can we trust large
+        language models? Now an AI safety PhD at Inria, thesis expected September 2027.
       </p>
     </div>
     <img class="head-memoji" src="/img/memojie/study.png" alt="" width="420" height="420" data-reveal />
@@ -37,8 +39,14 @@ const darkLogo = (logo: string) => logo.replace(/\.(\w+)$/, "-dark.$1");
           <div class="what">
             <a class="org" href={xp.company.link}>
               <span class="logo">
-                <img class="logo-light" src={xp.company.logo} alt="" loading="lazy" />
-                <img class="logo-dark" src={darkLogo(xp.company.logo)} alt="" loading="lazy" />
+                {xp.company.logo ? (
+                  <>
+                    <img class="logo-light" src={xp.company.logo} alt="" loading="lazy" />
+                    <img class="logo-dark" src={darkLogo(xp.company.logo)} alt="" loading="lazy" />
+                  </>
+                ) : (
+                  <span class="logo-text">{initials(xp.company.name)}</span>
+                )}
               </span>
               <span>{xp.company.name}</span>
             </a>
@@ -90,6 +98,61 @@ const darkLogo = (logo: string) => logo.replace(/\.(\w+)$/, "-dark.$1");
         </li>
       ))}
     </ol>
+  </section>
+
+  <section class="wrap block">
+    <div class="block-head" data-reveal>
+      <span class="kicker">03</span>
+      <h2>Papers</h2>
+    </div>
+    <div class="papers-cta" data-reveal>
+      <p>Four first-author papers on AI safety in 2026 — two under review at ICLR 2027 — and one journal paper.</p>
+      <a class="arrow-link" href="/publications">See all papers <span>→</span></a>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <div class="block-head" data-reveal>
+      <span class="kicker">04</span>
+      <h2>AI safety</h2>
+    </div>
+    <ul class="rows" data-reveal>
+      {safetyPrograms.map((p) => (
+        <li><span class="row-year">{p.year}</span><span><strong>{p.name}</strong> — {p.org}</span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap block">
+    <div class="block-head" data-reveal>
+      <span class="kicker">05</span>
+      <h2>Service &amp; more</h2>
+    </div>
+    <dl class="defs" data-reveal>
+      {service.map((s) => (
+        <>
+          <dt>{s.label}</dt>
+          <dd>{s.items.join(" · ")}</dd>
+        </>
+      ))}
+      <dt>Grants</dt>
+      <dd>{grants.map((g) => `${g.name}, ${g.org} (${g.year})`).join(" · ")}</dd>
+    </dl>
+  </section>
+
+  <section class="wrap block">
+    <div class="block-head" data-reveal>
+      <span class="kicker">06</span>
+      <h2>Skills</h2>
+    </div>
+    <dl class="defs" data-reveal>
+      {skills.map((s) => (
+        <>
+          <dt>{s.label}</dt>
+          <dd><ul class="chips">{s.items.map((i) => <li class="chip">{i}</li>)}</ul></dd>
+        </>
+      ))}
+    </dl>
   </section>
 
   <section class="wrap contact" data-reveal>
@@ -208,6 +271,76 @@ const darkLogo = (logo: string) => logo.replace(/\.(\w+)$/, "-dark.$1");
     flex: none;
   }
 
+  .logo-text {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+
+  .papers-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    letter-spacing: -0.02em;
+  }
+
+  .papers-cta p {
+    margin: 0;
+    max-width: 36rem;
+  }
+
+  .papers-cta .arrow-link {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--accent);
+  }
+
+  .rows {
+    margin: 0;
+    padding: 1.5rem 0;
+    list-style: none;
+  }
+
+  .rows li {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1.5rem;
+    padding-block: 0.6rem;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .row-year {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .defs {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 0.9rem 1.5rem;
+    margin: 0;
+    padding: 1.5rem 0;
+  }
+
+  .defs dt {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    padding-top: 0.15rem;
+  }
+
+  .defs dd {
+    margin: 0;
+  }
+
   .logo img {
     height: 100%;
     width: auto;
@@ -279,6 +412,14 @@ const darkLogo = (logo: string) => logo.replace(/\.(\w+)$/, "-dark.$1");
   }
 
   @media (max-width: 560px) {
+    .rows li,
+    .defs {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+    .defs dd {
+      margin-bottom: 0.75rem;
+    }
     .item {
       grid-template-columns: 1fr;
       gap: 0.6rem;

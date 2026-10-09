@@ -2,9 +2,10 @@
 import "../../styles/prose.css";
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import { hasAbstract, statusLabel } from "../../data/research";
 
 export async function getStaticPaths() {
-  const publications = await getCollection("publications");
+  const publications = (await getCollection("publications")).filter(hasAbstract);
   return publications.map((pub) => ({ params: { id: pub.id }, props: { pub } }));
 }
 
@@ -12,18 +13,14 @@ const { pub } = Astro.props;
 const { Content } = await render(pub);
 ---
 
-<Base title={pub.data.title} description={pub.data.summary}>
+<Base title={pub.data.title} description={pub.data.tldr}>
   <article class="wrap paper">
-    <a class="back kicker" href="/publications">← All publications</a>
+    <a class="back kicker" href="/publications">← All papers</a>
     <p class="kicker meta">
-      <time datetime={pub.data.date.toISOString()}>
-        {pub.data.date.toLocaleDateString("en-GB", { month: "long", year: "numeric" })}
-      </time>
-      · {pub.data.venue}
+      {statusLabel[pub.data.status]} · {pub.data.venue} · {pub.data.date.getFullYear()}
     </p>
     <h1>{pub.data.title}</h1>
-    {pub.data.authors && <p class="authors">{pub.data.authors.join(", ")}</p>}
-    <ul class="chips">{pub.data.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+    <p class="authors">{pub.data.authors.join(", ")}</p>
 
     <h2 class="kicker abstract-label">Abstract</h2>
     <div class="prose">

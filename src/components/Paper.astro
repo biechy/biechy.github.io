@@ -1,0 +1,156 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { hasAbstract, statusLabel, themes } from "../data/research";
+import { site } from "../data/site";
+
+interface Props {
+  paper: CollectionEntry<"publications">;
+  glyph?: string;
+}
+
+const { paper, glyph } = Astro.props;
+const { data } = paper;
+const theme = data.theme === "other" ? undefined : themes[data.theme];
+const linkLabel = data.link?.includes("arxiv.org") ? "arXiv" : "Paper";
+---
+
+<article class="paper" data-reveal>
+  {glyph && <span class="glyph" aria-hidden="true">{glyph}</span>}
+  <div class="info">
+    <p class="meta">
+      <span class={`status status-${data.status}`}>{statusLabel[data.status]}</span>
+      <span class="venue">{data.venue === statusLabel[data.status] ? "" : `${data.venue} · `}{data.date.getFullYear()}</span>
+      {data.short && <span class="short">{data.short}</span>}
+    </p>
+    <h3>
+      {hasAbstract(paper) ? <a href={`/publications/${paper.id}`}>{data.title}</a> : data.title}
+    </h3>
+    <p class="tldr">{data.tldr}</p>
+    <p class="authors">
+      {data.authors.map((author, i) => (
+        <>
+          {author === site.name ? <strong>{author}</strong> : author}
+          {i < data.authors.length - 1 && ", "}
+        </>
+      ))}
+    </p>
+    <div class="foot">
+      {theme && <span class="chip">{theme.label}</span>}
+      {data.link && <a class="arrow-link" href={data.link}>{linkLabel} <span>↗</span></a>}
+      {data.code && <a class="arrow-link" href={data.code}>Code <span>↗</span></a>}
+      {hasAbstract(paper) && <a class="arrow-link" href={`/publications/${paper.id}`}>Abstract <span>→</span></a>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .paper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .paper:not(:has(.glyph)) {
+    grid-template-columns: 1fr;
+  }
+
+  .glyph {
+    width: clamp(3.5rem, 9vw, 7rem);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(4rem, 10vw, 7.5rem);
+    line-height: 0.8;
+    color: var(--accent);
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+    transition: transform 0.7s var(--ease);
+  }
+
+  .paper:hover .glyph {
+    transform: rotate(-10deg) scale(1.05);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  .status {
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .status-under-review {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .status-workshop {
+    background: var(--cobalt);
+    color: #fff;
+  }
+
+  .status-published {
+    background: var(--lime);
+    color: #17140f;
+  }
+
+  .status-preprint {
+    border: 1px solid var(--line);
+  }
+
+  .short {
+    padding: 0.1rem 0.5rem;
+    border: 1px dashed var(--ink-3);
+    border-radius: 0.4rem;
+    text-transform: none;
+  }
+
+  h3 {
+    margin-top: 0.7rem;
+    font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+    letter-spacing: -0.03em;
+  }
+
+  h3 a {
+    text-decoration: none;
+  }
+
+  .tldr {
+    margin: 0.6rem 0 0;
+    max-width: 44rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink-2);
+  }
+
+  .authors {
+    margin: 0.6rem 0 0;
+    font-size: 0.88rem;
+    color: var(--ink-3);
+  }
+
+  .authors strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1.5rem;
+    margin-top: 0.9rem;
+  }
+</style>

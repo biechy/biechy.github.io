@@ -11,9 +11,9 @@ export async function GET(context: APIContext) {
     site: context.site!,
     items: publications.map((pub) => ({
       title: pub.data.title,
-      description: pub.data.summary,
+      description: pub.data.tldr,
       pubDate: pub.data.date,
-      link: `/publications/${pub.id}/`,
+      link: pub.body?.trim() ? `/publications/${pub.id}/` : (pub.data.link ?? "/publications/"),
     })),
   });
 }
