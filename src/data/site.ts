@@ -5,9 +5,8 @@ export const site = {
   affiliation: "PhD at Inria × Université Paris-Saclay",
   team: { name: "PETSCRAFT", link: "https://team.inria.fr/petscraft/" },
   description:
-    "Lucas Biéchy, AI safety researcher (PhD, Inria & Université Paris-Saclay) studying when LLMs can be trusted: calibration, honesty, human-AI alignment and privacy.",
+    "Lucas Biéchy, AI safety researcher (PhD, Inria & Université Paris-Saclay) building ways to audit LLMs and agents from the outside: black-box uncertainty, behavioural audits and privacy.",
   /** One-sentence research statement, used in the hero. */
-  statement: "I study when large language models can be trusted",
   availability: {
     now: "Open to PhD research internships & safety fellowships",
     later: "Full-time research roles from September 2027",
@@ -15,14 +14,15 @@ export const site = {
   cv: "/cv-lucas-biechy.pdf",
   email: "lucas.biechy@inria.fr",
   github: "https://github.com/biechy",
+  scholar: "https://scholar.google.com/citations?user=YhWaTUgAAAAJ",
   linkedin: "https://linkedin.com/in/biechy",
   topics: [
     "AI Safety",
-    "Calibration",
+    "Oversight",
+    "Black-box audits",
     "Uncertainty",
     "Jailbreaks",
     "Human-AI alignment",
-    "Trust in LLMs",
     "Privacy",
     "LLM agents",
   ],

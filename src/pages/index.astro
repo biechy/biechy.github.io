@@ -15,8 +15,8 @@ import { getKnowledge } from "../lib/knowledge";
 const papers = sortPapers(await getCollection("publications"));
 const featured = papers.filter((p) => p.data.featured);
 const { notes } = await getKnowledge();
-const ringText = "trust · calibration · human-AI alignment · privacy · ";
-const tones: Record<Theme, string> = { calibration: "var(--cobalt)", alignment: "var(--accent)", privacy: "var(--lime)" };
+const ringText = "oversight · black-box audits · uncertainty · privacy · ";
+const tones: Record<Theme, string> = { uncertainty: "var(--cobalt)", auditing: "var(--accent)", privacy: "var(--lime)" };
 const glyphs = ["γ", "λ", "ε"];
 ---
 
@@ -47,12 +47,11 @@ const glyphs = ["γ", "λ", "ε"];
 
       <div class="hero-intro" data-reveal style="--delay: .35s">
         <p class="statement">
-          {site.statement}: what they say about the world, about <em>themselves</em>, and what they infer about{" "}
-          <em>us</em>.
+          I build ways to audit LLMs and agents <em>from the outside</em>, when all you can see is what they do.
         </p>
         <p>
-          PhD researcher at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay ({site.team.name} team), working on calibration and honesty of reasoning models, human-AI alignment and privacy of LLM agents.
-          Two first-author papers under review at ICLR 2027.
+          PhD researcher at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay ({site.team.name} team), working on black-box uncertainty, behavioural audits of agents and privacy.
+          Three first-author papers under review at ICLR and AISTATS 2027.
         </p>
 
         <div class="availability">
@@ -77,7 +76,7 @@ const glyphs = ["γ", "λ", "ε"];
   <section class="wrap agenda-section">
     <div class="section-head" data-reveal>
       <p class="kicker">01 · Research agenda</p>
-      <h2 class="section-title">Three ways to ask <em>“can we trust it?”</em></h2>
+      <h2 class="section-title">Looking at models <em>from the outside</em></h2>
     </div>
 
     <div class="agenda">

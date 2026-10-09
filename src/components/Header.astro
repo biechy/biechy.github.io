@@ -25,6 +25,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
       <a class="icon-btn hide-sm" href={`mailto:${site.email}`} aria-label="Email"><Icon name="mail" /></a>
       <a class="icon-btn hide-sm" href={site.github} aria-label="GitHub"><Icon name="github" /></a>
       <a class="icon-btn hide-sm" href={site.linkedin} aria-label="LinkedIn"><Icon name="linkedin" /></a>
+      <a class="icon-btn hide-sm" href={site.scholar} aria-label="Google Scholar"><Icon name="scholar" /></a>
       <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode">
         <span class="when-light"><Icon name="moon" /></span>
         <span class="when-dark"><Icon name="sun" /></span>
@@ -44,6 +45,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
       <a href={`mailto:${site.email}`}>Email</a>
       <a href={site.github}>GitHub</a>
       <a href={site.linkedin}>LinkedIn</a>
+      <a href={site.scholar}>Scholar</a>
     </div>
   </div>
 </header>

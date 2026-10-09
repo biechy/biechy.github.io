@@ -11,8 +11,8 @@ export const experiences: Experience[] = [
     date: { start: "2024", end: null },
     location: "Palaiseau, France",
     description:
-      "Research on when LLMs and LLM agents can be trusted: uncertainty quantification of black-box reasoning models via jailbreaks, biased self-evaluation, latent user bias in human-AI interaction, and privacy-aware agents. Four first-author papers, two under review at ICLR 2027.",
-    tags: ["LLMs", "Evaluations", "Uncertainty", "Human-AI alignment", "Privacy"],
+      "Auditing LLMs and agents from the outside: calibrated uncertainty for black-box reasoning models (via jailbreaks), detecting biased self-grading agents and biased users from behaviour, and measuring how agents handle personal data. Four first-author papers, three under review (ICLR 2027, AISTATS 2027).",
+    tags: ["LLMs", "Oversight", "Uncertainty", "Agents", "Privacy"],
   },
   {
     title: "AI research intern",

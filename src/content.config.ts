@@ -27,7 +27,7 @@ const publications = defineCollection({
     status: z.enum(["published", "under-review", "workshop", "preprint"]),
     link: z.url().optional(),
     code: z.url().optional(),
-    theme: z.enum(["calibration", "alignment", "privacy", "other"]),
+    theme: z.enum(["uncertainty", "auditing", "privacy", "other"]),
     featured: z.boolean().default(false),
     tldr: z.string(),
   }),
