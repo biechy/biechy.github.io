@@ -14,6 +14,7 @@ const { notes } = await getKnowledge();
 const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
 const observation = papers.find((p) => p.id.includes("observation-to-intervention"));
+const ringText = "Lucas Biéchy ✺ Lucas Biéchy ✺ Lucas Biéchy ✺ ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
 ---
 
@@ -30,11 +31,10 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
       <div class="badge" data-reveal style="--delay: .3s">
         <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
-          <circle class="ring-dots" cx="100" cy="100" r="90" />
-          <circle class="ring-line" cx="100" cy="100" r="97" />
-          <circle cx="100" cy="10" r="5.5" fill="var(--accent)" />
-          <circle cx="178" cy="145" r="4" fill="var(--cobalt)" />
-          <circle cx="22" cy="145" r="4.5" fill="var(--lime)" stroke="var(--ink)" stroke-width="1" />
+          <defs>
+            <path id="ring-path" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0" />
+          </defs>
+          <text><textPath href="#ring-path" textLength="512" lengthAdjust="spacing">{ringText}</textPath></text>
         </svg>
         <img src="/img/memojie/hey.png" alt="Lucas' memoji waving hello" width="420" height="420" />
       </div>
@@ -390,27 +390,13 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     animation: spin 28s linear infinite;
   }
 
-  .ring circle {
-    fill-opacity: 1;
+  .ring text {
+    font-family: var(--font-mono);
+    font-size: 12.2px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    fill: var(--ink);
   }
-
-  .ring-dots,
-  .ring-line {
-    fill: none;
-    stroke: var(--ink);
-  }
-
-  .ring-dots {
-    stroke-width: 2.2;
-    stroke-linecap: round;
-    stroke-dasharray: 0 9.4;
-  }
-
-  .ring-line {
-    stroke-width: 0.8;
-    opacity: 0.25;
-  }
-
 
   .hero-intro {
     grid-area: intro;
