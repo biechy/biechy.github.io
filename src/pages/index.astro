@@ -112,43 +112,46 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <img class="tile-memoji" src="/img/memojie/news.png" alt="" width="420" height="420" loading="lazy" />
       </div>
 
-      <div class="tile tile-now" data-reveal style="--delay: .16s">
-        <p class="kicker">Community & growth</p>
-        <h3>Where I learn and who I work with</h3>
-        <ul class="community">
-          <li><strong><a href="https://caish.org/mars">MARS V</a> fellow</strong> · Cambridge AI Safety Hub <span>2026</span></li>
-          <li><strong>Visiting</strong> · Trajan House, Oxford, with MARS <span>2026</span></li>
-          <li><strong>Technical AI Safety course</strong> · <a href="https://bluedot.org/">BlueDot Impact</a> <span>2026</span></li>
-          <li><strong>BiAlign workshop</strong> · NeurIPS <span>2026</span></li>
-          <li><strong>MLSS</strong> · Columbia University <span>2026</span></li>
-          <li><strong>ELSA workshop</strong> · privacy-preserving ML <span>2025</span></li>
-        </ul>
-        <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
+      <div class="tile tile-mini-row" data-reveal style="--delay: .16s">
+        <p class="kicker">End-to-end application</p>
+        <h3>Hermes</h3>
+        <p class="tile-small">Learning from self-judgments, detectable by the paper's findings.</p>
       </div>
 
-      <div class="tile tile-hands" data-reveal style="--delay: .2s">
-        <p class="kicker">Hands-on</p>
-        <h3>I run my own experiments, end to end</h3>
-        <ul class="hands-list">
-          <li>Open-weight models and closed APIs</li>
-          <li>Fine-tuning and RL</li>
-          <li>Large eval runs with SLURM on Jean Zay and private GPU servers</li>
-          <li>Proofs when they help</li>
+      <div class="tile tile-mini-row" data-reveal style="--delay: .18s">
+        <p class="kicker">Community & growth</p>
+        <h3>Where I learn</h3>
+        <ul class="community-compact">
+          <li><a href="https://caish.org/mars">MARS V</a> fellow · 2026</li>
+          <li><a href="https://bluedot.org/">BlueDot</a> course · 2026</li>
+          <li>BiAlign @ NeurIPS · 2026</li>
+          <li>MLSS, ELSA · 2025–26</li>
         </ul>
+      </div>
+
+      <div class="tile tile-mini-row" data-reveal style="--delay: .2s">
+        <p class="kicker">Hands-on</p>
+        <h3>End to end</h3>
+        <p class="tile-small">Open & closed APIs, RL, SLURM evals, proofs.</p>
         <p class="stack">Python · PyTorch · Hugging Face</p>
       </div>
 
-      <div class="tile tile-mini" data-reveal style="--delay: .24s">
+      <div class="tile tile-mini-row" data-reveal style="--delay: .22s">
         <p class="kicker">Mentoring &amp; teaching</p>
-        <p>
-          Mentored 2 research interns (one now co-author on PrivacySkills) · TA in statistics and probability at ENSTA
-          Paris · organised the PETSCRAFT research seminar
-        </p>
+        <h3>Leadership</h3>
+        <p class="tile-small">2 interns (PrivacySkills co-author) · TA · seminars.</p>
       </div>
 
-      <div class="tile tile-mini tile-gpa" data-reveal style="--delay: .28s">
+      <div class="tile tile-mini-row" data-reveal style="--delay: .24s">
+        <p class="kicker">Talks</p>
+        <h3>Speaking</h3>
+        <p class="tile-small">Technical (j4u) & general (sovereignty, AI, security).</p>
+      </div>
+
+      <div class="tile tile-mini-row" data-reveal style="--delay: .26s">
         <p class="kicker">Track record</p>
-        <p><strong>4.0 GPA</strong> in the MSc in Maths &amp; AI (Paris-Saclay, CentraleSupélec, Polytechnique) · twice a DataIA scholar</p>
+        <h3>Academics</h3>
+        <p class="tile-small"><strong>4.0 GPA</strong> · MSc Maths & AI · twice DataIA scholar.</p>
       </div>
     </div>
   </section>
@@ -628,7 +631,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .tile-empirical,
   .tile-theory {
     grid-column: span 3;
-    min-height: 22rem;
+    min-height: 18rem;
     padding-right: clamp(1.25rem, 18%, 10rem);
   }
 
@@ -662,9 +665,10 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
-    gap: clamp(1rem, 4vw, 3rem);
+    gap: clamp(1rem, 3vw, 2rem);
     min-height: 0;
-    padding-right: clamp(1.25rem, 16%, 11rem);
+    padding: clamp(1.25rem, 3vw, 1.5rem);
+    padding-right: clamp(1.25rem, 12%, 8rem);
     background: var(--lime);
     color: #17140f;
     border-color: transparent;
@@ -684,7 +688,8 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .mars-text p {
     max-width: 38rem;
-    font-size: clamp(1rem, 1.6vw, 1.12rem);
+    font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+    margin: 0;
   }
 
   .tile-hands {
@@ -724,6 +729,43 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     box-shadow: none;
   }
 
+  .tile-mini-row {
+    grid-column: span 2;
+    min-height: 0;
+    gap: 0.35rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.88rem;
+  }
+
+  .tile-mini-row h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .tile-mini-row:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .community-compact {
+    list-style: none;
+    margin: 0.3rem 0 0;
+    padding: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .community-compact li {
+    padding-block: 0.2rem;
+    border: none;
+  }
+
+  .community-compact a {
+    color: inherit;
+    font-weight: 500;
+  }
+
   .tile-gpa strong {
     font-family: var(--font-display);
     font-size: 1.25rem;
@@ -757,6 +799,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     .tile-mars,
     .tile-hands,
     .tile-mini,
+    .tile-mini-row,
     .tile-now,
     .tile-pub,
     .tile-knowledge,
