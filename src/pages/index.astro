@@ -13,6 +13,7 @@ const papers = sortPapers(await getCollection("publications"));
 const { notes } = await getKnowledge();
 const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
+const j4u = papers.find((p) => p.data.short === "J4U");
 const ringText = "privacy · evals · uncertainty · AI safety · ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
 ---
@@ -105,8 +106,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         </div>
         <div class="mars-text">
           <p>
-            From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS, with my
-            mentors Tianyi Qiu, Zhonghao He and Yuxiao Li. Five weeks later, the full follow-up went to AISTATS 2027.
+            From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS.
           </p>
         </div>
         <img class="tile-memoji" src="/img/memojie/news.png" alt="" width="420" height="420" loading="lazy" />
@@ -114,32 +114,32 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
       <a class="tile tile-mini-row tile-hermes" href="/projects" data-reveal style="--delay: .16s">
         <p class="kicker">Up next · theory → practice</p>
-        <h3>Testing a Learner, applied to Hermes</h3>
+        <h3>Testing a Learner Changes It, applied to Hermes</h3>
         <p class="tile-small">Hermes learns from its own judgments of success, so it can fall into exactly the bias the paper detects.</p>
         <span class="tile-arrow"><Icon name="arrow" size={18} /></span>
         <img class="tile-memoji" src="/img/memojie/image00006.png" alt="" width="420" height="420" loading="lazy" />
       </a>
 
       <div class="tile tile-mini-row tile-now" data-reveal style="--delay: .18s">
-        <p class="kicker">Community & growth</p>
-        <h3>Where I learn</h3>
-        <ul class="community">
-          <li><strong><a href="https://caish.org/mars">MARS V</a> fellow</strong> · 2026</li>
-          <li><strong><a href="https://bluedot.org/">BlueDot</a> course</strong> · 2026</li>
-          <li><strong>BiAlign</strong> · NeurIPS <span>2026</span></li>
-          <li><strong>MLSS, ELSA</strong> · 2025–26</li>
+        <p class="kicker">AI safety community</p>
+        <h3>Programs &amp; fellowships</h3>
+        <ul class="mini-list">
+          <li><span><strong><a href="https://caish.org/mars">MARS V</a> fellow</strong> · Cambridge AI Safety Hub</span><time>2026</time></li>
+          <li><span><strong>Technical AI Safety</strong> · <a href="https://bluedot.org/">BlueDot Impact</a></span><time>2026</time></li>
+          <li><span><strong>BiAlign workshop</strong> · NeurIPS</span><time>2026</time></li>
+          <li><span><strong>MLSS</strong> · Columbia</span><time>2026</time></li>
+          <li><span><strong>ELSA workshop</strong> · privacy-preserving ML</span><time>2025</time></li>
         </ul>
-        <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
+        <img class="tile-memoji corner" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
       </div>
 
       <div class="tile tile-mini-row tile-hands" data-reveal style="--delay: .2s">
         <p class="kicker">Hands-on</p>
-        <h3>End to end</h3>
-        <ul class="hands-list">
-          <li>Open-weight models and closed APIs</li>
-          <li>Fine-tuning and RL</li>
-          <li>Large eval runs with SLURM</li>
-          <li>Proofs when they help</li>
+        <h3>I run my experiments end to end</h3>
+        <ul class="mini-list">
+          <li><span>Open-weight models and closed APIs</span></li>
+          <li><span>Fine-tuning and RL</span></li>
+          <li><span>Large eval runs with SLURM on Jean Zay and private GPU servers</span></li>
         </ul>
         <p class="stack">Python · PyTorch · Hugging Face</p>
       </div>
@@ -147,26 +147,32 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
       <div class="tile tile-mini-row tile-lead" data-reveal style="--delay: .22s">
         <span class="glyph" aria-hidden="true">✺</span>
         <p class="kicker">Mentoring &amp; teaching</p>
-        <p class="mid-number">2 <em>interns</em></p>
-        <p class="tile-small">One now co-author on PrivacySkills · TA in statistics at ENSTA Paris · ran the PETSCRAFT seminar.</p>
+        <h3>Passing it on</h3>
+        <ul class="mini-list">
+          <li><span><strong>Mentored 2 research interns</strong> · one now co-author on PrivacySkills</span></li>
+          <li><span><strong>TA in probability &amp; statistics</strong> · ENSTA Paris</span></li>
+        </ul>
       </div>
 
       <div class="tile tile-mini-row tile-talks" data-reveal style="--delay: .24s">
         <span class="glyph" aria-hidden="true">“</span>
         <p class="kicker">Talks</p>
         <h3>On stage, for experts and for everyone</h3>
-        <ul class="talk-list">
-          <li><strong>Technical</strong> · j4u</li>
-          <li><strong>AI &amp; cybersecurity</strong> · 2026</li>
-          <li><strong>Sovereignty &amp; entrepreneurship</strong> · 2026</li>
+        <ul class="mini-list">
+          <li><span><strong><a href={j4u?.data.link ?? "/publications"}>Jailbreaks for Uncertainty (J4U)</a></strong> · AI &amp; cybersecurity programme</span><time>2026</time></li>
+          <li><span><strong>Sovereignty &amp; entrepreneurship</strong></span><time>2026</time></li>
         </ul>
       </div>
 
       <div class="tile tile-mini-row tile-acad" data-reveal style="--delay: .26s">
-        <p class="kicker">Track record</p>
-        <p class="mid-number">4.0 <em>GPA</em></p>
-        <p class="tile-small">MSc Maths &amp; AI (Paris-Saclay, CentraleSupélec, Polytechnique) · twice a DataIA scholar.</p>
-        <img class="tile-memoji" src="/img/memojie/study.png" alt="" width="420" height="420" loading="lazy" />
+        <p class="kicker">Education</p>
+        <h3>Mathematics at Paris-Saclay</h3>
+        <ul class="mini-list">
+          <li><span><strong>MSc in Maths &amp; AI</strong> · with CentraleSupélec &amp; X</span><time>2024</time></li>
+          <li><span><strong>Double BSc in Maths &amp; Physics</strong></span><time>2022</time></li>
+          <li><span><strong>Excellence scholarship</strong> · DataIA, twice</span><time>2023–24</time></li>
+        </ul>
+        <img class="tile-memoji corner" src="/img/memojie/study.png" alt="" width="420" height="420" loading="lazy" />
       </div>
     </div>
   </section>
@@ -711,17 +717,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     color: color-mix(in srgb, var(--accent-ink) 75%, transparent);
   }
 
-  .hands-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0.95rem;
-  }
 
-  .hands-list li {
-    padding-block: 0.45rem;
-    border-top: 1px solid color-mix(in srgb, var(--accent-ink) 22%, transparent);
-  }
 
   .tile-mini {
     grid-column: span 3;
@@ -756,34 +752,18 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .tile-mini-row.tile-now {
-    position: relative;
-    padding-right: clamp(1.25rem, 18%, 7rem);
+    padding-right: clamp(1rem, 3vw, 1.25rem);
   }
 
-  .tile-mini-row.tile-now .tile-memoji {
-    width: clamp(6.5rem, 14vw, 9rem);
-    right: -0.5rem;
-    bottom: -1rem;
+  .tile-mini-row .tile-memoji.corner {
+    top: 0.4rem;
+    right: 0.4rem;
+    bottom: auto;
+    width: 4.75rem;
   }
 
-  .tile-mini-row.tile-now .community {
-    margin: 0.2rem 0 0;
-    padding: 0;
-    font-size: 0.82rem;
-    line-height: 1.3;
-  }
 
-  .tile-mini-row.tile-now .community li {
-    padding-block: 0.2rem;
-    border-bottom: 1px dashed var(--line);
-  }
 
-  .tile-mini-row.tile-now .community span {
-    margin-left: 0.3rem;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--ink-3);
-  }
 
   .tile-mini-row.tile-hands {
     background: var(--accent);
@@ -796,16 +776,9 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     color: color-mix(in srgb, var(--accent-ink) 75%, transparent);
   }
 
-  .tile-mini-row.tile-hands .hands-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0.82rem;
-  }
 
   .tile-hermes,
-  .tile-lead,
-  .tile-acad {
+  .tile-lead {
     padding-right: clamp(1.25rem, 30%, 7.5rem);
   }
 
@@ -816,8 +789,8 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .tile-hermes {
-    background: var(--cobalt);
-    color: #fff;
+    background: var(--ink);
+    color: var(--paper);
     border-color: transparent;
   }
 
@@ -826,8 +799,9 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     box-shadow: var(--shadow);
   }
 
-  .tile-hermes .kicker {
-    color: rgb(255 255 255 / 0.75);
+  .tile-hermes .kicker,
+  .tile-hermes .tile-small {
+    color: color-mix(in srgb, var(--paper) 72%, transparent);
   }
 
   .tile-hermes .tile-arrow {
@@ -835,41 +809,22 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     height: 2.25rem;
   }
 
-  .mid-number {
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 5vw, 3.4rem);
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
-  }
-
-  .mid-number em {
-    font-style: italic;
-    font-size: 0.55em;
-    letter-spacing: -0.02em;
-  }
-
   .tile-lead {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--cobalt);
+    color: #fff;
     border-color: transparent;
   }
 
-  .tile-lead .kicker,
-  .tile-lead .tile-small {
-    color: color-mix(in srgb, var(--paper) 72%, transparent);
-  }
-
-  .tile-lead .mid-number em {
-    color: var(--accent);
+  .tile-lead .kicker {
+    color: rgb(255 255 255 / 0.75);
   }
 
   .tile-lead .glyph {
     top: -1.5rem;
     right: -1.5rem;
     font-size: 9rem;
-    color: var(--accent);
-    opacity: 0.35;
+    color: var(--lime);
+    opacity: 0.45;
   }
 
   .tile-lead:hover .glyph {
@@ -903,36 +858,46 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     transform: rotate(-10deg) scale(1.1);
   }
 
-  .talk-list {
-    position: relative;
-    list-style: none;
-    margin: 0.2rem 0 0;
-    padding: 0;
-    font-size: 0.82rem;
-  }
 
-  .talk-list li {
-    padding-block: 0.2rem;
-    border-top: 1px solid rgb(23 20 15 / 0.18);
-  }
 
   .tile-acad {
     background: color-mix(in srgb, var(--accent) 12%, var(--card));
     border-color: color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
-  .tile-acad .mid-number {
-    color: var(--accent);
+  .mini-list {
+    position: relative;
+    list-style: none;
+    margin: 0.2rem 0 0;
+    padding: 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
   }
 
-  .tile-acad .tile-small {
-    color: var(--ink-2);
+  .mini-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding-block: 0.3rem;
+    border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
   }
 
-  .tile-mini-row.tile-hands .hands-list li {
-    padding-block: 0.2rem;
-    border-top: 1px solid color-mix(in srgb, var(--accent-ink) 22%, transparent);
+  .mini-list strong {
+    font-weight: 600;
   }
+
+  .mini-list a {
+    color: inherit;
+  }
+
+  .mini-list time {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    opacity: 0.65;
+  }
+
 
   .tile-gpa strong {
     font-family: var(--font-display);
@@ -991,10 +956,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     }
     .tile-mini-row.tile-now {
       padding-bottom: 1rem;
-      padding-right: clamp(1.25rem, 30%, 7.5rem);
-    }
-    .tile-mini-row.tile-now .tile-memoji {
-      width: 6.5rem;
     }
   }
 
@@ -1117,28 +1078,9 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     gap: 1rem;
   }
 
-  .community {
-    list-style: none;
-    margin: 0.25rem 0 0;
-    padding: 0;
-    font-size: 0.92rem;
-  }
 
-  .community li {
-    padding-block: 0.3rem;
-    border-bottom: 1px dashed var(--line);
-  }
 
-  .community span {
-    margin-left: 0.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--ink-3);
-  }
 
-  .community a {
-    color: inherit;
-  }
 
   @media (max-width: 900px) {
     .agenda {
