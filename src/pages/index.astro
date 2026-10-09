@@ -63,8 +63,8 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   <section class="wrap papers-section">
     <div class="section-head split" data-reveal>
       <div>
-        <p class="kicker">01 · Selected work</p>
-        <h2 class="section-title">Both ends of the <em>spectrum</em></h2>
+        <p class="kicker">01 · At a glance</p>
+        <h2 class="section-title">Research, execution, <em>track record</em></h2>
       </div>
       <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
     </div>
@@ -111,18 +111,9 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         </div>
         <img class="tile-memoji" src="/img/memojie/news.png" alt="" width="420" height="420" loading="lazy" />
       </div>
-    </div>
-  </section>
 
-  <section class="wrap bento-section">
-    <div class="section-head" data-reveal>
-      <p class="kicker">02 · AI safety</p>
-      <h2 class="section-title">Part of the <em>community</em></h2>
-    </div>
-
-    <div class="bento">
-      <div class="tile tile-now" data-reveal>
-        <p class="kicker">AI safety ecosystem</p>
+      <div class="tile tile-now" data-reveal style="--delay: .16s">
+        <p class="kicker">Community & growth</p>
         <h3>Where I learn and who I work with</h3>
         <ul class="community">
           <li><strong><a href="https://caish.org/mars">MARS V</a> fellow</strong> · Cambridge AI Safety Hub <span>2026</span></li>
@@ -135,7 +126,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
       </div>
 
-      <div class="tile tile-hands" data-reveal style="--delay: .08s">
+      <div class="tile tile-hands" data-reveal style="--delay: .2s">
         <p class="kicker">Hands-on</p>
         <h3>I run my own experiments, end to end</h3>
         <ul class="hands-list">
@@ -147,7 +138,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <p class="stack">Python · PyTorch · Hugging Face</p>
       </div>
 
-      <div class="tile tile-mini" data-reveal style="--delay: .1s">
+      <div class="tile tile-mini" data-reveal style="--delay: .24s">
         <p class="kicker">Mentoring &amp; teaching</p>
         <p>
           Mentored 2 research interns (one now co-author on PrivacySkills) · TA in statistics and probability at ENSTA
@@ -155,7 +146,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         </p>
       </div>
 
-      <div class="tile tile-mini tile-gpa" data-reveal style="--delay: .14s">
+      <div class="tile tile-mini tile-gpa" data-reveal style="--delay: .28s">
         <p class="kicker">Track record</p>
         <p><strong>4.0 GPA</strong> in the MSc in Maths &amp; AI (Paris-Saclay, CentraleSupélec, Polytechnique) · twice a DataIA scholar</p>
       </div>
@@ -164,7 +155,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap agenda-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">03 · What I work on</p>
+      <p class="kicker">02 · What I work on</p>
       <h2 class="section-title">Three <em>threads</em></h2>
     </div>
 
@@ -194,7 +185,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap bento-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">04 · Off the clock</p>
+      <p class="kicker">03 · Off the clock</p>
       <h2 class="section-title">Other things I <em>build</em></h2>
     </div>
 
@@ -225,7 +216,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap news-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">05 · Logbook</p>
+      <p class="kicker">04 · Logbook</p>
       <h2 class="section-title">Latest <em>news</em></h2>
     </div>
     <NewsTimeline items={news} initial={6} />
