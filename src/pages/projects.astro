@@ -1,0 +1,145 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { projects } from "../data/projects";
+import { formatRange } from "../lib/dates";
+
+const darkImage = (img: string) => img.replace(/\.(\w+)$/, "-dark.$1");
+---
+
+<Base title="Projects" description="Side projects by Lucas Biéchy: software engineering, MLOps and the web.">
+  <header class="wrap page-head">
+    <p class="kicker" data-reveal>Side projects · {projects.length}</p>
+    <h1 class="page-title" data-reveal style="--delay: .08s">Things I <em>build</em></h1>
+    <p class="lede" data-reveal style="--delay: .16s">
+      Software engineering and MLOps experiments, built after hours to learn by doing.
+    </p>
+  </header>
+
+  <section class="wrap grid">
+    {projects.map((project, i) => (
+      <article class="project" data-reveal style={`--delay: ${i * 0.06}s`}>
+        <a class="shot" href={project.link} aria-label={`Open ${project.name}`}>
+          <img class="logo-light" src={project.img} alt={`Screenshot of ${project.name}`} loading="lazy" />
+          <img class="logo-dark" src={darkImage(project.img)} alt="" loading="lazy" />
+        </a>
+        <div class="body">
+          <p class="kicker">{formatRange(project.date.start, project.date.end)} · {project.tag.filter((t) => t !== "main").join(" · ")}</p>
+          <h2>{project.name}</h2>
+          <p class="desc">{project.description.en}</p>
+          <ul class="chips">{project.technos.map((t) => <li class="chip">{t}</li>)}</ul>
+          <div class="links">
+            <a class="arrow-link" href={project.link}>Visit <span>↗</span></a>
+            <a class="arrow-link" href={project.repo_link}><Icon name="github" size={16} /> Source <span>↗</span></a>
+          </div>
+        </div>
+      </article>
+    ))}
+
+    <article class="project soon" data-reveal>
+      <img src="/img/memojie/work.png" alt="" width="420" height="420" loading="lazy" />
+      <h2>Next one is <em>cooking</em>…</h2>
+      <p class="desc">A trading bot powered by the models from my knowledge notes might land here soon.</p>
+    </article>
+  </section>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  .project {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    background: var(--card);
+    overflow: hidden;
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  }
+
+  .project:hover {
+    transform: translateY(-5px) rotate(-0.4deg);
+    box-shadow: var(--shadow);
+  }
+
+  .shot {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 0.8s var(--ease);
+  }
+
+  .project:hover .shot img {
+    transform: scale(1.04);
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    flex: 1;
+  }
+
+  .body .kicker {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    letter-spacing: -0.03em;
+  }
+
+  .desc {
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  .links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+  }
+
+  .soon {
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+    background: transparent;
+    border: 1.5px dashed var(--ink-3);
+  }
+
+  .soon img {
+    width: 9rem;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .soon:hover img {
+    transform: rotate(-8deg) scale(1.05);
+  }
+
+  .soon em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .soon .desc {
+    max-width: 22rem;
+  }
+</style>

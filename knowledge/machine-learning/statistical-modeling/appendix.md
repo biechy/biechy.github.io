@@ -1,8 +1,6 @@
-import styles from "/src/components/MarkdownFeatures/styles.module.css";
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-# Appendix
+---
+title: "Appendix"
+---
 
 TODOOOOOOOOOOOOOOO
 
@@ -34,16 +32,12 @@ A lot of "learning Bayesians statistics" is to learn the links between prior law
 
 :::
 
-<Tabs>
-<TabItem value="MAP" label="Maximum a posteriori estimation (MAP)" attributes={{type: "definition"}}>
-<div class="tab-content" data-type="definition">
+:::definition[Maximum a posteriori estimation (MAP)]
 The Maximum a posteriori estimation is the estimator given by
 $$ 
 \hat \theta_{MAP}:=\arg\max_{\theta \in \Theta}\pi(\theta|x)=\arg\max_{\theta \in \Theta}f(x|\theta) \pi(\theta)
 $$
-</div>
-</TabItem>
-</Tabs>
+:::
 
 :::note
 
@@ -51,11 +45,6 @@ When $\pi(\theta)$ is a uniform law, it coincides with the MLE.
 
 :::
 
-<Tabs>
-<TabItem value="MAP" label="Exemple" attributes={{type: "exercise"}}>
-<div class="tab-content" data-type="exercise">
-    Let's estimate the parameters $\theta$ of $\mathcal B(\theta)$
-
-</div>
-</TabItem>
-</Tabs>
+:::exercise[Exemple]
+Let's estimate the parameters $\theta$ of $\mathcal B(\theta)$
+:::

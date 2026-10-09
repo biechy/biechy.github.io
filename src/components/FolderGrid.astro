@@ -1,0 +1,72 @@
+---
+import { countNotes, type FolderNode } from "../lib/knowledge";
+
+interface Props {
+  node: FolderNode;
+}
+const { node } = Astro.props;
+---
+
+<ol class="grid not-prose">
+  {node.children.map((child, i) => (
+    <li>
+      <a class="card" href={`/knowledge/${child.slug}`}>
+        <span class="num">{String(i + 1).padStart(2, "0")}</span>
+        <span class="title">{child.kind === "note" ? child.title : child.label}</span>
+        <span class="meta">
+          {child.kind === "folder" ? `${countNotes(child)} notes` : "Note"}
+        </span>
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    height: 100%;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--card);
+    text-decoration: none;
+    transition: transform 0.35s var(--ease), border-color 0.2s;
+  }
+
+  .card:hover {
+    color: inherit;
+    border-color: var(--accent);
+    transform: translateY(-3px) rotate(-0.5deg);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .meta {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-3);
+  }
+</style>

@@ -1,0 +1,254 @@
+---
+import Icon from "./Icon.astro";
+import { nav, site } from "../data/site";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class="header">
+  <div class="bar">
+    <a class="brand" href="/" aria-label="Home">
+      <span class="avatar"><img src="/img/memojie/hey.png" alt="" width="40" height="40" /></span>
+      <span class="brand-name">Lucas <em>Biéchy</em></span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      {nav.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="actions">
+      <a class="icon-btn hide-sm" href={`mailto:${site.email}`} aria-label="Email"><Icon name="mail" /></a>
+      <a class="icon-btn hide-sm" href={site.github} aria-label="GitHub"><Icon name="github" /></a>
+      <a class="icon-btn hide-sm" href={site.linkedin} aria-label="LinkedIn"><Icon name="linkedin" /></a>
+      <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode">
+        <span class="when-light"><Icon name="moon" /></span>
+        <span class="when-dark"><Icon name="sun" /></span>
+      </button>
+      <button class="icon-btn menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <Icon name="menu" />
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav aria-label="Mobile">
+      <a href="/">Home</a>
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <div class="mobile-socials">
+      <a href={`mailto:${site.email}`}>Email</a>
+      <a href={site.github}>GitHub</a>
+      <a href={site.linkedin}>LinkedIn</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  document.querySelector(".theme-toggle")?.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem("theme", next);
+    } catch {}
+  });
+
+  const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") !== "true";
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    if (menu) menu.hidden = !open;
+    document.body.style.overflow = open ? "hidden" : "";
+  });
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 0.75rem var(--gutter);
+  }
+
+  .bar {
+    max-width: var(--max);
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.4rem 0.4rem 0.4rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--paper) 78%, transparent);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    box-shadow: var(--shadow);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--lime);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .brand:hover .avatar {
+    transform: rotate(-12deg) scale(1.06);
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+
+  .brand-name em {
+    font-style: italic;
+  }
+
+  .nav {
+    display: flex;
+    gap: 0.15rem;
+  }
+
+  .nav a {
+    position: relative;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--ink-2);
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .nav a:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+
+  .nav a[aria-current="page"] {
+    color: var(--paper);
+    background: var(--ink);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    margin-left: auto;
+  }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, transform 0.3s var(--ease);
+  }
+
+  .icon-btn:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+
+  .theme-toggle:hover {
+    transform: rotate(25deg);
+  }
+
+  .when-dark,
+  :global([data-theme="dark"]) .when-light {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .when-dark {
+    display: contents;
+  }
+
+  .when-light {
+    display: contents;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6.5rem var(--gutter) 2rem;
+    background: var(--paper);
+    animation: fade-in 0.3s var(--ease);
+  }
+
+  .mobile-menu[hidden] {
+    display: none;
+  }
+
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu nav a {
+    padding-block: 0.4rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 12vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mobile-socials {
+    display: flex;
+    gap: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 860px) {
+    .nav,
+    .hide-sm {
+      display: none;
+    }
+    .menu-toggle {
+      display: grid;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

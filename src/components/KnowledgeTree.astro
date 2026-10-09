@@ -1,0 +1,105 @@
+---
+import type { FolderNode } from "../lib/knowledge";
+
+interface Props {
+  node: FolderNode;
+  current?: string;
+  depth?: number;
+}
+
+const { node, current = "", depth = 0 } = Astro.props;
+const href = (slug: string) => `/knowledge/${slug}`;
+const contains = (folder: FolderNode) => current === folder.slug || current.startsWith(`${folder.slug}/`);
+---
+
+<ul class:list={["tree", { root: depth === 0 }]}>
+  {node.children.map((child) =>
+    child.kind === "note" ? (
+      <li>
+        <a href={href(child.slug)} aria-current={child.slug === current ? "page" : undefined}>
+          {child.title}
+        </a>
+      </li>
+    ) : (
+      <li>
+        <details open={depth === 0 || contains(child)}>
+          <summary>
+            <a href={href(child.slug)} aria-current={child.slug === current ? "page" : undefined}>
+              {child.label}
+            </a>
+          </summary>
+          <Astro.self node={child} current={current} depth={depth + 1} />
+        </details>
+      </li>
+    ),
+  )}
+</ul>
+
+<style>
+  .tree {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 0.9rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .tree.root {
+    padding-left: 0;
+    border: 0;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    padding: 0.28rem 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+
+  a[aria-current="page"] {
+    color: var(--paper);
+    background: var(--ink);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before {
+    content: "▸";
+    width: 1rem;
+    flex: none;
+    font-size: 0.7rem;
+    color: var(--ink-3);
+    transition: transform 0.2s;
+  }
+
+  details[open] > summary::before {
+    transform: rotate(90deg);
+  }
+
+  summary a {
+    flex: 1;
+    padding-left: 0.2rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+</style>

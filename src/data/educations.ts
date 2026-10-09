@@ -1,4 +1,4 @@
-import { Education } from "@site/src/components/types";
+import type { Education } from "./types";
 
 export const educations: Education[] = [
   {
@@ -10,7 +10,7 @@ export const educations: Education[] = [
       {
         name: "University of Paris-Saclay",
         link: "https://www.universite-paris-saclay.fr/",
-        logo: "./img/logo/upsaclay.png",
+        logo: "/img/logo/upsaclay.png",
       },
     ],
     date: {
@@ -32,12 +32,12 @@ export const educations: Education[] = [
       {
         name: "University of Paris-Saclay",
         link: "https://www.universite-paris-saclay.fr/",
-        logo: "./img/logo/upsaclay.png",
+        logo: "/img/logo/upsaclay.png",
       },
       {
         name: "CentraleSupélec",
         link: "https://www.centralesupelec.fr/",
-        logo: "./img/logo/centralesupelec.png",
+        logo: "/img/logo/centralesupelec.png",
       },
     ],
     date: {
@@ -59,7 +59,7 @@ export const educations: Education[] = [
       {
         name: "University of Paris-Saclay",
         link: "https://www.universite-paris-saclay.fr/",
-        logo: "./img/logo/upsaclay.png",
+        logo: "/img/logo/upsaclay.png",
       },
     ],
     date: {

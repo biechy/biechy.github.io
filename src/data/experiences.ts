@@ -1,4 +1,4 @@
-import { Experience } from "@site/src/components/types";
+import type { Experience } from "./types";
 
 export const experiences: Experience[] = [
   {
@@ -6,7 +6,7 @@ export const experiences: Experience[] = [
     company: {
       name: "Institut National de Recherche en Informatique et en Automatique",
       link: "https://www.inria.fr/",
-      logo: "./img/logo/inria.png",
+      logo: "/img/logo/inria.png",
     },
     date: {
       start: "2024",
@@ -14,7 +14,7 @@ export const experiences: Experience[] = [
       information: null,
     },
     location: "Palaiseau, France",
-    description: "Research on the satenization of textual data using inference attributes from large language models.",
+    description: "Research on the sanitization of textual data using inference attributes from large language models.",
     tags: ["LLMs", "NLP", "Privacy", "Red Teaming"],
   },
   {
@@ -22,7 +22,7 @@ export const experiences: Experience[] = [
     company: {
       name: "National Center of High-performance Computing",
       link: "https://www.nchc.org.tw/",
-      logo: "./img/logo/nchc.png",
+      logo: "/img/logo/nchc.png",
     },
     date: {
       start: "2024",
@@ -42,7 +42,7 @@ export const experiences: Experience[] = [
     company: {
       name: "Exotrail",
       link: "https://www.exotrail.com/",
-      logo: "./img/logo/exotrail.png",
+      logo: "/img/logo/exotrail.png",
     },
     date: {
       start: "2023",

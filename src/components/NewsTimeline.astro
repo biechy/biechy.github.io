@@ -1,0 +1,192 @@
+---
+import type { News } from "../data/types";
+import { formatMonth } from "../lib/dates";
+
+interface Props {
+  items: News[];
+  /** How many items are shown before the "show all" toggle. */
+  initial?: number;
+}
+
+const { items, initial = 8 } = Astro.props;
+const byYear = new Map<string, { item: News; index: number }[]>();
+items.forEach((item, index) => {
+  const year = item.date.split("/")[1];
+  byYear.set(year, [...(byYear.get(year) ?? []), { item, index }]);
+});
+---
+
+<div class="timeline" data-collapsed={items.length > initial ? "" : undefined}>
+  {[...byYear].map(([year, entries]) => (
+    <section class="year" data-hidden={entries[0].index >= initial ? "" : undefined}>
+      <h3 class="year-label" aria-label={year}>
+        <span>{year}</span>
+      </h3>
+      <ol>
+        {entries.map(({ item, index }) => (
+          <li class="entry" data-hidden={index >= initial ? "" : undefined} data-reveal>
+            <span class="emoji" aria-hidden="true">{item.emoji}</span>
+            <div>
+              <p class="meta">
+                <time>{formatMonth(item.date)}</time>
+                <span class={`cat cat-${item.category}`}>{item.category}</span>
+              </p>
+              <p class="text">{item.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+  {items.length > initial && (
+    <button class="more" type="button">
+      Show the full logbook <span>({items.length - initial} more)</span>
+    </button>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".timeline[data-collapsed]").forEach((timeline) => {
+    timeline.querySelector(".more")?.addEventListener("click", (event) => {
+      timeline.removeAttribute("data-collapsed");
+      (event.currentTarget as HTMLElement).remove();
+    });
+  });
+</script>
+
+<style>
+  .timeline[data-collapsed] [data-hidden] {
+    display: none;
+  }
+
+  .year {
+    display: grid;
+    grid-template-columns: minmax(6rem, 14rem) 1fr;
+    gap: 2rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .year-label span {
+    position: sticky;
+    top: 6rem;
+    display: block;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 300;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1.2px var(--ink);
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .year:first-child .year-label span {
+    color: var(--ink);
+    -webkit-text-stroke: 0;
+  }
+
+  .year-label {
+    height: 100%;
+  }
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding-block: 0.9rem;
+  }
+
+  .entry + .entry {
+    border-top: 1px dashed var(--line);
+  }
+
+  .emoji {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.9rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    font-size: 1.3rem;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .entry:hover .emoji {
+    transform: rotate(-10deg) scale(1.1);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+
+  .cat {
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    background: var(--paper-2);
+    color: var(--ink-2);
+  }
+
+  .cat-publications {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .cat-scholar {
+    background: color-mix(in srgb, var(--cobalt) 18%, transparent);
+    color: var(--cobalt);
+  }
+
+  .text {
+    margin: 0.25rem 0 0;
+    max-width: 44rem;
+  }
+
+  .more {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1.1rem;
+    border: 1px dashed var(--ink-3);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink);
+    font: 500 1rem var(--font-body);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .more span {
+    color: var(--ink-3);
+  }
+
+  .more:hover {
+    background: var(--card);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .year {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .year-label span {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,305 @@
+---
+import "../styles/prose.css";
+import Base from "./Base.astro";
+import KnowledgeTree from "../components/KnowledgeTree.astro";
+import { breadcrumbs, getKnowledge } from "../lib/knowledge";
+
+interface Props {
+  title: string;
+  slug: string;
+  description?: string;
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const { title, slug, description, headings = [] } = Astro.props;
+const { root, notes } = await getKnowledge();
+const trail = breadcrumbs(root, slug);
+const position = notes.findIndex((n) => n.slug === slug);
+const prev = position > 0 ? notes[position - 1] : undefined;
+const next = position >= 0 ? notes[position + 1] : undefined;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<Base title={title} description={description}>
+  <div class="wrap layout">
+    <aside class="sidebar">
+      <details class="sidebar-box" open>
+        <summary class="kicker">Mental palace</summary>
+        <a class="palace-link" href="/knowledge">↖ All notes</a>
+        <KnowledgeTree node={root} current={slug} />
+      </details>
+    </aside>
+
+    <article class="article">
+      <nav class="crumbs kicker" aria-label="Breadcrumb">
+        <a href="/knowledge">Knowledge</a>
+        {trail.filter((f) => f.slug !== slug).map((f) => (
+          <>
+            <span aria-hidden="true">/</span>
+            <a href={`/knowledge/${f.slug}`}>{f.label}</a>
+          </>
+        ))}
+      </nav>
+      <h1 class="note-title">{title}</h1>
+      {description && <p class="lede">{description}</p>}
+
+      <div class="prose">
+        <slot />
+      </div>
+
+      {(prev || next) && (
+        <nav class="pager" aria-label="Pagination">
+          {prev ? (
+            <a class="pager-link" href={`/knowledge/${prev.slug}`}>
+              <span class="kicker">← Previous</span>
+              <span class="pager-title">{prev.title}</span>
+            </a>
+          ) : <span />}
+          {next && (
+            <a class="pager-link next" href={`/knowledge/${next.slug}`}>
+              <span class="kicker">Next →</span>
+              <span class="pager-title">{next.title}</span>
+            </a>
+          )}
+        </nav>
+      )}
+    </article>
+
+    {toc.length > 1 && (
+      <aside class="toc" aria-label="On this page">
+        <p class="kicker">On this page</p>
+        <ul>
+          {toc.map((h) => (
+            <li class={`depth-${h.depth}`}>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </div>
+</Base>
+
+<script>
+  // The note tree starts folded on small screens.
+  if (matchMedia("(max-width: 820px)").matches) {
+    document.querySelector<HTMLDetailsElement>(".sidebar-box")?.removeAttribute("open");
+  }
+
+  // Tabs: build a button bar from the callout titles of each `::::tabs` group.
+  document.querySelectorAll<HTMLElement>(".tabs[data-tabs]").forEach((group, g) => {
+    const panels = [...group.children].filter((el): el is HTMLElement => el.classList.contains("callout"));
+    if (panels.length < 2) return;
+    const bar = document.createElement("div");
+    bar.className = "tabs-bar";
+    bar.setAttribute("role", "tablist");
+    const select = (index: number) => {
+      panels.forEach((panel, i) => (panel.hidden = i !== index));
+      bar.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-selected", String(i === index)));
+    };
+    panels.forEach((panel, i) => {
+      if (panel instanceof HTMLDetailsElement) panel.open = true;
+      panel.id ||= `tab-${g}-${i}`;
+      panel.setAttribute("role", "tabpanel");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("role", "tab");
+      button.setAttribute("aria-controls", panel.id);
+      button.textContent = panel.querySelector(".callout-title")?.textContent ?? `Tab ${i + 1}`;
+      button.style.setProperty("--c", getComputedStyle(panel).getPropertyValue("--c"));
+      button.addEventListener("click", () => select(i));
+      bar.append(button);
+    });
+    group.prepend(bar);
+    group.classList.add("is-ready");
+    select(0);
+  });
+
+  // Highlight the heading currently in view in the table of contents.
+  const links = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>(".toc a")].map((a) => [a.hash.slice(1), a]),
+  );
+  if (links.size) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          links.forEach((a) => a.classList.remove("active"));
+          links.get(entry.target.id)?.classList.add("active");
+        }
+      },
+      { rootMargin: "-20% 0px -70% 0px" },
+    );
+    links.forEach((_, id) => {
+      const el = document.getElementById(id);
+      if (el) spy.observe(el);
+    });
+  }
+</script>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr) 13rem;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    padding-top: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .sidebar,
+  .toc {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+    max-height: calc(100dvh - 7rem);
+    overflow-y: auto;
+  }
+
+  .sidebar-box > summary {
+    list-style: none;
+    margin-bottom: 0.75rem;
+    pointer-events: none;
+  }
+
+  .sidebar-box > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .palace-link {
+    display: block;
+    margin-bottom: 0.75rem;
+    padding: 0.28rem 0.6rem;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--ink-3);
+  }
+
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .crumbs a {
+    text-decoration: none;
+  }
+
+  .note-title {
+    margin: 0.75rem 0 2.5rem;
+    font-size: clamp(2.6rem, 6vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .lede {
+    margin: -1.5rem 0 2.5rem;
+  }
+
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 44rem;
+    margin-top: 4rem;
+  }
+
+  .pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.3s var(--ease);
+  }
+
+  .pager-link:hover {
+    color: inherit;
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .pager-link.next {
+    text-align: right;
+    grid-column: 2;
+  }
+
+  .pager-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+  }
+
+  .toc ul {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .toc a {
+    display: block;
+    margin-left: -1px;
+    padding: 0.25rem 0 0.25rem 0.9rem;
+    border-left: 2px solid transparent;
+    font-size: 0.84rem;
+    line-height: 1.35;
+    color: var(--ink-3);
+    text-decoration: none;
+  }
+
+  .toc .depth-3 a {
+    padding-left: 1.7rem;
+  }
+
+  .toc a:hover,
+  .toc a:global(.active) {
+    color: var(--ink);
+  }
+
+  .toc a:global(.active) {
+    border-left-color: var(--accent);
+  }
+
+  @media (max-width: 1180px) {
+    .layout {
+      grid-template-columns: 14rem minmax(0, 1fr);
+    }
+    .toc {
+      display: none;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .sidebar {
+      position: static;
+      max-height: none;
+    }
+    .sidebar-box {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: var(--card);
+    }
+    .sidebar-box > summary {
+      pointer-events: auto;
+      cursor: pointer;
+      margin: 0;
+    }
+    .sidebar-box > summary::after {
+      content: " ▾";
+    }
+    .sidebar-box[open] > summary {
+      margin-bottom: 0.75rem;
+    }
+    .pager {
+      grid-template-columns: 1fr;
+    }
+    .pager-link.next {
+      grid-column: 1;
+    }
+  }
+</style>

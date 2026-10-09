@@ -1,4 +1,4 @@
-import { News } from "@site/src/components/types";
+import type { News } from "./types";
 
 export const news: News[] = [
   {
@@ -56,7 +56,7 @@ export const news: News[] = [
     emoji: "🧙",
   },
   {
-    description: "I have finish my MSc in Mathematics and AI with high honors.",
+    description: "I finished my MSc in Mathematics and AI with high honors.",
     category: "scholar",
     date: "09/2024",
     emoji: "👨‍🎓",
@@ -105,7 +105,7 @@ export const news: News[] = [
   },
   {
     description:
-      "I have finish my double major licence degree in Mathematics and Physics with honors.",
+      "I finished my double major licence degree in Mathematics and Physics with honors.",
     category: "scholar",
     date: "08/2022",
     emoji: "👨‍🎓",

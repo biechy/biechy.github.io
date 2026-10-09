@@ -1,10 +1,7 @@
 ---
+title: "Welcome to my Mental Palace"
 sidebar_position: 1
 ---
-
-import DocCardList from "@theme/DocCardList";
-
-# Welcome to my Mental Palace
 
 Welcome ! I store here the most valuable knowledge I've acquired and I'm glad you're interested in it. While I aim to present this information very pedagogically, my primary goal is in fact selfish: to remember and organize my learnings from life's grand school... think of this palace more as notes.
 
@@ -60,14 +57,3 @@ coming soon
 coming (not) soon
 
 ---
-
-<DocCardList
-items={[
-{
-type: "category",
-href: "/knowledge/machine-learning",
-label: "Machine Learning",
-description: "",
-},
-]}
-/>

@@ -1,0 +1,25 @@
+---
+import { render } from "astro:content";
+import Note from "../../layouts/Note.astro";
+import FolderGrid from "../../components/FolderGrid.astro";
+import { getKnowledge, type FolderNode, type NoteNode } from "../../lib/knowledge";
+
+export async function getStaticPaths() {
+  const { notes, folders } = await getKnowledge();
+  return [
+    ...notes.map((node) => ({ params: { slug: node.slug }, props: { node } })),
+    ...folders.map((node) => ({ params: { slug: node.slug }, props: { node } })),
+  ];
+}
+
+const { node } = Astro.props as { node: NoteNode | FolderNode };
+const entry = node.kind === "note" ? node.entry : node.index;
+const rendered = entry ? await render(entry) : undefined;
+const title = node.kind === "note" ? node.title : node.label;
+const description = entry?.data.description ?? (node.kind === "folder" ? node.description : undefined);
+---
+
+<Note title={title} slug={node.slug} description={description} headings={rendered?.headings}>
+  {rendered && <rendered.Content />}
+  {node.kind === "folder" && <FolderGrid node={node} />}
+</Note>

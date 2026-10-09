@@ -1,54 +1,31 @@
 ---
+title: "Reminders"
 sidebar_position: 1
 ---
 
-import styles from "/src/components/MarkdownFeatures/styles.module.css";
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-# Reminders
-
 Suppose $f:K \rightarrow \mathbb R$
 
-<Tabs>
-<TabItem value="differential" label="Differential" attributes={{type: "definition"}}>
-<div class="tab-content" data-type="definition">
+:::definition[Differential]
 The differential of $f$ is a linear function $df$ such that 
 $$
     f(x+h)=f(x)+d_xf(h)+o(||h||)
 $$
 with $f(a)=o(g(a)) \Leftrightarrow \lim_{a \rightarrow 0} \frac{f(a)}{g(a)}=0$.
+:::
 
-</div>
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="differential" label="Example" attributes={{type: "exercise"}}>
-<div class="tab-content" data-type="exercise">
+:::exercise[Example]
 Suppose $f(x)=2x^2$,
 
 $f(x+h)=2(x+h)^2=2x^2+4xh+2h^2=f(x)+d_xf(h)+o(||h||)$ with $d_xf=4x$
+:::
 
-</div>
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="derivative" label="Derivative" attributes={{type: "definition"}}>
-<div class="tab-content" data-type="definition">
+:::definition[Derivative]
 The derivative of a function $f$ is $\partial_h f(x) = \lim_{t \rightarrow 0} \frac{f(x+th)-f(x)}{t}$
-</div>
-</TabItem>
-</Tabs>
+:::
 
-<Tabs>
-<TabItem value="implication" label="Proposition" attributes={{type: "proposition"}}>
-<div class="tab-content" data-type="proposition">
+:::proposition[Proposition]
 If $d_xf(h)$ exist, then  $\partial_h f(x)$ also exist.
-</div>
-</TabItem>
-</Tabs>
+:::
 
 :::note
 
@@ -67,9 +44,7 @@ but $\frac{h_1h_2}{\sqrt{h_1^2+h_2^2}}=\frac{h_1h_2}{||h||}$ is not a $o(||h||)$
 
 :::
 
-<Tabs>
-<TabItem value="gradient" label="Gradient" attributes={{type: "definition"}}>
-<div class="tab-content" data-type="definition">
+:::definition[Gradient]
 The gradient is the unique vector $\nabla f$ such that $d_xf(h)=<\nabla f(x)|h>$, i.e
 $
 \nabla f(x) =
@@ -80,13 +55,9 @@ $
 \partial_{x_n}f(x)
 \end{pmatrix}
 $
-</div>
-</TabItem>
-</Tabs>
+:::
 
-<Tabs>
-<TabItem value="gradient" label="Gradient" attributes={{type: "definition"}}>
-<div class="tab-content" data-type="definition">
+:::definition[Gradient]
 The Jacobian matrix is the generalization of the gradient but for function $f$ that outputs in multidimensional space, 
 $
 J_f(x) =
@@ -97,13 +68,9 @@ J_f(x) =
 \partial_{x_1}f_m(x) & \partial_{x_2}f_m(x) & \cdots & \partial_{x_n}f_m(x)
 \end{pmatrix}
 $
-</div>
-</TabItem>
-</Tabs>
+:::
 
-<Tabs>
-<TabItem value="hessian" label="Hessian" attributes={{type: "definition"}}>
-<div class="tab-content" data-type="definition">
+:::definition[Hessian]
 The Hessian matrix is the second order of the gradient,
 
 $
@@ -115,10 +82,7 @@ H_f(x) = \nabla^2 f =
 \partial^2_{x_n,x_1}f(x) & \partial^2_{x_n,x_2}f(x) & \cdots & \partial^2_{x_n}f(x)
 \end{pmatrix}
 $
-
-</div>
-</TabItem>
-</Tabs>
+:::
 
 :::note
 

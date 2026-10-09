@@ -1,0 +1,295 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { experiences } from "../data/experiences";
+import { educations } from "../data/educations";
+import { formatRange } from "../lib/dates";
+import { site } from "../data/site";
+
+const darkLogo = (logo: string) => logo.replace(/\.(\w+)$/, "-dark.$1");
+---
+
+<Base title="Resume" description="Experience and education of Lucas Biéchy, PhD researcher in AI at Inria.">
+  <header class="wrap page-head head">
+    <div>
+      <p class="kicker" data-reveal>Curriculum vitæ</p>
+      <h1 class="page-title" data-reveal style="--delay: .08s">The <em>path</em> so far</h1>
+      <p class="lede" data-reveal style="--delay: .16s">
+        From theoretical physics to statistics, then to the privacy of language models — with a detour through
+        satellites and Taiwanese traffic.
+      </p>
+    </div>
+    <img class="head-memoji" src="/img/memojie/study.png" alt="" width="420" height="420" data-reveal />
+  </header>
+
+  <section class="wrap block">
+    <div class="block-head" data-reveal>
+      <span class="kicker">01</span>
+      <h2>Experience</h2>
+    </div>
+    <ol class="items">
+      {experiences.map((xp) => (
+        <li class="item" data-reveal>
+          <div class="when">
+            <span class="range">{formatRange(xp.date.start, xp.date.end)}</span>
+            {xp.date.information && <span class="kicker">{xp.date.information}</span>}
+          </div>
+          <div class="what">
+            <a class="org" href={xp.company.link}>
+              <span class="logo">
+                <img class="logo-light" src={xp.company.logo} alt="" loading="lazy" />
+                <img class="logo-dark" src={darkLogo(xp.company.logo)} alt="" loading="lazy" />
+              </span>
+              <span>{xp.company.name}</span>
+            </a>
+            <h3>{xp.title}</h3>
+            <p class="desc">{xp.description}</p>
+            <div class="foot">
+              <span class="place"><Icon name="pin" size={14} /> {xp.location}</span>
+              <ul class="chips">{xp.tags.map((tag) => <li class="chip">{tag}</li>)}</ul>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap block">
+    <div class="block-head" data-reveal>
+      <span class="kicker">02</span>
+      <h2>Education</h2>
+    </div>
+    <ol class="items">
+      {educations.map((edu) => (
+        <li class="item" data-reveal>
+          <div class="when">
+            <span class="range">{formatRange(edu.date.start, edu.date.end)}</span>
+            {edu.honors !== "none" && <span class="honors">✺ {edu.honors}</span>}
+          </div>
+          <div class="what">
+            <div class="orgs">
+              {edu.school.map((school) => (
+                <a class="org" href={school.link}>
+                  <span class="logo">
+                    <img class="logo-light" src={school.logo} alt="" loading="lazy" />
+                    <img class="logo-dark" src={darkLogo(school.logo)} alt="" loading="lazy" />
+                  </span>
+                  <span>{school.name}</span>
+                </a>
+              ))}
+            </div>
+            <h3>
+              <a href={edu.degree.link}>{edu.degree.title}</a>
+            </h3>
+            {edu.description && <p class="desc">{edu.description}</p>}
+            <div class="foot">
+              <span class="place"><Icon name="pin" size={14} /> {edu.location}</span>
+              {edu.tags && <ul class="chips">{edu.tags.map((tag) => <li class="chip">{tag}</li>)}</ul>}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap contact" data-reveal>
+    <p>Up for a collaboration, a talk or a coffee?</p>
+    <a class="arrow-link" href={`mailto:${site.email}`}>Drop me a line <span>↗</span></a>
+  </section>
+</Base>
+
+<style>
+  .head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .head-memoji {
+    width: clamp(7rem, 18vw, 13rem);
+    flex: none;
+    transform: rotate(6deg);
+  }
+
+  .block {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: 2rem;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .block-head {
+    position: sticky;
+    top: 6.5rem;
+    align-self: start;
+  }
+
+  .block-head h2 {
+    margin-top: 0.3rem;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+  }
+
+  .item + .item {
+    border-top: 1px dashed var(--line);
+  }
+
+  .when {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .range {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .honors {
+    align-self: flex-start;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: var(--lime);
+    color: #17140f;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  .what {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .orgs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .org {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+
+  .logo {
+    display: grid;
+    place-items: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.6rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    flex: none;
+  }
+
+  .logo img {
+    height: 100%;
+    width: auto;
+    max-width: 5.5rem;
+    object-fit: contain;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    letter-spacing: -0.03em;
+  }
+
+  h3 a {
+    text-decoration: none;
+  }
+
+  .desc {
+    margin: 0;
+    max-width: 40rem;
+    color: var(--ink-2);
+  }
+
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: 0.3rem;
+  }
+
+  .place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--ink-3);
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-block: 2rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    letter-spacing: -0.02em;
+  }
+
+  .contact p {
+    margin: 0;
+  }
+
+  .contact .arrow-link {
+    color: var(--accent);
+  }
+
+  @media (max-width: 860px) {
+    .block {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .block-head {
+      position: static;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .item {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+    .when {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .head-memoji {
+      width: 6rem;
+    }
+  }
+</style>

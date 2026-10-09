@@ -1,0 +1,539 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import Marquee from "../components/Marquee.astro";
+import NewsTimeline from "../components/NewsTimeline.astro";
+import { site } from "../data/site";
+import { news } from "../data/news";
+import { experiences } from "../data/experiences";
+import { projects } from "../data/projects";
+import { getKnowledge } from "../lib/knowledge";
+
+const publications = (await getCollection("publications")).sort((a, b) => +b.data.date - +a.data.date);
+const latestPub = publications[0];
+const current = experiences[0];
+const { notes } = await getKnowledge();
+const ringText = "privacy · language models · red teaming · statistics · ";
+---
+
+<Base>
+  <section class="hero">
+    <div class="blob blob-a" aria-hidden="true"></div>
+    <div class="blob blob-b" aria-hidden="true"></div>
+
+    <div class="wrap hero-inner">
+      <p class="kicker hero-kicker" data-reveal>
+        <span class="dot"></span> {site.role} · {site.affiliation}
+      </p>
+
+      <h1 class="hero-title">
+        <span class="line" data-reveal style="--delay: .05s">Lucas</span>
+        <span class="line indent" data-reveal style="--delay: .15s"><em>Biéchy</em><span class="sparkle">✺</span></span>
+      </h1>
+
+      <div class="badge" data-reveal style="--delay: .3s">
+        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <path id="ring-path" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0" />
+          </defs>
+          <text><textPath href="#ring-path" textLength="512" lengthAdjust="spacing">{ringText}</textPath></text>
+        </svg>
+        <img src="/img/memojie/hey.png" alt="Lucas' memoji waving hello" width="420" height="420" />
+      </div>
+
+      <div class="hero-intro" data-reveal style="--delay: .35s">
+        <p>
+          I'm a PhD student at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay, supervised by{" "}
+          <a href="https://pages.saclay.inria.fr/nicolas.anciaux/">Nicolas Anciaux</a> in the{" "}
+          <a href={site.team.link}>{site.team.name}</a> team. I study what language models can{" "}
+          <span class="serif-italic">infer</span> about people, and how to measure and prevent it.
+        </p>
+        <p>
+          On the side, I build <a href="/projects">software &amp; MLOps projects</a> and keep a public{" "}
+          <a href="/knowledge">mental palace</a> of notes on machine learning, finance and maths.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="/resume">See my resume <Icon name="arrow" size={16} /></a>
+          <a class="btn" href={`mailto:${site.email}`}><Icon name="mail" size={16} /> Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Marquee items={site.topics} />
+
+  <section class="wrap bento-section">
+    <div class="section-head" data-reveal>
+      <p class="kicker">01 — Right now</p>
+      <h2 class="section-title">What I'm <em>up to</em></h2>
+    </div>
+
+    <div class="bento">
+      <a class="tile tile-now" href="/resume" data-reveal>
+        <p class="kicker">Currently</p>
+        <h3>{current.title}</h3>
+        <p class="muted">{current.company.name}</p>
+        <p>{current.description}</p>
+        <ul class="chips">{current.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+        <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
+      </a>
+
+      {latestPub && (
+        <a class="tile tile-pub" href={`/publications/${latestPub.id}`} data-reveal style="--delay: .08s">
+          <span class="glyph" aria-hidden="true">γ</span>
+          <p class="kicker">Latest paper · {latestPub.data.date.getFullYear()}</p>
+          <h3>{latestPub.data.title}</h3>
+          <p class="muted">{latestPub.data.venue}</p>
+        </a>
+      )}
+
+      <a class="tile tile-knowledge" href="/knowledge" data-reveal style="--delay: .12s">
+        <p class="kicker">Mental palace</p>
+        <p class="big-number">{notes.length}</p>
+        <p>notes on statistics, ML &amp; optimisation, with proofs you can unfold.</p>
+        <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
+      </a>
+
+      <a class="tile tile-projects" href="/projects" data-reveal style="--delay: .16s">
+        <p class="kicker">Side projects</p>
+        <h3>{projects.length} shipped, more cooking</h3>
+        <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
+        <img class="tile-memoji small" src="/img/memojie/image00006.png" alt="" width="420" height="420" loading="lazy" />
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap news-section">
+    <div class="section-head" data-reveal>
+      <p class="kicker">02 — Logbook</p>
+      <h2 class="section-title">Latest <em>news</em></h2>
+    </div>
+    <NewsTimeline items={news} initial={7} />
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    overflow-x: clip;
+    padding-block: clamp(2.5rem, 8vw, 6rem) clamp(4rem, 9vw, 7rem);
+    isolation: isolate;
+  }
+
+  .blob {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+
+  .blob-a {
+    width: min(42rem, 80vw);
+    aspect-ratio: 1;
+    top: -12rem;
+    right: -10rem;
+    background: radial-gradient(circle, var(--accent), transparent 65%);
+  }
+
+  .blob-b {
+    width: min(34rem, 70vw);
+    aspect-ratio: 1;
+    bottom: -10rem;
+    left: -12rem;
+    background: radial-gradient(circle, var(--cobalt), transparent 65%);
+    opacity: 0.35;
+    animation-duration: 24s;
+  }
+
+  @keyframes drift {
+    to {
+      transform: translate(-6%, 8%) scale(1.12);
+    }
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "kicker kicker"
+      "title badge"
+      "intro intro";
+    align-items: center;
+    column-gap: 2rem;
+  }
+
+  .hero-kicker {
+    grid-area: kicker;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgb(34 197 94 / 0.6);
+    animation: pulse 2.4s infinite;
+  }
+
+  @keyframes pulse {
+    70% {
+      box-shadow: 0 0 0 10px rgb(34 197 94 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(34 197 94 / 0);
+    }
+  }
+
+  .hero-title {
+    grid-area: title;
+    font-size: clamp(4.2rem, 17vw, 13.5rem);
+    font-weight: 380;
+    line-height: 0.86;
+    letter-spacing: -0.055em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .hero-title .line {
+    display: block;
+  }
+
+  .hero-title .indent {
+    padding-left: 0.55em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  .sparkle {
+    display: inline-block;
+    margin-left: 0.08em;
+    font-size: 0.35em;
+    vertical-align: top;
+    color: var(--cobalt);
+    animation: spin 12s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .badge {
+    grid-area: badge;
+    position: relative;
+    width: clamp(9rem, 22vw, 16rem);
+    aspect-ratio: 1;
+  }
+
+  .badge img {
+    position: absolute;
+    inset: 18%;
+    width: 64%;
+    height: 64%;
+    border-radius: 50%;
+    background: var(--lime);
+    transition: transform 0.6s var(--ease);
+  }
+
+  .badge:hover img {
+    transform: rotate(-10deg) scale(1.08);
+  }
+
+  .ring {
+    position: absolute;
+    inset: 0;
+    animation: spin 28s linear infinite;
+  }
+
+  .ring text {
+    font-family: var(--font-mono);
+    font-size: 12.2px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    fill: var(--ink);
+  }
+
+  .hero-intro {
+    grid-area: intro;
+    max-width: 40rem;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    margin-left: auto;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  }
+
+  .hero-intro p {
+    margin: 0 0 1rem;
+  }
+
+  .hero-intro .serif-italic {
+    font-size: 1.15em;
+    color: var(--accent);
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.75rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.3rem;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.3s var(--ease), background-color 0.2s, color 0.2s;
+  }
+
+  .btn:hover {
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  @media (max-width: 640px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "badge"
+        "kicker"
+        "title"
+        "intro";
+    }
+    .badge {
+      width: 8.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-kicker {
+      align-items: flex-start;
+    }
+    .dot {
+      margin-top: 0.3rem;
+      flex: none;
+    }
+  }
+
+  /* ---- sections */
+
+  .section-head {
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .section-title {
+    margin-top: 0.5rem;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .bento-section,
+  .news-section {
+    padding-top: clamp(4rem, 10vw, 8rem);
+  }
+
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    min-height: 15rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  }
+
+  .tile:hover {
+    color: inherit;
+    transform: translateY(-4px) rotate(-0.4deg);
+    box-shadow: var(--shadow);
+  }
+
+  .tile p {
+    margin: 0;
+  }
+
+  .tile h3 {
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .muted {
+    color: var(--ink-2);
+  }
+
+  .tile-now {
+    grid-column: span 4;
+    padding-right: clamp(1.25rem, 22%, 14rem);
+  }
+
+  .tile-now .chips {
+    margin-top: auto;
+  }
+
+  .tile-memoji {
+    position: absolute;
+    right: -1rem;
+    bottom: -1.5rem;
+    width: clamp(8rem, 18vw, 13rem);
+    transition: transform 0.6s var(--ease);
+  }
+
+  .tile:hover .tile-memoji {
+    transform: rotate(-8deg) translateY(-6px);
+  }
+
+  .tile-memoji.small {
+    width: 8rem;
+    right: -0.75rem;
+    bottom: -1.25rem;
+  }
+
+  .tile-pub {
+    grid-column: span 2;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+  }
+
+  .tile-pub .kicker,
+  .tile-pub .muted {
+    color: color-mix(in srgb, var(--accent-ink) 75%, transparent);
+  }
+
+  .tile-pub h3 {
+    font-size: 1.35rem;
+    margin-top: auto;
+    position: relative;
+  }
+
+  .glyph {
+    position: absolute;
+    top: -2.5rem;
+    right: -0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 13rem;
+    line-height: 1;
+    opacity: 0.22;
+    transition: transform 0.8s var(--ease);
+  }
+
+  .tile-pub:hover .glyph {
+    transform: rotate(12deg) scale(1.1);
+  }
+
+  .tile-knowledge {
+    grid-column: span 3;
+    background: var(--cobalt);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .tile-knowledge .kicker {
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  .big-number {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 9vw, 6.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .tile-projects {
+    grid-column: span 3;
+    background: var(--lime);
+    color: #17140f;
+    border-color: transparent;
+  }
+
+  .tile-projects .kicker {
+    color: rgb(23 20 15 / 0.7);
+  }
+
+  .tile-projects h3 {
+    max-width: 14ch;
+  }
+
+  .tile-arrow {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-top: auto;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    transition: transform 0.4s var(--ease), background-color 0.3s;
+  }
+
+  .tile:hover .tile-arrow {
+    transform: rotate(45deg);
+  }
+
+  @media (max-width: 900px) {
+    .tile-now,
+    .tile-pub,
+    .tile-knowledge,
+    .tile-projects {
+      grid-column: span 6;
+    }
+    .tile-pub,
+    .tile-knowledge,
+    .tile-projects {
+      min-height: 12rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tile-now {
+      padding-right: clamp(1.25rem, 3vw, 2rem);
+      padding-bottom: 9rem;
+    }
+    .tile-now .tile-memoji {
+      width: 8.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Not found">
+  <section class="wrap lost">
+    <img src="/img/memojie/image00002.png" alt="" width="420" height="420" />
+    <p class="kicker">Error 404</p>
+    <h1 class="page-title">Lost in the <em>palace</em></h1>
+    <p class="lede">This room doesn't exist (yet). Let's get you back somewhere familiar.</p>
+    <a class="arrow-link" href="/">Back home <span>↗</span></a>
+  </section>
+</Base>
+
+<style>
+  .lost {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-block: clamp(3rem, 10vw, 7rem);
+  }
+  .lost img {
+    width: 9rem;
+  }
+  .lost .lede {
+    margin: 0;
+  }
+</style>

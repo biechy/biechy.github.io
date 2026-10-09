@@ -1,0 +1,191 @@
+---
+import "../../styles/prose.css";
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { countNotes, getKnowledge, type FolderNode } from "../../lib/knowledge";
+
+const { root, notes } = await getKnowledge();
+const welcome = notes.find((n) => n.slug === "welcome");
+const { Content } = welcome ? await render(welcome.entry) : { Content: undefined };
+const shelves = root.children.filter((c): c is FolderNode => c.kind === "folder");
+const palette = ["var(--cobalt)", "var(--accent)", "var(--lime)", "var(--c-exercise)"];
+---
+
+<Base title="Knowledge" description="Lucas Biéchy's mental palace: notes on statistics, machine learning, optimisation and finance.">
+  <header class="wrap page-head">
+    <p class="kicker" data-reveal>Knowledge · {notes.length} notes</p>
+    <h1 class="page-title" data-reveal style="--delay: .08s">Mental <em>palace</em></h1>
+    <p class="lede" data-reveal style="--delay: .16s">
+      Where I store what I learn — written pedagogically, but mostly so I don't forget. Definitions, propositions and
+      proofs you can unfold, from statistical modelling to deep learning.
+    </p>
+  </header>
+
+  <section class="wrap shelves">
+    {shelves.map((shelf, s) => (
+      <div class="shelf" style={`--tone: ${palette[s % palette.length]}`} data-reveal>
+        <div class="shelf-head">
+          <a href={`/knowledge/${shelf.slug}`}>
+            <h2>{shelf.label}</h2>
+          </a>
+          <span class="kicker">{countNotes(shelf)} notes</span>
+        </div>
+        <div class="rooms">
+          {shelf.children.map((room, r) =>
+            room.kind === "folder" ? (
+              <article class="room">
+                <a class="room-title" href={`/knowledge/${room.slug}`}>
+                  <span class="num">{String(r + 1).padStart(2, "0")}</span>
+                  {room.label}
+                </a>
+                {room.description && room.description !== "Chapters" && <p class="room-desc">{room.description}</p>}
+                <ol>
+                  {room.children.map((leaf) => (
+                    <li>
+                      <a href={`/knowledge/${leaf.slug}`}>{leaf.kind === "note" ? leaf.title : leaf.label}</a>
+                    </li>
+                  ))}
+                </ol>
+              </article>
+            ) : (
+              <article class="room">
+                <a class="room-title" href={`/knowledge/${room.slug}`}>
+                  <span class="num">{String(r + 1).padStart(2, "0")}</span>
+                  {room.title}
+                </a>
+              </article>
+            ),
+          )}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  {Content && (
+    <section class="wrap welcome">
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .shelves {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .shelf {
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border-radius: 1.75rem;
+    background: color-mix(in srgb, var(--tone) 12%, var(--card));
+    border: 1px solid color-mix(in srgb, var(--tone) 35%, transparent);
+  }
+
+  .shelf-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .shelf-head a {
+    text-decoration: none;
+  }
+
+  .shelf-head h2 {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .rooms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+  }
+
+  .room {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    border-radius: 1.1rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  }
+
+  .room:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+
+  .room-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  .room-desc {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  ol {
+    margin: auto 0 0;
+    padding: 0.75rem 0 0;
+    list-style: none;
+    border-top: 1px dashed var(--line);
+    counter-reset: leaf;
+  }
+
+  ol li {
+    counter-increment: leaf;
+  }
+
+  ol a {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.2rem 0;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+
+  ol a::before {
+    content: counter(leaf, lower-roman) ".";
+    min-width: 1.6rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--ink-3);
+  }
+
+  .welcome {
+    padding-top: clamp(4rem, 9vw, 7rem);
+  }
+
+  .welcome .prose {
+    margin-inline: auto;
+  }
+</style>

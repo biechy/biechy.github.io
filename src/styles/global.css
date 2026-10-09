@@ -1,0 +1,295 @@
+@import "@fontsource-variable/fraunces/full.css";
+@import "@fontsource-variable/fraunces/full-italic.css";
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource-variable/jetbrains-mono/index.css";
+@import "katex/dist/katex.min.css";
+
+/* ------------------------------------------------------------------ tokens */
+
+:root {
+  --paper: #f3efe6;
+  --paper-2: #e9e3d5;
+  --card: #fbf9f4;
+  --ink: #17140f;
+  --ink-2: #5d564a;
+  --ink-3: #8e8676;
+  --line: rgb(23 20 15 / 0.13);
+  --accent: #ff5a1f;
+  --accent-ink: #fff8f2;
+  --cobalt: #2f4bff;
+  --lime: #c8f135;
+  --shadow: 0 1px 0 rgb(23 20 15 / 0.06), 0 12px 32px -18px rgb(23 20 15 / 0.35);
+
+  --c-definition: #2f6bff;
+  --c-proposition: #d99100;
+  --c-theorem: #e2372b;
+  --c-proof: #6f6a60;
+  --c-exercise: #1f9d63;
+  --c-tips: #8b4dff;
+  --c-note: #5d564a;
+  --c-info: #0f8fb3;
+
+  --font-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --font-body: "Inter Variable", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 76rem;
+  --radius: 1.25rem;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #13120f;
+  --paper-2: #1d1b17;
+  --card: #1a1814;
+  --ink: #efe9dc;
+  --ink-2: #b0a796;
+  --ink-3: #7c7466;
+  --line: rgb(239 233 220 / 0.12);
+  --accent: #ff7440;
+  --accent-ink: #1a0d06;
+  --cobalt: #7b8cff;
+  --lime: #d6ff5c;
+  --shadow: 0 1px 0 rgb(0 0 0 / 0.3), 0 16px 40px -20px rgb(0 0 0 / 0.8);
+
+  --c-definition: #7ea2ff;
+  --c-proposition: #f2b84b;
+  --c-theorem: #ff7a6e;
+  --c-proof: #a39b8c;
+  --c-exercise: #4fd197;
+  --c-tips: #b495ff;
+  --c-note: #b0a796;
+  --c-info: #4cc3e6;
+
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+/* Film grain, gives the flat paper colour some texture. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+main {
+  flex: 1;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--lime);
+  color: #17140f;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variation-settings: "SOFT" 50, "WONK" 0;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.serif-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.2em 0.7em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.page-head {
+  padding-block: clamp(3rem, 9vw, 7rem) clamp(2rem, 5vw, 4rem);
+}
+
+.page-title {
+  font-size: clamp(3.2rem, 11vw, 8.5rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+}
+
+.page-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lede {
+  max-width: 38rem;
+  margin-top: 1.5rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: var(--ink-2);
+}
+
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.arrow-link span {
+  transition: transform 0.25s var(--ease);
+}
+
+.arrow-link:hover span {
+  transform: translate(3px, -3px);
+}
+
+/* Reveal on scroll. Only hidden once JS has confirmed it can reveal it again. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transition-delay: var(--delay, 0s);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Logos ship with a light and a dark variant. */
+.logo-dark {
+  display: none;
+}
+:root[data-theme="dark"] .logo-light {
+  display: none;
+}
+:root[data-theme="dark"] .logo-dark {
+  display: block;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

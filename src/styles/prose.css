@@ -1,0 +1,261 @@
+/* Long-form Markdown: knowledge notes and publication pages. */
+
+.prose {
+  max-width: 44rem;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+.prose :where(p, ul, ol) {
+  margin-block: 0;
+}
+
+.prose :where(p, ul, ol) + :where(p, ul, ol) {
+  margin-top: 1em;
+}
+
+.prose h2 {
+  margin-top: 2.6em;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 72;
+}
+
+.prose h3 {
+  margin-top: 2em;
+  font-size: 1.35rem;
+}
+
+.prose h2 + *,
+.prose h3 + * {
+  margin-top: 0.8em;
+}
+
+.prose :where(ul, ol) {
+  padding-left: 1.3em;
+}
+
+.prose li + li {
+  margin-top: 0.35em;
+}
+
+.prose li::marker {
+  color: var(--ink-3);
+}
+
+.prose strong {
+  font-weight: 650;
+}
+
+.prose hr {
+  margin-block: 3em;
+  border: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding-left: 1.2em;
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15em;
+  color: var(--ink-2);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 0.12em 0.4em;
+  border-radius: 0.35em;
+  background: var(--paper-2);
+}
+
+.prose pre {
+  padding: 1.1rem 1.25rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+}
+
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.prose :where(th, td) {
+  padding: 0.5em 0.75em;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.prose .katex-display {
+  margin: 1em 0;
+  padding-block: 0.25em;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.prose .katex {
+  font-size: 1.07em;
+}
+
+/* --- callouts (see src/lib/remark-callouts.mjs) */
+
+.callout {
+  --c: var(--c-note);
+  position: relative;
+  padding: 1rem 1.25rem 1.1rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--c) 9%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c) 28%, transparent);
+}
+
+.callout[data-kind="definition"] { --c: var(--c-definition); }
+.callout[data-kind="proposition"] { --c: var(--c-proposition); }
+.callout[data-kind="theorem"] { --c: var(--c-theorem); }
+.callout[data-kind="proof"] { --c: var(--c-proof); }
+.callout[data-kind="exercise"] { --c: var(--c-exercise); }
+.callout[data-kind="tips"] { --c: var(--c-tips); }
+.callout[data-kind="info"] { --c: var(--c-info); }
+
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c);
+}
+
+.callout-title::before {
+  content: "";
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 2px;
+  background: var(--c);
+  transform: rotate(45deg);
+  flex: none;
+}
+
+.callout-body > * + * {
+  margin-top: 0.75em;
+}
+
+.callout-body > :first-child {
+  margin-top: 0;
+}
+
+.callout[data-kind="theorem"] {
+  border-width: 1px 1px 1px 4px;
+}
+
+details.callout > summary {
+  cursor: pointer;
+  list-style: none;
+  margin: 0;
+}
+
+details.callout > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.callout > summary::after {
+  content: "+ show";
+  margin-left: auto;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+details.callout[open] > summary {
+  margin-bottom: 0.6rem;
+}
+
+details.callout[open] > summary::after {
+  content: "− hide";
+}
+
+details.callout[open] .callout-body {
+  animation: fade-in 0.35s var(--ease);
+}
+
+details.callout .callout-body::after {
+  content: "∎";
+  display: block;
+  text-align: right;
+  color: var(--ink-3);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* --- tabs: enhanced by a small script, stacked when JS is off */
+
+.tabs-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.tabs-bar button {
+  --c: var(--c-note);
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font: 500 0.75rem/1.4 var(--font-mono);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.tabs-bar button:hover {
+  color: var(--ink);
+  border-color: var(--c);
+}
+
+.tabs-bar button[aria-selected="true"] {
+  background: var(--c);
+  border-color: var(--c);
+  color: var(--paper);
+}
+
+.tabs:not(.is-ready) > .callout + .callout {
+  margin-top: 0.75rem;
+}
+
+.tabs.is-ready > .callout > .callout-title {
+  display: none;
+}
+
+.tabs.is-ready > .callout[hidden] {
+  display: none;
+}

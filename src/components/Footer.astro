@@ -1,0 +1,129 @@
+---
+import Icon from "./Icon.astro";
+import { nav, site } from "../data/site";
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <p class="kicker">Say hello</p>
+    <a class="cta" href={`mailto:${site.email}`}>
+      Let's <em>talk</em><span class="cta-arrow"><Icon name="arrow" size={56} /></span>
+    </a>
+    <p class="email">{site.email}</p>
+
+    <div class="bottom">
+      <nav aria-label="Footer">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <div class="socials">
+        <a href={site.github}>GitHub</a>
+        <a href={site.linkedin}>LinkedIn</a>
+        <a href="/publications/rss.xml">RSS</a>
+      </div>
+      <p class="copy">© {new Date().getFullYear()} {site.name}. Built with Astro, typeset in Fraunces.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: clamp(5rem, 12vw, 10rem);
+    padding-block: clamp(3rem, 8vw, 6rem) 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 2rem 2rem 0 0;
+  }
+
+  .footer .kicker {
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15em;
+    margin-top: 0.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 13vw, 10rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    text-decoration: none;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .cta em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cta:hover {
+    color: var(--paper);
+  }
+
+  .cta-arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: 0.15em;
+    border-radius: 50%;
+    background: var(--lime);
+    color: #17140f;
+    transition: transform 0.5s var(--ease);
+  }
+
+  .cta-arrow :global(svg) {
+    width: 50%;
+    height: 50%;
+  }
+
+  .cta:hover .cta-arrow {
+    transform: rotate(45deg) scale(1.08);
+  }
+
+  .email {
+    margin: 1rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--paper) 70%, transparent);
+  }
+
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+    margin-top: clamp(3rem, 8vw, 5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent);
+    font-size: 0.9rem;
+  }
+
+  .bottom nav,
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+  }
+
+  .bottom a {
+    text-decoration: none;
+    color: color-mix(in srgb, var(--paper) 80%, transparent);
+  }
+
+  .bottom a:hover {
+    color: var(--lime);
+  }
+
+  .copy {
+    margin: 0 0 0 auto;
+    font-size: 0.8rem;
+    color: color-mix(in srgb, var(--paper) 50%, transparent);
+  }
+
+  @media (max-width: 700px) {
+    .copy {
+      margin-left: 0;
+    }
+  }
+</style>

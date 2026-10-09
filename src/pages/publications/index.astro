@@ -1,0 +1,103 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+
+const publications = (await getCollection("publications")).sort((a, b) => +b.data.date - +a.data.date);
+const glyphs = ["γ", "λ", "ε", "π", "β", "α"];
+---
+
+<Base title="Publications" description="Research papers by Lucas Biéchy on privacy, language models and time series.">
+  <header class="wrap page-head">
+    <p class="kicker" data-reveal>Research · {publications.length} {publications.length > 1 ? "papers" : "paper"}</p>
+    <h1 class="page-title" data-reveal style="--delay: .08s">Published <em>work</em></h1>
+    <p class="lede" data-reveal style="--delay: .16s">
+      Peer-reviewed papers and preprints. More on privacy &amp; LLMs on the way.
+      <a class="rss" href="/publications/rss.xml"><Icon name="rss" size={14} /> RSS</a>
+    </p>
+  </header>
+
+  <ol class="wrap list">
+    {publications.map((pub, i) => (
+      <li class="pub" data-reveal>
+        <span class="glyph" aria-hidden="true">{glyphs[i % glyphs.length]}</span>
+        <div class="info">
+          <p class="kicker">
+            <time datetime={pub.data.date.toISOString()}>{pub.data.date.getFullYear()}</time> · {pub.data.venue}
+          </p>
+          <h2><a href={`/publications/${pub.id}`}>{pub.data.title}</a></h2>
+          <p class="summary">{pub.data.summary}</p>
+          <div class="foot">
+            <ul class="chips">{pub.data.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+            <a class="arrow-link" href={`/publications/${pub.id}`}>Abstract <span>→</span></a>
+            {pub.data.link && <a class="arrow-link" href={pub.data.link}>Paper <span>↗</span></a>}
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+</Base>
+
+<style>
+  .rss {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .list {
+    margin-block: 0;
+    list-style: none;
+  }
+
+  .pub {
+    display: grid;
+    grid-template-columns: clamp(4rem, 12vw, 9rem) 1fr;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-block: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .glyph {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(4.5rem, 12vw, 9rem);
+    line-height: 0.8;
+    color: var(--accent);
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+    transition: transform 0.7s var(--ease);
+  }
+
+  .pub:hover .glyph {
+    transform: rotate(-10deg) scale(1.05);
+  }
+
+  .info .kicker {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0.6rem;
+    font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+    letter-spacing: -0.03em;
+  }
+
+  h2 a {
+    text-decoration: none;
+  }
+
+  .summary {
+    max-width: 44rem;
+    color: var(--ink-2);
+  }
+
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+  }
+</style>
