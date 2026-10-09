@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkportfolio=self.webpackChunkportfolio||[]).push([[7472],{5513:t=>{t.exports=JSON.parse('{"title":"All articles","items":[{"title":"A Lightweight Recurrent Architecture for Robust Urban Traffic Forecasting With Missing Data","permalink":"/publications/2025-09-publication-example copy","unlisted":false,"date":"2025-09-24T15:12:37.000Z"}]}')}}]);
