@@ -146,6 +146,19 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         </ul>
         <p class="stack">Python · PyTorch · Hugging Face</p>
       </div>
+
+      <div class="tile tile-mini" data-reveal style="--delay: .1s">
+        <p class="kicker">Mentoring &amp; teaching</p>
+        <p>
+          Mentored 2 research interns (one now co-author on PrivacySkills) · TA in statistics and probability at ENSTA
+          Paris · organised the PETSCRAFT research seminar
+        </p>
+      </div>
+
+      <div class="tile tile-mini tile-gpa" data-reveal style="--delay: .14s">
+        <p class="kicker">Track record</p>
+        <p><strong>4.0 GPA</strong> in the MSc in Maths &amp; AI (Paris-Saclay, CentraleSupélec, Polytechnique) · twice a DataIA scholar</p>
+      </div>
     </div>
   </section>
 
@@ -202,8 +215,8 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
       <a class="tile tile-projects" href="/projects" data-reveal style="--delay: .16s">
         <p class="kicker">Up next</p>
-        <h3>PrivacySkills, extended to Hermes</h3>
-        <p class="tile-small">The framework fits Hermes' skill system almost as is.</p>
+        <h3>Testing a Learner, applied to Hermes</h3>
+        <p class="tile-small">Hermes learns from its own judgments of success, so it can fall into exactly the bias the paper detects.</p>
         <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
         <img class="tile-memoji small" src="/img/memojie/image00006.png" alt="" width="420" height="420" loading="lazy" />
       </a>
@@ -707,6 +720,25 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     border-top: 1px solid color-mix(in srgb, var(--accent-ink) 22%, transparent);
   }
 
+  .tile-mini {
+    grid-column: span 3;
+    min-height: 0;
+    gap: 0.4rem;
+    padding: 1.1rem 1.4rem;
+    font-size: 0.92rem;
+  }
+
+  .tile-mini:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .tile-gpa strong {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
   .stack {
     margin-top: auto !important;
     font-family: var(--font-mono);
@@ -733,6 +765,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     .tile-theory,
     .tile-mars,
     .tile-hands,
+    .tile-mini,
     .tile-now,
     .tile-pub,
     .tile-knowledge,
