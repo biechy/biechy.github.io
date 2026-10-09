@@ -4,22 +4,17 @@ import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import Marquee from "../components/Marquee.astro";
 import NewsTimeline from "../components/NewsTimeline.astro";
-import Paper from "../components/Paper.astro";
+import AtAGlance from "../components/AtAGlance.astro";
 import { site } from "../data/site";
 import { news } from "../data/news";
 import { projects } from "../data/projects";
-import { safetyPrograms } from "../data/community";
 import { sortPapers, themes, type Theme } from "../data/research";
 import { getKnowledge } from "../lib/knowledge";
 
 const papers = sortPapers(await getCollection("publications"));
-const featured = papers.filter((p) => p.data.featured);
 const { notes } = await getKnowledge();
 const ringText = "privacy · evals · uncertainty · AI safety · ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
-const marsPaper = papers.find((p) => p.data.status === "workshop");
-const aistatsPaper = papers.find((p) => p.data.venue.startsWith("AISTATS"));
-const glyphs = ["γ", "λ", "ε"];
 ---
 
 <Base>
@@ -66,32 +61,11 @@ const glyphs = ["γ", "λ", "ε"];
   <Marquee items={site.topics} />
 
   <section class="wrap papers-section">
-    <div class="section-head split" data-reveal>
-      <div>
-        <p class="kicker">01 · Selected work</p>
-        <h2 class="section-title">Recent <em>work</em></h2>
-      </div>
-      <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
+    <div class="section-head" data-reveal>
+      <p class="kicker">01 · At a glance</p>
+      <h2 class="section-title">The <em>short</em> version</h2>
     </div>
-    {marsPaper && (
-      <div class="mars" data-reveal>
-        <div class="mars-big">
-          <span class="kicker">MARS V · summer 2026</span>
-          <strong>7 <em>weeks</em></strong>
-        </div>
-        <div class="mars-text">
-          <p>
-            From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS. Five weeks
-            later, a full follow-up paper went to AISTATS 2027.
-          </p>
-          <ul>
-            <li><a href={marsPaper.data.link ?? "/publications"}>{marsPaper.data.title}</a> <span>NeurIPS workshop · accepted</span></li>
-            {aistatsPaper && <li><a href={aistatsPaper.data.link ?? "/publications"}>{aistatsPaper.data.title}</a> <span>AISTATS 2027 · submitted</span></li>}
-          </ul>
-        </div>
-      </div>
-    )}
-    {featured.map((paper, i) => <Paper paper={paper} glyph={glyphs[i % glyphs.length]} />)}
+    <AtAGlance papers={papers} />
   </section>
 
   <section class="wrap agenda-section">
@@ -126,26 +100,12 @@ const glyphs = ["γ", "λ", "ε"];
 
   <section class="wrap bento-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">03 · Beyond papers</p>
-      <h2 class="section-title">In the <em>community</em></h2>
+      <p class="kicker">03 · Off the clock</p>
+      <h2 class="section-title">Other things I <em>build</em></h2>
     </div>
 
     <div class="bento">
-      <a class="tile tile-now" href="/resume" data-reveal>
-        <p class="kicker">AI safety ecosystem</p>
-        <h3>Part of the AI safety community</h3>
-        <ul class="community">
-          {safetyPrograms.map((p) => (
-            <li><strong>{p.name}</strong> · {p.org} <span>{p.year}</span></li>
-          ))}
-          <li><strong>Visiting</strong> · Trajan House, Oxford <span>2026</span></li>
-          <li><strong>BiAlign workshop</strong> · NeurIPS <span>2026</span></li>
-          <li><strong>MLSS</strong> · Columbia University <span>2026</span></li>
-        </ul>
-        <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
-      </a>
-
-      <a class="tile tile-pub" href="/resume" data-reveal style="--delay: .08s">
+      <a class="tile tile-pub" href="/resume" data-reveal>
         <span class="glyph" aria-hidden="true">∂</span>
         <p class="kicker">Building</p>
         <h3>Doctoral entrepreneurship programme</h3>
@@ -529,7 +489,7 @@ const glyphs = ["γ", "λ", "ε"];
   }
 
   .tile-knowledge {
-    grid-column: span 3;
+    grid-column: span 2;
     background: var(--cobalt);
     color: #fff;
     border-color: transparent;
@@ -548,7 +508,7 @@ const glyphs = ["γ", "λ", "ε"];
   }
 
   .tile-projects {
-    grid-column: span 3;
+    grid-column: span 2;
     background: var(--lime);
     color: #17140f;
     border-color: transparent;
@@ -627,88 +587,6 @@ const glyphs = ["γ", "λ", "ε"];
     border-radius: 999px;
     background: var(--ink);
     color: var(--paper);
-  }
-
-  .mars {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: clamp(1.25rem, 4vw, 3rem);
-    margin-bottom: 1.5rem;
-    padding: clamp(1.25rem, 3.5vw, 2.25rem);
-    border-radius: var(--radius);
-    background: var(--lime);
-    color: #17140f;
-    text-decoration: none;
-    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
-  }
-
-
-  .mars-big {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .mars-big .kicker {
-    color: rgb(23 20 15 / 0.7);
-  }
-
-  .mars-big strong {
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 6vw, 4.5rem);
-    font-weight: 400;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    white-space: nowrap;
-    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
-  }
-
-  .mars-big em {
-    font-style: italic;
-  }
-
-  .mars p {
-    margin: 0;
-    max-width: 38rem;
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
-  }
-
-  .mars ul {
-    list-style: none;
-    margin: 0.9rem 0 0;
-    padding: 0;
-  }
-
-  .mars li {
-    padding-block: 0.45rem;
-    border-top: 1px solid rgb(23 20 15 / 0.15);
-  }
-
-  .mars li a {
-    font-family: var(--font-display);
-    font-style: italic;
-    text-decoration-color: rgb(23 20 15 / 0.35);
-  }
-
-  .mars li a:hover {
-    color: #17140f;
-    text-decoration-color: currentColor;
-  }
-
-  .mars li span {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: rgb(23 20 15 / 0.65);
-  }
-
-  @media (max-width: 640px) {
-    .mars {
-      grid-template-columns: 1fr;
-    }
   }
 
   .statement em {

@@ -1,0 +1,394 @@
+---
+// The recruiter's view: one screen answering "what has this person done,
+// how fast, with whom, and can they do the engineering?".
+import type { CollectionEntry } from "astro:content";
+import { statusLabel } from "../data/research";
+
+interface Props {
+  papers: CollectionEntry<"publications">[];
+}
+
+const { papers } = Astro.props;
+const safety = papers.filter((p) => p.data.theme !== "other");
+const marsPaper = papers.find((p) => p.data.status === "workshop");
+const aistatsPaper = papers.find((p) => p.data.venue.startsWith("AISTATS"));
+const shortTitle = (p: CollectionEntry<"publications">) => p.data.short ?? p.data.title.split(":")[0];
+---
+
+<div class="glance">
+  {marsPaper && (
+    <div class="card mars" data-reveal>
+      <div class="mars-big">
+        <span class="kicker">MARS V · summer 2026</span>
+        <strong>7 <em>weeks</em></strong>
+      </div>
+      <div class="mars-text">
+        <p>
+          From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS, with my mentors
+          Tianyi Qiu, Zhonghao He and Yuxiao Li. Five weeks later, a full follow-up paper went to AISTATS 2027.
+        </p>
+        <ul class="mars-papers">
+          <li>
+            <a href={marsPaper.data.link ?? "/publications"}>{marsPaper.data.title}</a>
+            <span>NeurIPS workshop · accepted</span>
+          </li>
+          {aistatsPaper && (
+            <li>
+              <a href={aistatsPaper.data.link ?? "/publications"}>{aistatsPaper.data.title}</a>
+              <span>AISTATS 2027 · submitted</span>
+            </li>
+          )}
+        </ul>
+      </div>
+    </div>
+  )}
+
+  <div class="card papers" data-reveal>
+    <p class="kicker">Papers</p>
+    <h3>{safety.length} first-author safety papers in 2026</h3>
+    <ol>
+      {safety.map((p) => (
+        <li>
+          <span class={`status status-${p.data.status}`}>{statusLabel[p.data.status]}</span>
+          <a href={p.data.link ?? "/publications"}>{shortTitle(p)}</a>
+          <span class="venue">{p.data.venue}</span>
+        </li>
+      ))}
+    </ol>
+    <a class="arrow-link more" href="/publications">All papers with summaries <span>↗</span></a>
+  </div>
+
+  <div class="card hands" data-reveal style="--delay: .06s">
+    <p class="kicker">Hands-on</p>
+    <h3>I run my own experiments, end to end</h3>
+    <ul class="lines">
+      <li>Open-weight models and closed APIs</li>
+      <li>Fine-tuning and RL</li>
+      <li>Large eval runs with SLURM, on Jean Zay and private GPU servers</li>
+      <li>Theory when it helps: identifiability results and matching lower bounds</li>
+    </ul>
+    <p class="stack">Python · PyTorch · Hugging Face</p>
+  </div>
+
+  <div class="card community" data-reveal style="--delay: .1s">
+    <p class="kicker">Safety community</p>
+    <ul class="lines">
+      <li><strong><a href="https://caish.org/mars">MARS V</a> fellow</strong>, Cambridge AI Safety Hub, with a stay at Trajan House, Oxford</li>
+      <li><strong><a href="https://bluedot.org/">BlueDot Impact</a></strong>, Technical AI Safety course</li>
+      <li><strong>BiAlign workshop</strong> at NeurIPS 2026</li>
+      <li><strong>ML Summer School</strong>, Columbia University</li>
+      <li><strong>ELSA workshop</strong> on privacy-preserving ML</li>
+    </ul>
+  </div>
+
+  <div class="card people" data-reveal style="--delay: .14s">
+    <p class="kicker">Mentoring &amp; teaching</p>
+    <ul class="lines">
+      <li>Mentored 2 research interns, one now co-author on PrivacySkills</li>
+      <li>TA in statistics and probability at ENSTA Paris</li>
+      <li>Organised the PETSCRAFT research seminar</li>
+      <li>Talks on AI &amp; cybersecurity and on sovereignty</li>
+    </ul>
+  </div>
+
+  <div class="card record" data-reveal style="--delay: .18s">
+    <p class="kicker">Track record</p>
+    <p class="big">4.0</p>
+    <p>GPA in the MSc in Maths &amp; AI (Paris-Saclay, with CentraleSupélec &amp; Polytechnique), twice a DataIA scholar.</p>
+  </div>
+</div>
+
+<style>
+  .glance {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+  }
+
+  .card .kicker,
+  .card p {
+    margin: 0;
+  }
+
+  .card h3 {
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    letter-spacing: -0.03em;
+  }
+
+  .lines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .lines li {
+    padding-block: 0.5rem;
+    border-top: 1px dashed var(--line);
+    font-size: 0.95rem;
+  }
+
+  .lines li:first-child {
+    border-top: 0;
+  }
+
+  .lines strong {
+    font-weight: 600;
+  }
+
+  /* ---- MARS */
+
+  .mars {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(1.25rem, 4vw, 3rem);
+    background: var(--lime);
+    border-color: transparent;
+    color: #17140f;
+  }
+
+  .mars-big {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .mars-big .kicker {
+    color: rgb(23 20 15 / 0.7);
+  }
+
+  .mars-big strong {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .mars-big em {
+    font-style: italic;
+  }
+
+  .mars-text p {
+    max-width: 40rem;
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+  }
+
+  .mars-papers {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+  }
+
+  .mars-papers li {
+    padding-block: 0.45rem;
+    border-top: 1px solid rgb(23 20 15 / 0.15);
+  }
+
+  .mars-papers a {
+    font-family: var(--font-display);
+    font-style: italic;
+    text-decoration-color: rgb(23 20 15 / 0.35);
+  }
+
+  .mars-papers a:hover {
+    color: #17140f;
+    text-decoration-color: currentColor;
+  }
+
+  .mars-papers span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgb(23 20 15 / 0.65);
+  }
+
+  /* ---- papers */
+
+  .papers {
+    grid-column: span 7;
+  }
+
+  .papers ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .papers li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    column-gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.65rem;
+    border-top: 1px dashed var(--line);
+  }
+
+  .papers li a {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+
+  .papers li .venue {
+    grid-column: 2;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-3);
+  }
+
+  .status {
+    grid-row: span 2;
+    justify-self: start;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .status-under-review {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .status-workshop {
+    background: var(--cobalt);
+    color: #fff;
+  }
+
+  .status-published {
+    background: var(--lime);
+    color: #17140f;
+  }
+
+  .status-preprint {
+    border: 1px solid var(--line);
+  }
+
+  .more {
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  /* ---- hands-on */
+
+  .hands {
+    grid-column: span 5;
+    background: var(--ink);
+    color: var(--paper);
+    border-color: transparent;
+  }
+
+  .hands .kicker,
+  .hands .stack {
+    color: color-mix(in srgb, var(--paper) 65%, transparent);
+  }
+
+  .hands .lines li {
+    border-color: color-mix(in srgb, var(--paper) 18%, transparent);
+  }
+
+  .stack {
+    margin-top: auto !important;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  /* ---- community / people / record */
+
+  .community {
+    grid-column: span 5;
+    background: var(--cobalt);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .community .kicker {
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  .community .lines li {
+    border-color: rgb(255 255 255 / 0.25);
+  }
+
+  .community a {
+    color: inherit;
+  }
+
+  .people {
+    grid-column: span 4;
+  }
+
+  .record {
+    grid-column: span 3;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+  }
+
+  .record .kicker {
+    color: color-mix(in srgb, var(--accent-ink) 75%, transparent);
+  }
+
+  .big {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  @media (max-width: 1000px) {
+    .papers,
+    .hands {
+      grid-column: span 12;
+    }
+    .community {
+      grid-column: span 12;
+    }
+    .people,
+    .record {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .mars {
+      grid-template-columns: 1fr;
+    }
+    .people,
+    .record {
+      grid-column: span 12;
+    }
+    .papers li {
+      grid-template-columns: 1fr;
+      row-gap: 0.25rem;
+    }
+    .status {
+      grid-row: auto;
+    }
+    .papers li .venue {
+      grid-column: 1;
+    }
+  }
+</style>
