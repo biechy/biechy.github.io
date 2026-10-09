@@ -4,15 +4,15 @@ import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import Marquee from "../components/Marquee.astro";
 import NewsTimeline from "../components/NewsTimeline.astro";
-import AtAGlance from "../components/AtAGlance.astro";
 import { site } from "../data/site";
 import { news } from "../data/news";
-import { projects } from "../data/projects";
-import { sortPapers, themes, type Theme } from "../data/research";
+import { sortPapers, statusLabel, themes, type Theme } from "../data/research";
 import { getKnowledge } from "../lib/knowledge";
 
 const papers = sortPapers(await getCollection("publications"));
 const { notes } = await getKnowledge();
+const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
+const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
 const ringText = "privacy · evals · uncertainty · AI safety · ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
 ---
@@ -61,16 +61,97 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   <Marquee items={site.topics} />
 
   <section class="wrap papers-section">
-    <div class="section-head" data-reveal>
-      <p class="kicker">01 · At a glance</p>
-      <h2 class="section-title">The <em>short</em> version</h2>
+    <div class="section-head split" data-reveal>
+      <div>
+        <p class="kicker">01 · Selected work</p>
+        <h2 class="section-title">Both ends of the <em>spectrum</em></h2>
+      </div>
+      <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
     </div>
-    <AtAGlance papers={papers} />
+
+    <div class="bento">
+      {privacySkills && (
+        <a class="tile tile-empirical" href={privacySkills.data.link ?? "/publications"} data-reveal>
+          <p class="kicker">Empirical · {statusLabel[privacySkills.data.status]}, {privacySkills.data.venue}</p>
+          <h3>PrivacySkills</h3>
+          <p class="big-number">30%</p>
+          <p class="tile-text">
+            of runs where LLM agents dig into confidential sources even though a harmless option exists. Privacy
+            labels on the skills plus a system instruction roughly halve it.
+          </p>
+          <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
+          <img class="tile-memoji" src="/img/memojie/computer_.png" alt="" width="420" height="420" loading="lazy" />
+        </a>
+      )}
+
+      {testingLearner && (
+        <a class="tile tile-theory" href={testingLearner.data.link ?? "/publications"} data-reveal style="--delay: .08s">
+          <p class="kicker">Theory · {statusLabel[testingLearner.data.status]}, {testingLearner.data.venue}</p>
+          <h3>Testing a Learner Changes It</h3>
+          <p class="big-number">7×</p>
+          <p class="tile-text">
+            fewer rounds than random probes to catch a mildly biased self-grading agent (57 vs 424), with a lower
+            bound showing no adaptive audit can do better.
+          </p>
+          <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
+          <img class="tile-memoji" src="/img/memojie/image00002.png" alt="" width="420" height="420" loading="lazy" />
+        </a>
+      )}
+
+      <div class="tile tile-mars" data-reveal style="--delay: .12s">
+        <div class="mars-big">
+          <p class="kicker">MARS V · summer 2026</p>
+          <p class="big-number">7 <em>weeks</em></p>
+        </div>
+        <div class="mars-text">
+          <p>
+            From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS, with my
+            mentors Tianyi Qiu, Zhonghao He and Yuxiao Li. Five weeks later, the full follow-up went to AISTATS 2027.
+          </p>
+        </div>
+        <img class="tile-memoji" src="/img/memojie/news.png" alt="" width="420" height="420" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap bento-section">
+    <div class="section-head" data-reveal>
+      <p class="kicker">02 · AI safety</p>
+      <h2 class="section-title">Part of the <em>community</em></h2>
+    </div>
+
+    <div class="bento">
+      <div class="tile tile-now" data-reveal>
+        <p class="kicker">AI safety ecosystem</p>
+        <h3>Where I learn and who I work with</h3>
+        <ul class="community">
+          <li><strong><a href="https://caish.org/mars">MARS V</a> fellow</strong> · Cambridge AI Safety Hub <span>2026</span></li>
+          <li><strong>Visiting</strong> · Trajan House, Oxford, with MARS <span>2026</span></li>
+          <li><strong>Technical AI Safety course</strong> · <a href="https://bluedot.org/">BlueDot Impact</a> <span>2026</span></li>
+          <li><strong>BiAlign workshop</strong> · NeurIPS <span>2026</span></li>
+          <li><strong>MLSS</strong> · Columbia University <span>2026</span></li>
+          <li><strong>ELSA workshop</strong> · privacy-preserving ML <span>2025</span></li>
+        </ul>
+        <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
+      </div>
+
+      <div class="tile tile-hands" data-reveal style="--delay: .08s">
+        <p class="kicker">Hands-on</p>
+        <h3>I run my own experiments, end to end</h3>
+        <ul class="hands-list">
+          <li>Open-weight models and closed APIs</li>
+          <li>Fine-tuning and RL</li>
+          <li>Large eval runs with SLURM on Jean Zay and private GPU servers</li>
+          <li>Proofs when they help</li>
+        </ul>
+        <p class="stack">Python · PyTorch · Hugging Face</p>
+      </div>
+    </div>
   </section>
 
   <section class="wrap agenda-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">02 · What I work on</p>
+      <p class="kicker">03 · What I work on</p>
       <h2 class="section-title">Three <em>threads</em></h2>
     </div>
 
@@ -100,7 +181,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap bento-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">03 · Off the clock</p>
+      <p class="kicker">04 · Off the clock</p>
       <h2 class="section-title">Other things I <em>build</em></h2>
     </div>
 
@@ -120,8 +201,9 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
       </a>
 
       <a class="tile tile-projects" href="/projects" data-reveal style="--delay: .16s">
-        <p class="kicker">Side projects</p>
-        <h3>{projects.length} shipped, more cooking</h3>
+        <p class="kicker">Up next</p>
+        <h3>PrivacySkills, extended to Hermes</h3>
+        <p class="tile-small">The framework fits Hermes' skill system almost as is.</p>
         <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
         <img class="tile-memoji small" src="/img/memojie/image00006.png" alt="" width="420" height="420" loading="lazy" />
       </a>
@@ -130,7 +212,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap news-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">04 · Logbook</p>
+      <p class="kicker">05 · Logbook</p>
       <h2 class="section-title">Latest <em>news</em></h2>
     </div>
     <NewsTimeline items={news} initial={6} />
@@ -522,6 +604,115 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     max-width: 14ch;
   }
 
+  .tile-text {
+    max-width: 22rem;
+  }
+
+  .tile-empirical .tile-memoji,
+  .tile-theory .tile-memoji,
+  .tile-mars .tile-memoji {
+    width: clamp(7rem, 12vw, 9.5rem);
+    right: -0.5rem;
+    bottom: -1rem;
+  }
+
+  .tile-small {
+    max-width: 16rem;
+    font-size: 0.92rem;
+  }
+
+  .tile-empirical,
+  .tile-theory {
+    grid-column: span 3;
+    min-height: 22rem;
+    padding-right: clamp(1.25rem, 18%, 10rem);
+  }
+
+  .tile-empirical {
+    background: var(--cobalt);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .tile-empirical .kicker {
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  .tile-theory {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: transparent;
+  }
+
+  .tile-theory .kicker {
+    color: color-mix(in srgb, var(--paper) 65%, transparent);
+  }
+
+  .tile-empirical .big-number,
+  .tile-theory .big-number {
+    margin-top: 0.5rem;
+  }
+
+  .tile-mars {
+    grid-column: span 6;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    min-height: 0;
+    padding-right: clamp(1.25rem, 16%, 11rem);
+    background: var(--lime);
+    color: #17140f;
+    border-color: transparent;
+  }
+
+  .tile-mars .kicker {
+    color: rgb(23 20 15 / 0.7);
+  }
+
+  .tile-mars .big-number {
+    white-space: nowrap;
+  }
+
+  .tile-mars .big-number em {
+    font-style: italic;
+  }
+
+  .mars-text p {
+    max-width: 38rem;
+    font-size: clamp(1rem, 1.6vw, 1.12rem);
+  }
+
+  .tile-hands {
+    grid-column: span 2;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+  }
+
+  .tile-hands .kicker,
+  .tile-hands .stack {
+    color: color-mix(in srgb, var(--accent-ink) 75%, transparent);
+  }
+
+  .hands-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
+  }
+
+  .hands-list li {
+    padding-block: 0.45rem;
+    border-top: 1px solid color-mix(in srgb, var(--accent-ink) 22%, transparent);
+  }
+
+  .stack {
+    margin-top: auto !important;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
   .tile-arrow {
     display: grid;
     place-items: center;
@@ -538,6 +729,10 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   @media (max-width: 900px) {
+    .tile-empirical,
+    .tile-theory,
+    .tile-mars,
+    .tile-hands,
     .tile-now,
     .tile-pub,
     .tile-knowledge,
@@ -611,7 +806,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .agenda {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1.4fr 1fr 1fr;
     gap: 1rem;
   }
 
@@ -699,9 +894,24 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     color: var(--ink-3);
   }
 
+  .community a {
+    color: inherit;
+  }
+
   @media (max-width: 900px) {
     .agenda {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tile-mars {
+      grid-template-columns: 1fr;
+      padding-bottom: 7rem;
+    }
+    .tile-empirical,
+    .tile-theory {
+      padding-bottom: 8rem;
     }
   }
 </style>
