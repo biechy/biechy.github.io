@@ -2,7 +2,7 @@ import type { Experience } from "./types";
 
 export const experiences: Experience[] = [
   {
-    title: "PhD researcher — AI safety & privacy",
+    title: "PhD researcher in AI safety & privacy",
     company: {
       name: "Inria, PETSCRAFT team",
       link: "https://team.inria.fr/petscraft/",
@@ -11,13 +11,13 @@ export const experiences: Experience[] = [
     date: { start: "2024", end: null },
     location: "Palaiseau, France",
     description:
-      "Research on when LLMs and LLM agents can be trusted: uncertainty quantification of black-box reasoning models via jailbreaks, biased self-evaluation, latent user bias in human–AI interaction, and privacy-aware agents. Four first-author papers, two under review at ICLR 2027.",
-    tags: ["LLMs", "Evaluations", "Uncertainty", "Human–AI alignment", "Privacy"],
+      "Research on when LLMs and LLM agents can be trusted: uncertainty quantification of black-box reasoning models via jailbreaks, biased self-evaluation, latent user bias in human-AI interaction, and privacy-aware agents. Four first-author papers, two under review at ICLR 2027.",
+    tags: ["LLMs", "Evaluations", "Uncertainty", "Human-AI alignment", "Privacy"],
   },
   {
     title: "AI research intern",
     company: {
-      name: "NARLabs — National Center for High-performance Computing",
+      name: "NARLabs, National Center for High-performance Computing",
       link: "https://www.nchc.org.tw/",
       logo: "/img/logo/nchc.png",
     },

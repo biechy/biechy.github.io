@@ -13,8 +13,7 @@ const knowledge = defineCollection({
   }),
 });
 
-// One file per paper. The Markdown body (the abstract) is optional:
-// papers without one get no dedicated page and link straight to `link`.
+// One file per paper, frontmatter only. `link` points to the official page.
 const publications = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: "./publications" }),
   schema: z.object({

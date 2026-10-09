@@ -106,7 +106,7 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
       <h2>Papers</h2>
     </div>
     <div class="papers-cta" data-reveal>
-      <p>Four first-author papers on AI safety in 2026 — two under review at ICLR 2027 — and one journal paper.</p>
+      <p>Four first-author papers on AI safety in 2026, two of them under review at ICLR 2027, plus one journal paper.</p>
       <a class="arrow-link" href="/publications">See all papers <span>→</span></a>
     </div>
   </section>
@@ -118,7 +118,7 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
     </div>
     <ul class="rows" data-reveal>
       {safetyPrograms.map((p) => (
-        <li><span class="row-year">{p.year}</span><span><strong>{p.name}</strong> — {p.org}</span></li>
+        <li><span class="row-year">{p.year}</span><span><strong>{p.name}</strong>, {p.org}</span></li>
       ))}
     </ul>
   </section>

@@ -6,14 +6,14 @@ import { site } from "../../data/site";
 export async function GET(context: APIContext) {
   const publications = (await getCollection("publications")).sort((a, b) => +b.data.date - +a.data.date);
   return rss({
-    title: `${site.name} — Publications`,
+    title: `${site.name}: papers`,
     description: "Research papers by Lucas Biéchy.",
     site: context.site!,
     items: publications.map((pub) => ({
       title: pub.data.title,
       description: pub.data.tldr,
       pubDate: pub.data.date,
-      link: pub.body?.trim() ? `/publications/${pub.id}/` : (pub.data.link ?? "/publications/"),
+      link: pub.data.link ?? "/publications/",
     })),
   });
 }

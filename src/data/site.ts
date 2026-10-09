@@ -5,7 +5,7 @@ export const site = {
   affiliation: "PhD at Inria × Université Paris-Saclay",
   team: { name: "PETSCRAFT", link: "https://team.inria.fr/petscraft/" },
   description:
-    "Lucas Biéchy — AI safety researcher (PhD, Inria & Université Paris-Saclay) studying when LLMs can be trusted: calibration, honesty, human–AI alignment and privacy.",
+    "Lucas Biéchy, AI safety researcher (PhD, Inria & Université Paris-Saclay) studying when LLMs can be trusted: calibration, honesty, human-AI alignment and privacy.",
   /** One-sentence research statement, used in the hero. */
   statement: "I study when large language models can be trusted",
   availability: {
@@ -20,7 +20,7 @@ export const site = {
     "Calibration",
     "Uncertainty",
     "Jailbreaks",
-    "Human–AI alignment",
+    "Human-AI alignment",
     "Trust in LLMs",
     "Privacy",
     "LLM agents",

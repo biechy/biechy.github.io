@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { hasAbstract, statusLabel, themes } from "../data/research";
+import { statusLabel, themes } from "../data/research";
 import { site } from "../data/site";
 
 interface Props {
@@ -11,7 +11,6 @@ interface Props {
 const { paper, glyph } = Astro.props;
 const { data } = paper;
 const theme = data.theme === "other" ? undefined : themes[data.theme];
-const linkLabel = data.link?.includes("arxiv.org") ? "arXiv" : "Paper";
 ---
 
 <article class="paper" data-reveal>
@@ -23,7 +22,7 @@ const linkLabel = data.link?.includes("arxiv.org") ? "arXiv" : "Paper";
       {data.short && <span class="short">{data.short}</span>}
     </p>
     <h3>
-      {hasAbstract(paper) ? <a href={`/publications/${paper.id}`}>{data.title}</a> : data.title}
+      {data.link ? <a href={data.link}>{data.title}</a> : data.title}
     </h3>
     <p class="tldr">{data.tldr}</p>
     <p class="authors">
@@ -36,9 +35,8 @@ const linkLabel = data.link?.includes("arxiv.org") ? "arXiv" : "Paper";
     </p>
     <div class="foot">
       {theme && <span class="chip">{theme.label}</span>}
-      {data.link && <a class="arrow-link" href={data.link}>{linkLabel} <span>↗</span></a>}
+      {data.link && <a class="arrow-link" href={data.link}>Paper <span>↗</span></a>}
       {data.code && <a class="arrow-link" href={data.code}>Code <span>↗</span></a>}
-      {hasAbstract(paper) && <a class="arrow-link" href={`/publications/${paper.id}`}>Abstract <span>→</span></a>}
     </div>
   </div>
 </article>

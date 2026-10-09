@@ -6,5 +6,5 @@ venue: "Preprint"
 status: "preprint"
 theme: "calibration"
 featured: true
-tldr: "Detecting when a model's self-evaluation is biased, from what it does rather than what it says — knowing that testing it changes it."
+tldr: "Agents that grade their own work can get stuck on a bad option, and watching their choices won't reveal it. We show an auditor can catch this with tasks whose answer it already knows, and give the optimal way to do it."
 ---

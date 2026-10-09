@@ -15,7 +15,7 @@ import { getKnowledge } from "../lib/knowledge";
 const papers = sortPapers(await getCollection("publications"));
 const featured = papers.filter((p) => p.data.featured);
 const { notes } = await getKnowledge();
-const ringText = "trust · calibration · human–AI alignment · privacy · ";
+const ringText = "trust · calibration · human-AI alignment · privacy · ";
 const tones: Record<Theme, string> = { calibration: "var(--cobalt)", alignment: "var(--accent)", privacy: "var(--lime)" };
 const glyphs = ["γ", "λ", "ε"];
 ---
@@ -47,11 +47,11 @@ const glyphs = ["γ", "λ", "ε"];
 
       <div class="hero-intro" data-reveal style="--delay: .35s">
         <p class="statement">
-          {site.statement} — what they say about the world, about <em>themselves</em>, and what they infer about{" "}
+          {site.statement}: what they say about the world, about <em>themselves</em>, and what they infer about{" "}
           <em>us</em>.
         </p>
         <p>
-          PhD researcher at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay ({site.team.name} team), working on calibration and honesty of reasoning models, human–AI alignment and privacy of LLM agents.
+          PhD researcher at <a href="https://www.inria.fr/">Inria</a> and Université Paris-Saclay ({site.team.name} team), working on calibration and honesty of reasoning models, human-AI alignment and privacy of LLM agents.
           Two first-author papers under review at ICLR 2027.
         </p>
 
@@ -76,7 +76,7 @@ const glyphs = ["γ", "λ", "ε"];
 
   <section class="wrap agenda-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">01 — Research agenda</p>
+      <p class="kicker">01 · Research agenda</p>
       <h2 class="section-title">Three ways to ask <em>“can we trust it?”</em></h2>
     </div>
 
@@ -107,7 +107,7 @@ const glyphs = ["γ", "λ", "ε"];
   <section class="wrap papers-section">
     <div class="section-head split" data-reveal>
       <div>
-        <p class="kicker">02 — Selected papers</p>
+        <p class="kicker">02 · Selected papers</p>
         <h2 class="section-title">Recent <em>work</em></h2>
       </div>
       <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
@@ -117,14 +117,14 @@ const glyphs = ["γ", "λ", "ε"];
 
   <section class="wrap bento-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">03 — Beyond papers</p>
+      <p class="kicker">03 · Beyond papers</p>
       <h2 class="section-title">In the <em>community</em></h2>
     </div>
 
     <div class="bento">
       <a class="tile tile-now" href="/resume" data-reveal>
         <p class="kicker">AI safety ecosystem</p>
-        <h3>Trained and connected in the safety community</h3>
+        <h3>Part of the AI safety community</h3>
         <ul class="community">
           {safetyPrograms.map((p) => (
             <li><strong>{p.name}</strong> · {p.org} <span>{p.year}</span></li>
@@ -161,7 +161,7 @@ const glyphs = ["γ", "λ", "ε"];
 
   <section class="wrap news-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">04 — Logbook</p>
+      <p class="kicker">04 · Logbook</p>
       <h2 class="section-title">Latest <em>news</em></h2>
     </div>
     <NewsTimeline items={news} initial={6} />

@@ -6,8 +6,8 @@ export function formatMonth(value: string): string {
   return `${MONTHS[Number(month) - 1] ?? month} ${year}`;
 }
 
-/** "2024", null -> "2024 — now", identical years collapse to one. */
+/** "2024", null -> "2024 - now", identical years collapse to one. */
 export function formatRange(start: string | number, end?: string | number | null): string {
-  if (end === undefined || end === null) return `${start} — now`;
-  return String(start) === String(end) ? String(start) : `${start} — ${end}`;
+  if (end === undefined || end === null) return `${start} - now`;
+  return String(start) === String(end) ? String(start) : `${start} - ${end}`;
 }

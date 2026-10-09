@@ -8,5 +8,5 @@ status: "under-review"
 link: "https://arxiv.org/abs/2609.35350"
 theme: "calibration"
 featured: true
-tldr: "Jailbreaks as a probe to quantify how uncertain a black-box reasoning model really is."
+tldr: "RL alignment makes reasoning models overconfident, and the usual black-box tricks barely help. J4U borrows ideas from jailbreaks to loosen the model up and get much better calibrated uncertainty, even on a closed production model."
 ---
