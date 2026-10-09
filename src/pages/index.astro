@@ -13,6 +13,7 @@ const papers = sortPapers(await getCollection("publications"));
 const { notes } = await getKnowledge();
 const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
+const observation = papers.find((p) => p.id.includes("observation-to-intervention"));
 const ringText = "privacy · evals · uncertainty · AI safety · ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
 ---
@@ -72,6 +73,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     <div class="bento">
       {privacySkills && (
         <a class="tile tile-empirical" href={privacySkills.data.link ?? "/publications"} data-reveal>
+          <span class="pill">Selected paper</span>
           <p class="kicker">Empirical · {statusLabel[privacySkills.data.status]}, {privacySkills.data.venue}</p>
           <h3>PrivacySkills</h3>
           <p class="big-number">30%</p>
@@ -86,6 +88,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
       {testingLearner && (
         <a class="tile tile-theory" href={testingLearner.data.link ?? "/publications"} data-reveal style="--delay: .08s">
+          <span class="pill">Selected paper</span>
           <p class="kicker">Theory · {statusLabel[testingLearner.data.status]}, {testingLearner.data.venue}</p>
           <h3>Testing a Learner Changes It</h3>
           <p class="big-number">7×</p>
@@ -105,14 +108,17 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         </div>
         <div class="mars-text">
           <p>
-            From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS.
+            From the MARS V kick-off in mid-July to a paper accepted at the BiAlign Workshop @ NeurIPS:{" "}
+            <a href={observation?.data.link ?? "/publications"}><em>From Observation to Intervention</em></a>, on
+            identifying latent user bias in human-AI interaction.
           </p>
         </div>
         <img class="tile-memoji" src="/img/memojie/news.png" alt="" width="420" height="420" loading="lazy" />
       </div>
 
       <a class="tile tile-mini-row tile-hermes" href="/projects" data-reveal style="--delay: .16s">
-        <p class="kicker">Up next · theory → practice</p>
+        <span class="pill">Upcoming project</span>
+        <p class="kicker">Theory → practice</p>
         <h3>Testing a Learner Changes It, applied to Hermes</h3>
         <p class="tile-small">Hermes learns from its own judgments of success, so it can fall into exactly the bias the paper detects.</p>
         <span class="tile-arrow"><Icon name="arrow" size={18} /></span>
@@ -512,8 +518,12 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
   }
 
+  .tile,
   .tile:hover {
-    color: inherit;
+    color: var(--fg, var(--ink));
+  }
+
+  .tile:hover {
     transform: translateY(-4px) rotate(-0.4deg);
     box-shadow: var(--shadow);
   }
@@ -561,7 +571,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .tile-pub {
     grid-column: span 3;
     background: var(--accent);
-    color: var(--accent-ink);
+    --fg: var(--accent-ink);
     border-color: transparent;
   }
 
@@ -595,7 +605,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .tile-knowledge {
     grid-column: span 3;
     background: var(--cobalt);
-    color: #fff;
+    --fg: #fff;
     border-color: transparent;
   }
 
@@ -614,7 +624,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .tile-projects {
     grid-column: span 2;
     background: var(--lime);
-    color: #17140f;
+    --fg: #17140f;
     border-color: transparent;
   }
 
@@ -652,7 +662,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .tile-empirical {
     background: var(--cobalt);
-    color: #fff;
+    --fg: #fff;
     border-color: transparent;
   }
 
@@ -662,7 +672,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .tile-theory {
     background: var(--ink);
-    color: var(--paper);
+    --fg: var(--paper);
     border-color: transparent;
   }
 
@@ -685,7 +695,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     padding: clamp(1.25rem, 3vw, 1.5rem);
     padding-right: clamp(1.25rem, 12%, 8rem);
     background: var(--lime);
-    color: #17140f;
+    --fg: #17140f;
     border-color: transparent;
   }
 
@@ -710,7 +720,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .tile-hands {
     grid-column: span 2;
     background: var(--accent);
-    color: var(--accent-ink);
+    --fg: var(--accent-ink);
     border-color: transparent;
   }
 
@@ -769,7 +779,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .tile-mini-row.tile-hands {
     background: var(--accent);
-    color: var(--accent-ink);
+    --fg: var(--accent-ink);
     border-color: transparent;
   }
 
@@ -792,7 +802,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .tile-hermes {
     background: var(--ink);
-    color: var(--paper);
+    --fg: var(--paper);
     border-color: transparent;
   }
 
@@ -813,7 +823,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .tile-lead {
     background: var(--cobalt);
-    color: #fff;
+    --fg: #fff;
     border-color: transparent;
   }
 
@@ -835,7 +845,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .tile-talks {
     background: var(--lime);
-    color: #17140f;
+    --fg: #17140f;
     border-color: transparent;
   }
 
@@ -865,6 +875,23 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .tile-acad {
     background: color-mix(in srgb, var(--accent) 12%, var(--card));
     border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .pill {
+    align-self: flex-start;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mars-text a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
   }
 
   .mini-list {
