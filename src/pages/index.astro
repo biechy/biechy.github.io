@@ -14,7 +14,6 @@ const { notes } = await getKnowledge();
 const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
 const observation = papers.find((p) => p.id.includes("observation-to-intervention"));
-const ringText = "Lucas Biéchy ✺ Lucas Biéchy ✺ Lucas Biéchy ✺ ";
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
 ---
 
@@ -30,12 +29,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
       </h1>
 
       <div class="badge" data-reveal style="--delay: .3s">
-        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
-          <defs>
-            <path id="ring-path" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0" />
-          </defs>
-          <text><textPath href="#ring-path" textLength="512" lengthAdjust="spacing">{ringText}</textPath></text>
-        </svg>
+        <span class="badge-glow" aria-hidden="true"></span>
         <img src="/img/memojie/hey.png" alt="Lucas' memoji waving hello" width="420" height="420" />
       </div>
 
@@ -366,17 +360,18 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .badge {
     grid-area: badge;
     position: relative;
+    isolation: isolate;
     width: clamp(9rem, 22vw, 16rem);
     aspect-ratio: 1;
   }
 
   .badge img {
     position: absolute;
-    inset: 18%;
-    width: 64%;
-    height: 64%;
+    inset: 12%;
+    width: 76%;
+    height: 76%;
     border-radius: 50%;
-    background: var(--lime);
+    background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--lime) 55%, #fff), var(--lime) 72%);
     transition: transform 0.6s var(--ease);
   }
 
@@ -384,19 +379,17 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     transform: rotate(-10deg) scale(1.08);
   }
 
-  .ring {
+  .badge-glow {
     position: absolute;
-    inset: 0;
-    animation: spin 28s linear infinite;
+    inset: -35%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--lime), transparent 62%);
+    filter: blur(28px);
+    opacity: 0.85;
+    animation: drift 14s ease-in-out infinite alternate;
   }
 
-  .ring text {
-    font-family: var(--font-mono);
-    font-size: 12.2px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    fill: var(--ink);
-  }
 
   .hero-intro {
     grid-area: intro;

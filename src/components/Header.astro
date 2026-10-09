@@ -108,7 +108,8 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    background: var(--lime);
+    background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--lime) 55%, #fff), var(--lime) 72%);
+    box-shadow: 0 0 14px 2px color-mix(in srgb, var(--lime) 65%, transparent);
     overflow: hidden;
     transition: transform 0.4s var(--ease);
   }
