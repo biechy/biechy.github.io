@@ -118,21 +118,27 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <p class="tile-small">Learning from self-judgments, detectable by the paper's findings.</p>
       </div>
 
-      <div class="tile tile-mini-row" data-reveal style="--delay: .18s">
+      <div class="tile tile-mini-row tile-now" data-reveal style="--delay: .18s">
         <p class="kicker">Community & growth</p>
         <h3>Where I learn</h3>
-        <ul class="community-compact">
-          <li><a href="https://caish.org/mars">MARS V</a> fellow · 2026</li>
-          <li><a href="https://bluedot.org/">BlueDot</a> course · 2026</li>
-          <li>BiAlign @ NeurIPS · 2026</li>
-          <li>MLSS, ELSA · 2025–26</li>
+        <ul class="community">
+          <li><strong><a href="https://caish.org/mars">MARS V</a> fellow</strong> · 2026</li>
+          <li><strong><a href="https://bluedot.org/">BlueDot</a> course</strong> · 2026</li>
+          <li><strong>BiAlign</strong> · NeurIPS <span>2026</span></li>
+          <li><strong>MLSS, ELSA</strong> · 2025–26</li>
         </ul>
+        <img class="tile-memoji" src="/img/memojie/computer.png" alt="" width="420" height="420" loading="lazy" />
       </div>
 
-      <div class="tile tile-mini-row" data-reveal style="--delay: .2s">
+      <div class="tile tile-mini-row tile-hands" data-reveal style="--delay: .2s">
         <p class="kicker">Hands-on</p>
         <h3>End to end</h3>
-        <p class="tile-small">Open & closed APIs, RL, SLURM evals, proofs.</p>
+        <ul class="hands-list">
+          <li>Open-weight models and closed APIs</li>
+          <li>Fine-tuning and RL</li>
+          <li>Large eval runs with SLURM</li>
+          <li>Proofs when they help</li>
+        </ul>
         <p class="stack">Python · PyTorch · Hugging Face</p>
       </div>
 
@@ -748,22 +754,57 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     box-shadow: none;
   }
 
-  .community-compact {
-    list-style: none;
-    margin: 0.3rem 0 0;
+  .tile-mini-row.tile-now {
+    position: relative;
+    padding-right: clamp(1.25rem, 18%, 7rem);
+  }
+
+  .tile-mini-row.tile-now .tile-memoji {
+    width: clamp(6.5rem, 14vw, 9rem);
+    right: -0.5rem;
+    bottom: -1rem;
+  }
+
+  .tile-mini-row.tile-now .community {
+    margin: 0.2rem 0 0;
     padding: 0;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 0.82rem;
+    line-height: 1.3;
   }
 
-  .community-compact li {
+  .tile-mini-row.tile-now .community li {
     padding-block: 0.2rem;
-    border: none;
+    border-bottom: 1px dashed var(--line);
   }
 
-  .community-compact a {
-    color: inherit;
-    font-weight: 500;
+  .tile-mini-row.tile-now .community span {
+    margin-left: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--ink-3);
+  }
+
+  .tile-mini-row.tile-hands {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+  }
+
+  .tile-mini-row.tile-hands .kicker,
+  .tile-mini-row.tile-hands .stack {
+    color: color-mix(in srgb, var(--accent-ink) 75%, transparent);
+  }
+
+  .tile-mini-row.tile-hands .hands-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+
+  .tile-mini-row.tile-hands .hands-list li {
+    padding-block: 0.2rem;
+    border-top: 1px solid color-mix(in srgb, var(--accent-ink) 22%, transparent);
   }
 
   .tile-gpa strong {
