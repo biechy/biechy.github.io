@@ -68,7 +68,7 @@ export const educations: Education[] = [
     },
     location: "Gif-sur-Yvette, France",
     description:
-      "Physics track joint with École Normale Supérieure Paris-Saclay. Mathematics GPA 4.00/4.00.",
+      "Physics track joint with École Normale Supérieure Paris-Saclay. Mathematics GPA 4.00/4.00, Physics GPA 3.33/4.00.",
     tags: ["Mathematics", "Theoretical Physics"],
     honors: "Honors",
   },
