@@ -112,11 +112,13 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <img class="tile-memoji" src="/img/memojie/news.png" alt="" width="420" height="420" loading="lazy" />
       </div>
 
-      <div class="tile tile-mini-row" data-reveal style="--delay: .16s">
-        <p class="kicker">End-to-end application</p>
-        <h3>Hermes</h3>
-        <p class="tile-small">Learning from self-judgments, detectable by the paper's findings.</p>
-      </div>
+      <a class="tile tile-mini-row tile-hermes" href="/projects" data-reveal style="--delay: .16s">
+        <p class="kicker">Up next · theory → practice</p>
+        <h3>Testing a Learner, applied to Hermes</h3>
+        <p class="tile-small">Hermes learns from its own judgments of success, so it can fall into exactly the bias the paper detects.</p>
+        <span class="tile-arrow"><Icon name="arrow" size={18} /></span>
+        <img class="tile-memoji" src="/img/memojie/image00006.png" alt="" width="420" height="420" loading="lazy" />
+      </a>
 
       <div class="tile tile-mini-row tile-now" data-reveal style="--delay: .18s">
         <p class="kicker">Community & growth</p>
@@ -142,22 +144,29 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <p class="stack">Python · PyTorch · Hugging Face</p>
       </div>
 
-      <div class="tile tile-mini-row" data-reveal style="--delay: .22s">
+      <div class="tile tile-mini-row tile-lead" data-reveal style="--delay: .22s">
+        <span class="glyph" aria-hidden="true">✺</span>
         <p class="kicker">Mentoring &amp; teaching</p>
-        <h3>Leadership</h3>
-        <p class="tile-small">2 interns (PrivacySkills co-author) · TA · seminars.</p>
+        <p class="mid-number">2 <em>interns</em></p>
+        <p class="tile-small">One now co-author on PrivacySkills · TA in statistics at ENSTA Paris · ran the PETSCRAFT seminar.</p>
       </div>
 
-      <div class="tile tile-mini-row" data-reveal style="--delay: .24s">
+      <div class="tile tile-mini-row tile-talks" data-reveal style="--delay: .24s">
+        <span class="glyph" aria-hidden="true">“</span>
         <p class="kicker">Talks</p>
-        <h3>Speaking</h3>
-        <p class="tile-small">Technical (j4u) & general (sovereignty, AI, security).</p>
+        <h3>On stage, for experts and for everyone</h3>
+        <ul class="talk-list">
+          <li><strong>Technical</strong> · j4u</li>
+          <li><strong>AI &amp; cybersecurity</strong> · 2026</li>
+          <li><strong>Sovereignty &amp; entrepreneurship</strong> · 2026</li>
+        </ul>
       </div>
 
-      <div class="tile tile-mini-row" data-reveal style="--delay: .26s">
+      <div class="tile tile-mini-row tile-acad" data-reveal style="--delay: .26s">
         <p class="kicker">Track record</p>
-        <h3>Academics</h3>
-        <p class="tile-small"><strong>4.0 GPA</strong> · MSc Maths & AI · twice DataIA scholar.</p>
+        <p class="mid-number">4.0 <em>GPA</em></p>
+        <p class="tile-small">MSc Maths &amp; AI (Paris-Saclay, CentraleSupélec, Polytechnique) · twice a DataIA scholar.</p>
+        <img class="tile-memoji" src="/img/memojie/study.png" alt="" width="420" height="420" loading="lazy" />
       </div>
     </div>
   </section>
@@ -211,14 +220,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <p class="big-number">{notes.length}</p>
         <p>notes on statistics, ML &amp; optimisation, with proofs you can unfold.</p>
         <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
-      </a>
-
-      <a class="tile tile-projects" href="/projects" data-reveal style="--delay: .16s">
-        <p class="kicker">Up next</p>
-        <h3>Testing a Learner, applied to Hermes</h3>
-        <p class="tile-small">Hermes learns from its own judgments of success, so it can fall into exactly the bias the paper detects.</p>
-        <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
-        <img class="tile-memoji small" src="/img/memojie/image00006.png" alt="" width="420" height="420" loading="lazy" />
       </a>
     </div>
   </section>
@@ -550,7 +551,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .tile-pub {
-    grid-column: span 2;
+    grid-column: span 3;
     background: var(--accent);
     color: var(--accent-ink);
     border-color: transparent;
@@ -584,7 +585,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .tile-knowledge {
-    grid-column: span 2;
+    grid-column: span 3;
     background: var(--cobalt);
     color: #fff;
     border-color: transparent;
@@ -802,6 +803,132 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     font-size: 0.82rem;
   }
 
+  .tile-hermes,
+  .tile-lead,
+  .tile-acad {
+    padding-right: clamp(1.25rem, 30%, 7.5rem);
+  }
+
+  .tile-mini-row .tile-memoji {
+    width: clamp(6rem, 11vw, 8rem);
+    right: -0.75rem;
+    bottom: -1rem;
+  }
+
+  .tile-hermes {
+    background: var(--cobalt);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .tile-hermes:hover {
+    transform: translateY(-4px) rotate(-0.4deg);
+    box-shadow: var(--shadow);
+  }
+
+  .tile-hermes .kicker {
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  .tile-hermes .tile-arrow {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .mid-number {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 5vw, 3.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  }
+
+  .mid-number em {
+    font-style: italic;
+    font-size: 0.55em;
+    letter-spacing: -0.02em;
+  }
+
+  .tile-lead {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: transparent;
+  }
+
+  .tile-lead .kicker,
+  .tile-lead .tile-small {
+    color: color-mix(in srgb, var(--paper) 72%, transparent);
+  }
+
+  .tile-lead .mid-number em {
+    color: var(--accent);
+  }
+
+  .tile-lead .glyph {
+    top: -1.5rem;
+    right: -1.5rem;
+    font-size: 9rem;
+    color: var(--accent);
+    opacity: 0.35;
+  }
+
+  .tile-lead:hover .glyph {
+    transform: rotate(45deg);
+  }
+
+  .tile-talks {
+    background: var(--lime);
+    color: #17140f;
+    border-color: transparent;
+  }
+
+  .tile-talks .kicker {
+    color: rgb(23 20 15 / 0.7);
+  }
+
+  .tile-talks h3 {
+    position: relative;
+    max-width: 15ch;
+    font-family: var(--font-display);
+  }
+
+  .tile-talks .glyph {
+    top: -1.75rem;
+    right: 0.75rem;
+    font-size: 10rem;
+    opacity: 0.22;
+  }
+
+  .tile-talks:hover .glyph {
+    transform: rotate(-10deg) scale(1.1);
+  }
+
+  .talk-list {
+    position: relative;
+    list-style: none;
+    margin: 0.2rem 0 0;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+
+  .talk-list li {
+    padding-block: 0.2rem;
+    border-top: 1px solid rgb(23 20 15 / 0.18);
+  }
+
+  .tile-acad {
+    background: color-mix(in srgb, var(--accent) 12%, var(--card));
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .tile-acad .mid-number {
+    color: var(--accent);
+  }
+
+  .tile-acad .tile-small {
+    color: var(--ink-2);
+  }
+
   .tile-mini-row.tile-hands .hands-list li {
     padding-block: 0.2rem;
     border-top: 1px solid color-mix(in srgb, var(--accent-ink) 22%, transparent);
@@ -861,6 +988,13 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     }
     .tile-now .tile-memoji {
       width: 8.5rem;
+    }
+    .tile-mini-row.tile-now {
+      padding-bottom: 1rem;
+      padding-right: clamp(1.25rem, 30%, 7.5rem);
+    }
+    .tile-mini-row.tile-now .tile-memoji {
+      width: 6.5rem;
     }
   }
 
