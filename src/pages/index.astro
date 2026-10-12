@@ -222,6 +222,14 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
         <p>notes on statistics, ML &amp; optimisation, with proofs you can unfold.</p>
         <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
       </a>
+
+      <a class="tile tile-lw" href={site.lesswrong} data-reveal style="--delay: .16s">
+        <span class="glyph" aria-hidden="true">✎</span>
+        <p class="kicker">Writing</p>
+        <h3>LessWrong</h3>
+        <p class="muted">Where I write about AI safety and evals.</p>
+        <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
+      </a>
     </div>
   </section>
 
@@ -540,7 +548,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .tile-pub {
-    grid-column: span 3;
+    grid-column: span 2;
     background: var(--accent);
     --fg: var(--accent-ink);
     border-color: transparent;
@@ -574,10 +582,37 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .tile-knowledge {
-    grid-column: span 3;
+    grid-column: span 2;
     background: var(--cobalt);
     --fg: #fff;
     border-color: transparent;
+  }
+
+  .tile-lw {
+    grid-column: span 2;
+    background: var(--ink);
+    --fg: var(--paper);
+    border-color: transparent;
+  }
+
+  .tile-lw .kicker,
+  .tile-lw .muted {
+    color: color-mix(in srgb, var(--paper) 70%, transparent);
+  }
+
+  .tile-lw h3 {
+    margin-top: auto;
+  }
+
+  .tile-lw .glyph {
+    top: -2rem;
+    right: 0.5rem;
+    font-size: 10rem;
+    opacity: 0.18;
+  }
+
+  .tile-lw:hover .glyph {
+    transform: rotate(-12deg) scale(1.1);
   }
 
   .tile-knowledge .kicker {
@@ -947,11 +982,13 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     .tile-now,
     .tile-pub,
     .tile-knowledge,
+    .tile-lw,
     .tile-projects {
       grid-column: span 6;
     }
     .tile-pub,
     .tile-knowledge,
+    .tile-lw,
     .tile-projects {
       min-height: 12rem;
     }

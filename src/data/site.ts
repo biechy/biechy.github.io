@@ -10,6 +10,7 @@ export const site = {
   github: "https://github.com/biechy",
   scholar: "https://scholar.google.com/citations?user=YhWaTUgAAAAJ",
   linkedin: "https://linkedin.com/in/biechy",
+  lesswrong: "https://www.lesswrong.com/users/biechy",
 };
 
 export const nav = [
