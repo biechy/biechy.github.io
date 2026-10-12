@@ -57,15 +57,9 @@ export const news: News[] = [
     emoji: "🎲",
   },
   {
-    description: "I gave a talk on sovereignty and entrepreneurship.",
+    description: "I took part in a round-table on sovereignty and entrepreneurship at the Cyber Founder Tour Paris-Saclay.",
     category: "career",
     date: "12/2025",
-    emoji: "🎤",
-  },
-  {
-    description: "I took part in the round-table on governance at the Cyber Founder Tour Paris-Saclay.",
-    category: "career",
-    date: "11/2025",
     emoji: "🚀",
   },
   {
