@@ -2,7 +2,50 @@ import type { News } from "./types";
 
 export const news: News[] = [
   {
-    description: "I am participating in the round-table discussion on governance organized as part of the Cyber Founder Tour Paris-Saclay.",
+    description: "Our paper From Observation to Intervention was accepted at the BiAlign Workshop @ NeurIPS 2026, seven weeks after the MARS kick-off.",
+    category: "publications",
+    date: "09/2026",
+    emoji: "🎉",
+  },
+  {
+    description: "I gave a talk on Jailbreaks for Uncertainty (J4U) at the AI & Cybersecurity programme.",
+    category: "career",
+    date: "09/2026",
+    emoji: "🎤",
+    link: "https://youtu.be/ZhORtZ00Ur0?t=2760",
+  },
+  {
+    description: "I started the MARS V fellowship with the Cambridge AI Safety Hub.",
+    category: "career",
+    date: "07/2026",
+    emoji: "🛡️",
+  },
+  {
+    description: "I attended the Machine Learning Summer School (MLSS) at Columbia University.",
+    category: "scholar",
+    date: "06/2026",
+    emoji: "🗽",
+  },
+  {
+    description: "I completed BlueDot Impact's Technical AI Safety course.",
+    category: "scholar",
+    date: "05/2026",
+    emoji: "📚",
+  },
+  {
+    description: "I started teaching statistics tutorials (TD) at ENSTA Paris.",
+    category: "career",
+    date: "05/2026",
+    emoji: "🧑‍🏫",
+  },
+  {
+    description: "I started teaching probability tutorials (TD) at ENSTA Paris.",
+    category: "career",
+    date: "03/2026",
+    emoji: "🎲",
+  },
+  {
+    description: "I took part in the round-table on governance at the Cyber Founder Tour Paris-Saclay.",
     category: "career",
     date: "11/2025",
     emoji: "🚀",
@@ -14,7 +57,7 @@ export const news: News[] = [
     emoji: "🇪🇦",
   },
   {
-    description: "My (first) paper for traffic forecasting have been accepted at IEEE-OJITS (Q1) !",
+    description: "My first paper, on traffic forecasting, was accepted at IEEE OJITS (Q1).",
     category: "publications",
     date: "09/2025",
     emoji: "🎉",
@@ -50,7 +93,7 @@ export const news: News[] = [
     emoji: "🇮🇹",
   },
   {
-    description: "I start my PhD at Inria and Paris-Saclay as NLP Researcher.",
+    description: "I started my PhD at Inria (PETSCRAFT team) on privacy in LLM agents.",
     category: "career",
     date: "10/2024",
     emoji: "🧙",
@@ -63,14 +106,14 @@ export const news: News[] = [
   },
   {
     description:
-      "The PETSCRAFT team accepted me as PhD to work on privacy and LLM !",
+      "The PETSCRAFT team at Inria accepted me as a PhD student on privacy and LLMs.",
     category: "career",
     date: "07/2024",
     emoji: "🎉",
   },
   {
     description:
-      "I start my internship at NCHC (Taiwan) as AI Researcher. End in September.",
+      "I started my AI research internship at NCHC (NARLabs, Taiwan), until September.",
     category: "career",
     date: "05/2024",
     emoji: "👨‍🔬",
@@ -91,7 +134,7 @@ export const news: News[] = [
   },
   {
     description:
-      "I start my internship at Exotrail as Data Engineer. End in August.",
+      "I started my data engineering internship at Exotrail, until August.",
     category: "career",
     date: "03/2023",
     emoji: "🧑‍💻",
@@ -112,7 +155,7 @@ export const news: News[] = [
   },
   {
     description:
-      "I have been accepted in the Master of Science in Mathematics and AI at the University of Paris-Saclay",
+      "I was accepted into the MSc in Mathematics and AI at Paris-Saclay.",
     category: "scholar",
     date: "07/2022",
     emoji: "🎓",

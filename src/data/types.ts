@@ -4,6 +4,7 @@ export interface News {
   emoji: string;
   /** "MM/YYYY" */
   date: string;
+  link?: string;
 }
 
 interface Organisation {

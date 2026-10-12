@@ -31,7 +31,10 @@ items.forEach((item, index) => {
                 <time>{formatMonth(item.date)}</time>
                 <span class={`cat cat-${item.category}`}>{item.category}</span>
               </p>
-              <p class="text">{item.description}</p>
+              <p class="text">
+                {item.description}
+                {item.link && <a class="watch" href={item.link}>Watch ↗</a>}
+              </p>
             </div>
           </li>
         ))}
@@ -55,6 +58,12 @@ items.forEach((item, index) => {
 </script>
 
 <style>
+  .watch {
+    margin-left: 0.4rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
   .timeline[data-collapsed] [data-hidden] {
     display: none;
   }
