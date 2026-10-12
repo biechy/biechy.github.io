@@ -21,6 +21,12 @@ export const news: News[] = [
     emoji: "🛡️",
   },
   {
+    description: "I visited Trajan House in Oxford with the MARS cohort.",
+    category: "career",
+    date: "07/2026",
+    emoji: "🇬🇧",
+  },
+  {
     description: "I attended the Machine Learning Summer School (MLSS) at Columbia University.",
     category: "scholar",
     date: "06/2026",
@@ -39,10 +45,22 @@ export const news: News[] = [
     emoji: "🧑‍🏫",
   },
   {
+    description: "I followed the Inria Academy training on reinforcement learning for industry.",
+    category: "scholar",
+    date: "03/2026",
+    emoji: "🤖",
+  },
+  {
     description: "I started teaching probability tutorials (TD) at ENSTA Paris.",
     category: "career",
     date: "03/2026",
     emoji: "🎲",
+  },
+  {
+    description: "I gave a talk on sovereignty and entrepreneurship.",
+    category: "career",
+    date: "12/2025",
+    emoji: "🎤",
   },
   {
     description: "I took part in the round-table on governance at the Cyber Founder Tour Paris-Saclay.",
@@ -63,34 +81,16 @@ export const news: News[] = [
     emoji: "🎉",
   },
   {
-    description: "I was at the journées scientifiques INESIA.",
+    description: "Between March and July, I attended the ELLIS/ELSA workshop on privacy and ML, the iPoP workshop on AI development and governance, APVP 2025, the CNIL privacy research day and the INESIA scientific days.",
     category: "career",
     date: "07/2025",
-    emoji: "🧑‍🏫",
+    emoji: "🧭",
   },
   {
-    description: "I was at the Journée de recherche sur la vie privée of the CNIL.",
+    description: "I joined Inria's science outreach team.",
     category: "career",
-    date: "07/2025",
-    emoji: "🧑‍⚖️",
-  },
-  {
-    description: "I was at APVP 2025.",
-    category: "career",
-    date: "06/2025",
-    emoji: "🚈",
-  },
-  {
-    description: "I was at the iPoP workshop about Bridging AI Development and Governance.",
-    category: "career",
-    date: "04/2025",
-    emoji: "📜",
-  },
-  {
-    description: "I was at the ELLIS/ELSA workshop about privacy and machine learning.",
-    category: "career",
-    date: "03/2025",
-    emoji: "🇮🇹",
+    date: "11/2024",
+    emoji: "🔬",
   },
   {
     description: "I started my PhD at Inria (PETSCRAFT team) on privacy in LLM agents.",
