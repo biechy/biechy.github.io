@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
-import Marquee from "../components/Marquee.astro";
 import NewsTimeline from "../components/NewsTimeline.astro";
 import { site } from "../data/site";
 import { news } from "../data/news";
@@ -51,8 +50,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
       </div>
     </div>
   </section>
-
-  <Marquee items={site.topics} />
 
   <section class="wrap papers-section">
     <div class="section-head split" data-reveal>
@@ -244,7 +241,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   .hero {
     position: relative;
     overflow-x: clip;
-    padding-block: clamp(2.5rem, 8vw, 6rem) clamp(4rem, 9vw, 7rem);
+    padding-block: clamp(2.5rem, 8vw, 6rem) clamp(0.5rem, 2vw, 1.5rem);
     isolation: isolate;
   }
 

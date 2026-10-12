@@ -10,16 +10,6 @@ export const site = {
   github: "https://github.com/biechy",
   scholar: "https://scholar.google.com/citations?user=YhWaTUgAAAAJ",
   linkedin: "https://linkedin.com/in/biechy",
-  topics: [
-    "AI Safety",
-    "Privacy",
-    "Evals",
-    "Uncertainty",
-    "Jailbreaks",
-    "Human-AI alignment",
-    "LLM agents",
-    "Oversight",
-  ],
 };
 
 export const nav = [
