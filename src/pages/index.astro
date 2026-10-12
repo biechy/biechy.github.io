@@ -54,7 +54,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   <section class="wrap papers-section">
     <div class="section-head split" data-reveal>
       <div>
-        <p class="kicker">01 · At a glance</p>
         <h2 class="section-title">Research, execution, <em>track record</em></h2>
       </div>
       <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
@@ -177,7 +176,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap agenda-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">02 · What I work on</p>
       <h2 class="section-title">Three <em>threads</em></h2>
     </div>
 
@@ -207,7 +205,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap bento-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">03 · Off the clock</p>
       <h2 class="section-title">Other things I <em>build</em></h2>
     </div>
 
@@ -230,7 +227,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   <section class="wrap news-section">
     <div class="section-head" data-reveal>
-      <p class="kicker">04 · Logbook</p>
       <h2 class="section-title">Latest <em>news</em></h2>
     </div>
     <NewsTimeline items={news} initial={6} />
@@ -455,7 +451,7 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .section-title {
-    margin-top: 0.5rem;
+    margin-top: 0;
     font-size: clamp(2.6rem, 7vw, 5rem);
     font-weight: 400;
     letter-spacing: -0.04em;
