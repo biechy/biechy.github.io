@@ -53,11 +53,8 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
   </section>
 
   <section class="wrap papers-section">
-    <div class="section-head split" data-reveal>
-      <div>
-        <h2 class="section-title">The <em>short</em> version</h2>
-      </div>
-      <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
+    <div class="section-head" data-reveal>
+      <h2 class="section-title">The <em>short</em> version</h2>
     </div>
 
     <div class="bento">
@@ -176,32 +173,20 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
   </section>
 
   <section class="wrap agenda-section">
-    <div class="section-head" data-reveal>
+    <div class="section-head split" data-reveal>
       <h2 class="section-title">My <em>topics</em></h2>
+      <a class="arrow-link" href="/publications">All {papers.length} papers <span>↗</span></a>
     </div>
 
     <div class="agenda">
-      {topicOrder.map((key, i) => {
-        const related = papers.filter((p) => p.data.theme === key);
-        return (
-          <article class={`theme ${themes[key].focus ? "theme-main" : ""}`} style={`--tone: ${tones[key]}; --delay: ${i * 0.08}s`} data-reveal>
-            <span class="theme-glyph" aria-hidden="true">{glyphs[key]}</span>
-            <p class="kicker">{themes[key].label}{themes[key].focus && <span class="focus">Main focus</span>}</p>
-            <h3>{themes[key].question}</h3>
-            <p class="theme-blurb">{themes[key].blurb}</p>
-            {related.length > 0 && (
-              <ul>
-                {related.map((p) => (
-                  <li>
-                    <a href={p.data.link ?? "/publications"}>{p.data.short ?? p.data.title.split(":")[0]}</a>
-                    <span>{p.data.venue}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </article>
-        );
-      })}
+      {topicOrder.map((key, i) => (
+        <article class={`theme ${themes[key].focus ? "theme-main" : ""}`} style={`--tone: ${tones[key]}; --delay: ${i * 0.08}s`} data-reveal>
+          <span class="theme-glyph" aria-hidden="true">{glyphs[key]}</span>
+          <p class="kicker">{themes[key].label}{themes[key].focus && <span class="focus">Main focus</span>}</p>
+          <h3>{themes[key].question}</h3>
+          <p class="theme-blurb">{themes[key].blurb}</p>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -1144,29 +1129,9 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
     font-size: 1.05rem;
   }
 
-  .theme ul {
-    list-style: none;
-    margin: auto 0 0;
-    padding: 0.75rem 0 0;
-    border-top: 1px dashed var(--line);
-  }
 
-  .theme li {
-    display: flex;
-    flex-direction: column;
-    padding-block: 0.3rem;
-  }
 
-  .theme li a {
-    font-weight: 600;
-    text-decoration: none;
-  }
 
-  .theme li span {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--ink-3);
-  }
 
   .split {
     display: flex;
