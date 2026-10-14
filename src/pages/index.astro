@@ -13,8 +13,8 @@ const { notes } = await getKnowledge();
 const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
 const observation = papers.find((p) => p.id.includes("observation-to-intervention"));
-const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
-const glyphs: Record<Theme, string> = { privacy: "∅", uncertainty: "σ", evals: "∂" };
+const tones: Record<Theme, string> = { privacy: "var(--lime)", alignment: "var(--accent)", capabilities: "var(--cobalt)" };
+const glyphs: Record<Theme, string> = { privacy: "∅", alignment: "∥", capabilities: "∇" };
 const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes[b].focus) - Number(themes[a].focus));
 ---
 

@@ -1,24 +1,24 @@
 import type { CollectionEntry } from "astro:content";
 
-/** The research agenda, shown on the home page. Each paper points to one theme. */
+/** Research topics shown on the home page. Each paper points to one theme. */
 export const themes = {
   privacy: {
-    label: "Privacy in LLM agents",
+    label: "Privacy",
     focus: true,
     question: "What do agents do with our personal data?",
-    blurb: "Where agents go looking for information, what they do with it, and which kind of privacy guidance actually changes that. Most of my upcoming work is here.",
+    blurb: "Where agents go looking for information, what they do with it, and which privacy guidance actually changes that, from benchmarks to theory.",
   },
-  uncertainty: {
-    label: "Black-box uncertainty",
+  alignment: {
+    label: "Alignment",
     focus: false,
-    question: "How sure is the model, really?",
-    blurb: "Getting calibrated uncertainty out of reasoning models when you have no access to logits, only to what they answer.",
+    question: "Can we tell when a model drifts from what we want?",
+    blurb: "A biased agent or a biased user can look perfectly normal from the outside. I work out when behaviour is enough to catch them, and which tests give them away.",
   },
-  evals: {
-    label: "Behavioural evaluations",
+  capabilities: {
+    label: "Capabilities",
     focus: false,
-    question: "What can behaviour alone tell us?",
-    blurb: "A biased agent or a biased user can look perfectly normal from the outside. I work out when watching isn't enough, and which tests give them away.",
+    question: "What can a model do, and how sure is it?",
+    blurb: "Getting calibrated uncertainty out of reasoning models with only API access, by borrowing ideas from jailbreaks.",
   },
 } as const;
 
