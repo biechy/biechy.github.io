@@ -14,6 +14,8 @@ const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
 const observation = papers.find((p) => p.id.includes("observation-to-intervention"));
 const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var(--cobalt)", evals: "var(--accent)" };
+const glyphs: Record<Theme, string> = { privacy: "∅", uncertainty: "σ", evals: "∂" };
+const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes[b].focus) - Number(themes[a].focus));
 ---
 
 <Base>
@@ -179,10 +181,11 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     </div>
 
     <div class="agenda">
-      {(Object.keys(themes) as Theme[]).map((key, i) => {
+      {topicOrder.map((key, i) => {
         const related = papers.filter((p) => p.data.theme === key);
         return (
-          <article class="theme" style={`--tone: ${tones[key]}; --delay: ${i * 0.08}s`} data-reveal>
+          <article class={`theme ${themes[key].focus ? "theme-main" : ""}`} style={`--tone: ${tones[key]}; --delay: ${i * 0.08}s`} data-reveal>
+            <span class="theme-glyph" aria-hidden="true">{glyphs[key]}</span>
             <p class="kicker">{themes[key].label}{themes[key].focus && <span class="focus">Main focus</span>}</p>
             <h3>{themes[key].question}</h3>
             <p class="theme-blurb">{themes[key].blurb}</p>
@@ -1026,7 +1029,6 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   }
 
   .focus {
-    margin-left: 0.5rem;
     padding: 0.05rem 0.45rem;
     border-radius: 999px;
     background: var(--ink);
@@ -1055,18 +1057,21 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
 
   .agenda {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: 1.3fr 1fr;
     gap: 1rem;
   }
 
   .theme {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     padding: clamp(1.25rem, 3vw, 1.75rem);
+    padding-right: clamp(1.25rem, 22%, 7rem);
     border-radius: var(--radius);
-    border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
-    background: color-mix(in srgb, var(--tone) 12%, var(--card));
+    border: 1px solid var(--line);
+    background: var(--card);
+    overflow: hidden;
     transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
   }
 
@@ -1075,7 +1080,46 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     box-shadow: var(--shadow);
   }
 
+  .theme-main {
+    grid-row: span 2;
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    padding-right: clamp(1.5rem, 30%, 10rem);
+  }
+
+  .theme-glyph {
+    position: absolute;
+    top: -2.5rem;
+    right: -0.25rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 11rem;
+    line-height: 1;
+    color: var(--tone);
+    opacity: 0.55;
+    pointer-events: none;
+    transition: transform 0.8s var(--ease);
+  }
+
+  .theme-main .theme-glyph {
+    top: auto;
+    bottom: -5rem;
+    right: 1rem;
+    font-size: 24rem;
+  }
+
+  .theme:hover .theme-glyph {
+    transform: rotate(-10deg) scale(1.06);
+  }
+
+  .theme > :not(.theme-glyph) {
+    position: relative;
+  }
+
   .theme .kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
     margin: 0;
   }
 
@@ -1086,10 +1130,18 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
     font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 72;
   }
 
+  .theme-main h3 {
+    font-size: clamp(2rem, 3.6vw, 2.9rem);
+  }
+
   .theme-blurb {
     margin: 0;
     color: var(--ink-2);
     font-size: 0.95rem;
+  }
+
+  .theme-main .theme-blurb {
+    font-size: 1.05rem;
   }
 
   .theme ul {
@@ -1131,6 +1183,16 @@ const tones: Record<Theme, string> = { privacy: "var(--lime)", uncertainty: "var
   @media (max-width: 900px) {
     .agenda {
       grid-template-columns: 1fr;
+    }
+    .theme-main {
+      grid-row: auto;
+      padding-right: clamp(1.25rem, 22%, 7rem);
+    }
+    .theme-main .theme-glyph {
+      top: -2.5rem;
+      bottom: auto;
+      right: -0.25rem;
+      font-size: 11rem;
     }
   }
 
