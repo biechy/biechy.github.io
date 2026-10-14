@@ -6,19 +6,19 @@ export const themes = {
     label: "Privacy",
     focus: true,
     question: "How LLMs deal with our privacy",
-    blurb: "Where agents go looking for information, what they do with it, and which privacy guidance actually changes that, from benchmarks to theory.",
+    blurb: "How agents find, use and protect personal information.",
   },
   alignment: {
     label: "Alignment",
     focus: false,
     question: "When models drift from what we want",
-    blurb: "A biased agent or a biased user can look perfectly normal from the outside. I work out when behaviour is enough to catch them, and which tests give them away.",
+    blurb: "Catching models that stray from what we intended.",
   },
   capabilities: {
     label: "Capabilities",
     focus: false,
     question: "How far a model can go",
-    blurb: "Getting calibrated uncertainty out of reasoning models with only API access, by borrowing ideas from jailbreaks.",
+    blurb: "Measuring what models can really do.",
   },
 } as const;
 

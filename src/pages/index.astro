@@ -14,7 +14,7 @@ const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
 const observation = papers.find((p) => p.id.includes("observation-to-intervention"));
 const tones: Record<Theme, string> = { privacy: "var(--lime)", alignment: "var(--accent)", capabilities: "var(--cobalt)" };
-const glyphs: Record<Theme, string> = { privacy: "∅", alignment: "∥", capabilities: "∇" };
+const glyphs: Record<Theme, string> = { privacy: "π", alignment: "α", capabilities: "κ" };
 const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes[b].focus) - Number(themes[a].focus));
 ---
 
@@ -1087,9 +1087,9 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
 
   .theme-main .theme-glyph {
     top: auto;
-    bottom: -5rem;
-    right: 1rem;
-    font-size: 24rem;
+    bottom: -3.5rem;
+    right: 1.5rem;
+    font-size: 20rem;
   }
 
   .theme:hover .theme-glyph {
