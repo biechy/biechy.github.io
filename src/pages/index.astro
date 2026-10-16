@@ -76,7 +76,7 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
       {testingLearner && (
         <a class="tile tile-theory" href={testingLearner.data.link ?? "/publications"} data-reveal style="--delay: .08s">
           <span class="pill">Selected paper</span>
-          <p class="kicker">Theory · {statusLabel[testingLearner.data.status]}, {testingLearner.data.venue}</p>
+          <p class="kicker">Theory · {statusLabel[testingLearner.data.status]}{testingLearner.data.venue !== statusLabel[testingLearner.data.status] && `, ${testingLearner.data.venue}`}</p>
           <h3>Testing a Learner Changes It</h3>
           <p class="big-number">7×</p>
           <p class="tile-text">
