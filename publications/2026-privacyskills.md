@@ -2,7 +2,7 @@
 title: "PrivacySkills: How Privacy Guidance Shapes Source Selection in LLM Agents"
 date: 2026-09-01
 authors: ["Lucas Biéchy", "Christophe Rechdan", "Cédric Eichler", "Héber Arcolezi", "Nicolas Anciaux"]
-venue: "ICLR 2027"
+venue: "Under review"
 status: "under-review"
 link: "https://arxiv.org/abs/2609.35937"
 theme: "privacy"
