@@ -6,10 +6,8 @@ import NewsTimeline from "../components/NewsTimeline.astro";
 import { site } from "../data/site";
 import { news } from "../data/news";
 import { sortPapers, statusLabel, themes, type Theme } from "../data/research";
-import { getKnowledge } from "../lib/knowledge";
 
 const papers = sortPapers(await getCollection("publications"));
-const { notes } = await getKnowledge();
 const privacySkills = papers.find((p) => p.id.includes("privacyskills"));
 const testingLearner = papers.find((p) => p.id.includes("testing-a-learner"));
 const observation = papers.find((p) => p.id.includes("observation-to-intervention"));
@@ -200,13 +198,6 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
         <span class="glyph" aria-hidden="true">∂</span>
         <p class="kicker">Building</p>
         <h3>Doctoral entrepreneurship programme</h3>
-      </a>
-
-      <a class="tile tile-knowledge" href="/knowledge" data-reveal style="--delay: .12s">
-        <p class="kicker">Mental palace</p>
-        <p class="big-number">{notes.length}</p>
-        <p>notes on statistics, ML &amp; optimisation, with proofs you can unfold.</p>
-        <span class="tile-arrow"><Icon name="arrow" size={20} /></span>
       </a>
 
       <a class="tile tile-lw" href={site.lesswrong} data-reveal style="--delay: .16s">
@@ -534,7 +525,7 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
   }
 
   .tile-pub {
-    grid-column: span 2;
+    grid-column: span 3;
     background: var(--accent);
     --fg: var(--accent-ink);
     border-color: transparent;
@@ -575,7 +566,7 @@ const topicOrder = (Object.keys(themes) as Theme[]).sort((a, b) => Number(themes
   }
 
   .tile-lw {
-    grid-column: span 2;
+    grid-column: span 3;
     background: var(--ink);
     --fg: var(--paper);
     border-color: transparent;
