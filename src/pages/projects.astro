@@ -7,12 +7,12 @@ import { formatRange } from "../lib/dates";
 const darkImage = (img: string) => img.replace(/\.(\w+)$/, "-dark.$1");
 ---
 
-<Base title="Projects" description="Side projects by Lucas Biéchy: software engineering, MLOps and the web.">
+<Base title="Projects" description="Open-source projects by Lucas Biéchy, mostly around running and monitoring AI agents.">
   <header class="wrap page-head">
-    <p class="kicker" data-reveal>Side projects · {projects.length}</p>
+    <p class="kicker" data-reveal>Projects · {projects.length}</p>
     <h1 class="page-title" data-reveal style="--delay: .08s">Things I <em>build</em></h1>
     <p class="lede" data-reveal style="--delay: .16s">
-      Software engineering and MLOps experiments, built after hours to learn by doing.
+      Open-source tools I build alongside my research, mostly to run AI agents and keep an eye on them.
     </p>
   </header>
 
@@ -29,7 +29,7 @@ const darkImage = (img: string) => img.replace(/\.(\w+)$/, "-dark.$1");
           <p class="desc">{project.description.en}</p>
           <ul class="chips">{project.technos.map((t) => <li class="chip">{t}</li>)}</ul>
           <div class="links">
-            <a class="arrow-link" href={project.link}>Visit <span>↗</span></a>
+            {project.link !== project.repo_link && <a class="arrow-link" href={project.link}>Visit <span>↗</span></a>}
             <a class="arrow-link" href={project.repo_link}><Icon name="github" size={16} /> Source <span>↗</span></a>
           </div>
         </div>

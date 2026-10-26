@@ -2,18 +2,15 @@ import type { Project } from "./types";
 
 export const projects: Project[] = [
   {
-    name: "Portfolio",
+    name: "AgentsAlignmentBox",
     description: {
-      en: "My personal portfolio website, showcasing my projects, skills, professionnal experience, and even more!",
+      en: "A sandbox for Claude Code and Codex that logs every model call, tool call and web request at the network level, flags agents that drift from their own task (rules, TabPFN and a Claude reviewer), and stops any agent or sub-agent with a network kill switch.",
     },
-    tag: ["web", "main"],
-    date: {
-      start: 2024,
-      end: 2024,
-    },
-    technos: ["React", "TailwindCSS", "TypeScript"],
-    link: "https://biechy.github.io/",
-    repo_link: "https://github.com/Biechy/biechy.github.io",
-    img: "/img/projects/portfolio.webp",
+    tag: ["agents", "monitoring", "open source"],
+    date: { start: 2026 },
+    technos: ["Python", "Docker", "mitmproxy", "PostgreSQL", "TabPFN", "Claude Code", "Codex"],
+    link: "https://github.com/biechy/AgentsAlignmentBox",
+    repo_link: "https://github.com/biechy/AgentsAlignmentBox",
+    img: "/img/projects/aab.webp",
   },
 ];
