@@ -282,11 +282,14 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
   }
 
   .logo {
-    display: grid;
-    place-items: center;
-    min-width: 2.5rem;
-    height: 2.5rem;
-    padding: 0.35rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 6rem;
+    height: 2.75rem;
+    padding: 0.35rem 0.6rem;
+    overflow: hidden;
     border-radius: 0.6rem;
     background: var(--card);
     border: 1px solid var(--line);
@@ -364,9 +367,10 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
   }
 
   .logo img {
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
-    max-width: 5.5rem;
+    height: auto;
     object-fit: contain;
   }
 
