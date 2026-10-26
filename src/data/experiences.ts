@@ -45,7 +45,7 @@ export const experiences: Experience[] = [
     company: {
       name: "CNRS, Laboratoire de Mathématiques d'Orsay",
       link: "https://www.imo.universite-paris-saclay.fr/fr/la-recherche/",
-      logo: "",
+      logo: "/img/logo/lmo.svg",
     },
     date: { start: "2022", end: "2022", information: "2 months" },
     location: "Orsay, France",
