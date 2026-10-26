@@ -55,7 +55,6 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
             <p class="desc">{xp.description}</p>
             <div class="foot">
               <span class="place"><Icon name="pin" size={14} /> {xp.location}</span>
-              <ul class="chips">{xp.tags.map((tag) => <li class="chip">{tag}</li>)}</ul>
             </div>
           </div>
         </li>
@@ -93,7 +92,6 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
             {edu.description && <p class="desc">{edu.description}</p>}
             <div class="foot">
               <span class="place"><Icon name="pin" size={14} /> {edu.location}</span>
-              {edu.tags && <ul class="chips">{edu.tags.map((tag) => <li class="chip">{tag}</li>)}</ul>}
             </div>
           </div>
         </li>
@@ -284,15 +282,9 @@ const initials = (name: string) => name.split(/[ ,]+/)[0].slice(0, 4);
   .logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    width: 6rem;
-    height: 2.75rem;
-    padding: 0.35rem 0.6rem;
-    overflow: hidden;
-    border-radius: 0.6rem;
-    background: var(--card);
-    border: 1px solid var(--line);
+    justify-content: flex-start;
+    width: 5rem;
+    height: 2.25rem;
     flex: none;
   }
 
