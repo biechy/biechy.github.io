@@ -2,6 +2,12 @@ import type { News } from "./types";
 
 export const news: News[] = [
   {
+    description: "I am back at UC3M in Madrid as a visiting researcher for a week.",
+    category: "career",
+    date: "10/2026",
+    emoji: "🇪🇸",
+  },
+  {
     description: "Our paper From Observation to Intervention was accepted at the BiAlign Workshop @ NeurIPS 2026, seven weeks after the MARS kick-off.",
     category: "publications",
     date: "09/2026",
