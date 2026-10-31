@@ -71,6 +71,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         { rootMargin: "0px 0px -8% 0px" },
       );
       document.querySelectorAll("[data-reveal]").forEach((el) => reveal.observe(el));
+
+      document.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((a) => {
+        const url = new URL(a.href, location.href);
+        if (!url.protocol.startsWith("http")) return;
+        if (url.host !== location.host || url.pathname.endsWith(".pdf")) {
+          a.target = "_blank";
+          a.rel = "noopener";
+        }
+      });
     </script>
   </body>
 </html>
